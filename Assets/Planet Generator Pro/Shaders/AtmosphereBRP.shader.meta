@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: c47809acd72b91a45aa338e14f3d023c
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 332948
+  packageName: Planet Generator Pro
+  packageVersion: 1.0
+  assetPath: Assets/Planet Generator Pro/Shaders/AtmosphereBRP.shader
+  uploadId: 788536

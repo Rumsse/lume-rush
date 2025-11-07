@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 9d0bbb99f1fc8844ab7503ca2c996569
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 332948
+  packageName: Planet Generator Pro
+  packageVersion: 1.0
+  assetPath: Assets/Planet Generator Pro/Scripts/SpotlightToggle.cs
+  uploadId: 788536

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 35a9870da8245bf4f9036b5ae13f4a59
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 332948
+  packageName: Planet Generator Pro
+  packageVersion: 1.0
+  assetPath: Assets/Planet Generator Pro/Shaders/ToonWater.shader
+  uploadId: 788536

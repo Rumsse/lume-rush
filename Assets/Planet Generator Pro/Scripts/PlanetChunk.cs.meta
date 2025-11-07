@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: fa569f8519bc6fa45a48fc5773591a34
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 332948
+  packageName: Planet Generator Pro
+  packageVersion: 1.0
+  assetPath: Assets/Planet Generator Pro/Scripts/PlanetChunk.cs
+  uploadId: 788536
