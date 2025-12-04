@@ -15,6 +15,20 @@ public class ThrirdPersonPlanetCamera : MonoBehaviour
     [SerializeField] float collisionRadius = 0.25f;
     [SerializeField] float collisionOffset = 0.2f;
 
+    [Header("Jump response")]
+    [SerializeField] float jumpDistanceMultiplier = 0.6f;
+    [SerializeField] float jumpExtraHeight = 0.8f;
+    [SerializeField] float jumpPitchAdd = 12f;
+    [SerializeField] float jumpDetectThreshold = 0.6f;
+    [SerializeField] float jumpTransitionSpeed = 6f;
+
+    [Header("Jump Look Target")]
+    [SerializeField] Transform jumpLookTarget;
+    [SerializeField] bool useJumpLookTarget = true;
+
+    [Header("Look smoothing")]
+    [SerializeField][Range(0.01f, 1f)] float lookSmoothTime = 0.18f;
+
     #endregion
 
     #region State
@@ -22,29 +36,75 @@ public class ThrirdPersonPlanetCamera : MonoBehaviour
     Vector3 velocity;
     Vector3 lastForward = Vector3.forward;
 
+    Rigidbody targetRb;
+    float currentDistance;
+    float currentHeight;
+    float currentPitch;
+    float distanceVel;
+    float heightVel;
+
+    Vector3 currentLookPoint;
+    Vector3 lookVelocity;
+
     #endregion
 
     void Start()
     {
         if (target == null)
-        {
-            var p = GameObject.FindGameObjectWithTag("Player");
-            if (p != null) target = p.transform;
-        }
+            target = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        if (target != null)
+            targetRb = target.GetComponentInParent<Rigidbody>();
+
+        currentDistance = distance;
+        currentHeight = heightOffset;
+        currentPitch = pitchAngle;
+        currentLookPoint = target != null ? target.position + target.up * heightOffset : Vector3.zero;
+        lookVelocity = Vector3.zero;
     }
 
     void LateUpdate()
     {
         if (target == null) return;
+
         Vector3 pivot = target.position + target.up * heightOffset;
+
         Vector3 tangentF = GetTangentForward();
-        if (tangentF.sqrMagnitude > 0.0001f) lastForward = Vector3.Slerp(lastForward, tangentF, Time.deltaTime * rotationSpeed);
-        Vector3 dir = Quaternion.AngleAxis(pitchAngle, target.right) * (-lastForward);
-        Vector3 desiredPos = pivot + dir.normalized * distance;
+        if (tangentF.sqrMagnitude > 0.0001f)
+            lastForward = Vector3.Slerp(lastForward, tangentF, Time.deltaTime * rotationSpeed);
+
+        bool isJumping = false;
+        if (targetRb != null)
+        {
+            float normalVel = Vector3.Dot(targetRb.linearVelocity, target.up);
+            if (normalVel > jumpDetectThreshold) isJumping = true;
+        }
+
+        float targetDist = isJumping ? distance * jumpDistanceMultiplier : distance;
+        currentDistance = Mathf.SmoothDamp(currentDistance, targetDist, ref distanceVel, smoothTime);
+
+        float targetH = isJumping ? heightOffset + jumpExtraHeight : heightOffset;
+        currentHeight = Mathf.SmoothDamp(currentHeight, targetH, ref heightVel, smoothTime);
+
+        float targetPitch = isJumping ? pitchAngle + jumpPitchAdd : pitchAngle;
+        currentPitch = Mathf.MoveTowards(currentPitch, targetPitch, jumpTransitionSpeed * Time.deltaTime);
+
+        Vector3 dir = Quaternion.AngleAxis(currentPitch, target.right) * (-lastForward);
+        Vector3 desiredPos = pivot + dir.normalized * currentDistance;
         desiredPos = ResolveCollision(pivot, desiredPos);
+
         transform.position = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, smoothTime);
-        Vector3 lookDir = (pivot - transform.position).normalized;
+
+        Vector3 desiredLookPoint = pivot;
+        if (isJumping && useJumpLookTarget && jumpLookTarget != null)
+            desiredLookPoint = jumpLookTarget.position;
+
+        // Smooth the lookAt point to avoid sudden snapping
+        currentLookPoint = Vector3.SmoothDamp(currentLookPoint, desiredLookPoint, ref lookVelocity, lookSmoothTime);
+
+        Vector3 lookDir = (currentLookPoint - transform.position).normalized;
         if (lookDir.sqrMagnitude < 0.0001f) return;
+
         Quaternion targetRot = Quaternion.LookRotation(lookDir, target.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
     }
