@@ -783,8 +783,6 @@ GameObject:
   - component: {fileID: 740454294}
   - component: {fileID: 740454293}
   - component: {fileID: 740454292}
-  - component: {fileID: 740454295}
-  - component: {fileID: 740454296}
   - component: {fileID: 740454297}
   m_Layer: 0
   m_Name: Camera
@@ -911,60 +909,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &740454295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740454290}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63d8a6f09fe239e4a859a100aa8faf25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1929153109}
-  baseDistance: 4
-  minDistanceWhenRunning: 2.6
-  maxDistanceWhenJumping: 6
-  distanceSmoothTime: 0.12
-  baseHeight: 1.2
-  maxHeightWhenRunning: 2.2
-  jumpHeightOffset: 1
-  rotationSmooth: 10
-  surfaceNormalSmooth: 12
-  forwardSmooth: 12
-  baseFocusOnPlanetWeight: 0.35
-  maxFocusOnPlanetWeight: 0.6
-  jumpFocusWeight: 0.15
-  focusAdjustSpeed: 3
-  speedForFullEffect: 4
-  minForwardDot: 0.0001
-  jumpNormalVelocityThreshold: 0.6
-  groundDistanceTolerance: 0.12
---- !u!114 &740454296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740454290}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e306a3990d559e4eb9399c04ce369b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1929153109}
-  distance: 5
-  heightOffset: 1.6
-  pitchAngle: 35
-  verticalLagAmount: 0.5
-  collisionMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  collisionRadius: 0.25
-  collisionOffset: 0.2
-  minVelocityForForward: 0.3
 --- !u!114 &740454297
 MonoBehaviour:
   m_ObjectHideFlags: 0
