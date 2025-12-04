@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 48083443}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.994, z: 0}
+  m_LocalPosition: {x: 0, y: -0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -461,6 +461,7 @@ GameObject:
   - component: {fileID: 740454292}
   - component: {fileID: 740454295}
   - component: {fileID: 740454296}
+  - component: {fileID: 740454297}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -593,17 +594,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740454290}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63d8a6f09fe239e4a859a100aa8faf25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1929153109}
-  baseDistance: 8.38
-  minDistanceWhenRunning: 2.78
+  baseDistance: 4
+  minDistanceWhenRunning: 2.6
   maxDistanceWhenJumping: 6
   distanceSmoothTime: 0.12
-  baseHeight: 12.1
+  baseHeight: 1.2
   maxHeightWhenRunning: 2.2
   jumpHeightOffset: 1
   rotationSmooth: 10
@@ -611,7 +612,7 @@ MonoBehaviour:
   forwardSmooth: 12
   baseFocusOnPlanetWeight: 0.35
   maxFocusOnPlanetWeight: 0.6
-  jumpFocusWeight: 0.139
+  jumpFocusWeight: 0.15
   focusAdjustSpeed: 3
   speedForFullEffect: 4
   minForwardDot: 0.0001
@@ -640,6 +641,29 @@ MonoBehaviour:
   collisionRadius: 0.25
   collisionOffset: 0.2
   minVelocityForForward: 0.3
+--- !u!114 &740454297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740454290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5745d0fa8648e1e4abe2232573cd3710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1929153109}
+  distance: 12.15
+  heightOffset: 1.84
+  pitchAngle: 47.1
+  smoothTime: 0.08
+  rotationSpeed: 8
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  collisionRadius: 0.25
+  collisionOffset: 0.2
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -860,7 +884,11 @@ MonoBehaviour:
     m_Bits: 64
   _groundCheck: {fileID: 48083444}
   _speed: 11.7
-  _turnSpeed: 5
+  _turnSpeed: 200
+  _groundCheckRadius: 0.3
+  _jumpForce: 500
+  _airMoveMultiplier: 0.6
+  _airTurnMultiplier: 0.6
 --- !u!1 &2007565951
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,83 +4,94 @@ using UnityEngine;
 
 public class PlayerPlanetMovement : MonoBehaviour
 {
+    #region Inspector
+
     [SerializeField] private LayerMask _groundMask;
     [SerializeField] private Transform _groundCheck;
 
-    private float _groundCheckRadius = 0.3f;
-    public float _speed = 15f;
-    public float _turnSpeed = 1500f;
-    private float _jumpForce = 500f;
+    [SerializeField] public float _speed = 15f;
+    [SerializeField] public float _turnSpeed = 1500f;
+    [SerializeField] private float _groundCheckRadius = 0.3f;
+    [SerializeField] private float _jumpForce = 500f;
+
+    [Header("Air control")]
+    [SerializeField][Range(0f, 1f)] private float _airMoveMultiplier = 0.6f;
+    [SerializeField][Range(0f, 1f)] private float _airTurnMultiplier = 0.6f;
+
+    #endregion
+
+    #region State
 
     private GravityBody _gravityBody;
     private Rigidbody _rigidbody;
-    private Vector3 _direction;
+    private float _horizontal;
+    private float _vertical;
     private bool _isGrounded;
 
+    #endregion
 
-    void Start()
+    void Awake()
     {
-        _rigidbody = transform.GetComponent<Rigidbody>();
-        _gravityBody = transform.GetComponent<GravityBody>();
-
+        _rigidbody = GetComponent<Rigidbody>();
+        _gravityBody = GetComponent<GravityBody>();
         _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
         _rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
     }
 
     void Update()
     {
-        _direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized;
-        _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundCheckRadius, _groundMask);
+        _horizontal = Input.GetAxisRaw("Horizontal");
+        _vertical = Input.GetAxisRaw("Vertical");
+        _isGrounded = _groundCheck != null && Physics.CheckSphere(_groundCheck.position, _groundCheckRadius, _groundMask);
 
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
-        {
             _rigidbody.AddForce(-_gravityBody.GravityDirection * _jumpForce, ForceMode.Impulse);
-        }
     }
 
     void FixedUpdate()
     {
-        bool isRunning = _direction.magnitude > 0.1f;
+        Vector3 gravityDir = _gravityBody != null ? _gravityBody.GravityDirection : Vector3.zero;
+        Vector3 gravityUp = gravityDir != Vector3.zero ? -gravityDir.normalized : transform.up;
 
-        if (isRunning && _isGrounded)
+        bool moveInput = Mathf.Abs(_vertical) > 0.1f;
+        bool turnInput = Mathf.Abs(_horizontal) > 0.1f;
+        float moveMultiplier = _isGrounded ? 1f : _airMoveMultiplier;
+        float turnMultiplier = _isGrounded ? 1f : _airTurnMultiplier;
+
+        if (moveInput)
         {
-            // U�yj lokalnych kierunk�w zamiast globalnych
-            Vector3 moveDirection = transform.TransformDirection(new Vector3(_direction.x, 0, _direction.z));
-
-            // Ruch z interpolacj� - mniej szarpni��
-            Vector3 targetVelocity = moveDirection * _speed;
-            Vector3 velocityChange = targetVelocity - _rigidbody.linearVelocity;
-
-            // Ogranicz Y �eby nie wp�ywa� na grawitacj�
-            velocityChange.y = 0;
-
-            _rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
-
-            // P�ynniejsze obracanie
-            if (_direction.x != 0)
-            {
-                float turnAmount = _direction.x * (_turnSpeed * Time.fixedDeltaTime);
-                Quaternion turnRotation = Quaternion.Euler(0f, turnAmount, 0f);
-                _rigidbody.MoveRotation(_rigidbody.rotation * turnRotation);
-            }
+            Vector3 desired = transform.forward * Mathf.Sign(_vertical);
+            desired = Vector3.ProjectOnPlane(desired, gravityUp).normalized;
+            Vector3 targetVel = desired * (_speed * moveMultiplier);
+            Vector3 currentHorizVel = Vector3.ProjectOnPlane(_rigidbody.linearVelocity, gravityUp);
+            Vector3 velChange = targetVel - currentHorizVel;
+            velChange = Vector3.ProjectOnPlane(velChange, gravityUp);
+            _rigidbody.AddForce(velChange, ForceMode.VelocityChange);
         }
 
-        // Dodatkowe t�umienie pr�dko�ci gdy nie porusza si�
-        if (!isRunning && _isGrounded)
+        if (turnInput)
         {
-            Vector3 horizontalVelocity = new Vector3(_rigidbody.linearVelocity.x, 0, _rigidbody.linearVelocity.z);
+            float angle = _horizontal * (_turnSpeed * Time.fixedDeltaTime) * turnMultiplier;
+            Vector3 currentForward = Vector3.ProjectOnPlane(transform.forward, gravityUp);
+            if (currentForward.sqrMagnitude <= 0.0001f)
+                currentForward = Vector3.ProjectOnPlane(transform.right, gravityUp).normalized;
+
+            Quaternion yaw = Quaternion.AngleAxis(angle, gravityUp);
+            Vector3 newForward = (yaw * currentForward).normalized;
+            _rigidbody.MoveRotation(Quaternion.LookRotation(newForward, gravityUp));
+        }
+
+        if (!moveInput && _isGrounded)
+        {
+            Vector3 horizontalVelocity = Vector3.ProjectOnPlane(_rigidbody.linearVelocity, gravityUp);
             _rigidbody.AddForce(-horizontalVelocity * 5f, ForceMode.Acceleration);
         }
     }
 
-    // Wizualna pomoc - pokazuje czy gracz jest uziemiony
     void OnDrawGizmosSelected()
     {
-        if (_groundCheck != null)
-        {
-            Gizmos.color = _isGrounded ? Color.green : Color.red;
-            Gizmos.DrawWireSphere(_groundCheck.position, _groundCheckRadius);
-        }
+        if (_groundCheck == null) return;
+        Gizmos.color = _isGrounded ? Color.green : Color.red;
+        Gizmos.DrawWireSphere(_groundCheck.position, _groundCheckRadius);
     }
-
 }
