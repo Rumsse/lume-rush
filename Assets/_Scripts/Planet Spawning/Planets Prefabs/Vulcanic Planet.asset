@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1703e57b0719a6459ada6cf20c0b533, type: 3}
+  m_Name: Vulcanic Planet
+  m_EditorClassIdentifier: Assembly-CSharp::PlanetSpawnSettings
+  planetPrefab: {fileID: 8123137777780912630, guid: 797600a41611b8a4a9bbbace8aae119e, type: 3}
+  spawnOnStart: 1
+  spawnPosition: {x: 0, y: 0, z: 0}
+  spawnEuler: {x: 0, y: 0, z: 0}
+  parent: {fileID: 7879821253416149472, guid: 6c12738caea1e3a41b2481c688ab1afc, type: 3}
+  seedMin: 0
+  seedMax: 360
