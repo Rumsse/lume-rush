@@ -1,0 +1,161 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf0ef91efa296423fbbde98ce5af19ba, type: 3}
+  m_Name: Shape 1
+  m_EditorClassIdentifier: 
+  randomize: 0
+  seed: 0
+  heightMapCompute: {fileID: 7200000, guid: 1c8bff6c5dfd7461f8403bd2cef35625, type: 3}
+  perturbVertices: 1
+  perturbCompute: {fileID: 7200000, guid: 0cc4782d709194aa5a22ed5e9ab8bf09, type: 3}
+  perturbStrength: 0
+  craterSettings:
+    enabled: 1
+    craterSeed: 5
+    numCraters: 25
+    craterSizeMinMax: {x: 0.02, y: 0.1}
+    rimSteepness: 0.27
+    rimWidth: 3.52
+    smoothMinMax: {x: 0.4, y: 1.5}
+    sizeDistribution: 0.564
+    cachedCraters:
+    - centre: {x: -0.8629643, y: -0.39167422, z: -0.31919277}
+      size: 0.034419537
+      floorHeight: -0.41428682
+      smoothness: 1.3017313
+    - centre: {x: 0.37621477, y: -0.90288997, z: -0.20797122}
+      size: 0.037225485
+      floorHeight: -0.6823715
+      smoothness: 1.2631496
+    - centre: {x: -0.5605956, y: -0.03485433, z: 0.82735586}
+      size: 0.02168439
+      floorHeight: -0.8760159
+      smoothness: 1.4768397
+    - centre: {x: -0.65678644, y: 0.23317868, z: -0.71711874}
+      size: 0.05553318
+      floorHeight: -0.542066
+      smoothness: 1.0114188
+    - centre: {x: -0.035427, y: 0.069365315, z: -0.9969621}
+      size: 0.08264234
+      floorHeight: -0.30250677
+      smoothness: 0.6386678
+    - centre: {x: 0.78628874, y: -0.0966949, z: 0.61024594}
+      size: 0.022643086
+      floorHeight: -0.9356557
+      smoothness: 1.4636576
+    - centre: {x: 0.44161558, y: 0.8227833, z: -0.35777557}
+      size: 0.029993111
+      floorHeight: -0.84220773
+      smoothness: 1.3625947
+    - centre: {x: 0.118303664, y: -0.82747364, z: -0.54890037}
+      size: 0.0856133
+      floorHeight: -0.36920586
+      smoothness: 0.5978171
+    - centre: {x: -0.7638996, y: 0.054507595, z: 0.643029}
+      size: 0.04734509
+      floorHeight: -0.2
+      smoothness: 1.124005
+    - centre: {x: 0.38415343, y: -0.43465087, z: 0.814558}
+      size: 0.031848907
+      floorHeight: -0.91587055
+      smoothness: 1.3370775
+    - centre: {x: -0.62345743, y: 0.75385386, z: 0.20737708}
+      size: 0.041597173
+      floorHeight: -0.27316532
+      smoothness: 1.2030389
+    - centre: {x: -0.75852764, y: -0.31220517, z: -0.5719824}
+      size: 0.09282652
+      floorHeight: -0.2782329
+      smoothness: 0.4986353
+    - centre: {x: -0.5594204, y: 0.23312746, z: -0.7954247}
+      size: 0.032961134
+      floorHeight: -0.7620659
+      smoothness: 1.3217844
+    - centre: {x: -0.6514652, y: -0.44015348, z: 0.6179466}
+      size: 0.06318893
+      floorHeight: -0.22993161
+      smoothness: 0.90615225
+    - centre: {x: -0.71467036, y: 0.6707752, z: 0.19825971}
+      size: 0.027273111
+      floorHeight: -1.0796994
+      smoothness: 1.3999947
+    - centre: {x: -0.96625346, y: 0.18966125, z: -0.17430699}
+      size: 0.02149778
+      floorHeight: -0.9598321
+      smoothness: 1.4794055
+    - centre: {x: 0.2935068, y: -0.8907775, z: 0.34694263}
+      size: 0.022708626
+      floorHeight: -0.2
+      smoothness: 1.4627564
+    - centre: {x: 0.48141006, y: 0.6365676, z: -0.6025164}
+      size: 0.030379307
+      floorHeight: -0.545536
+      smoothness: 1.3572845
+    - centre: {x: 0.8294266, y: -0.514525, z: 0.21752131}
+      size: 0.02020731
+      floorHeight: -1.0230882
+      smoothness: 1.4971495
+    - centre: {x: 0.7885872, y: 0.28517896, z: -0.54479647}
+      size: 0.023320042
+      floorHeight: -0.27319047
+      smoothness: 1.4543494
+    - centre: {x: -0.3925774, y: 0.9102965, z: -0.13131368}
+      size: 0.026240086
+      floorHeight: -0.65829855
+      smoothness: 1.4141988
+    - centre: {x: 0.4450927, y: 0.42198047, z: 0.7898259}
+      size: 0.020885345
+      floorHeight: -1.0745982
+      smoothness: 1.4878266
+    - centre: {x: 0.3337759, y: 0.89177847, z: -0.3054911}
+      size: 0.05578304
+      floorHeight: -0.2
+      smoothness: 1.0079832
+    - centre: {x: -0.7606635, y: 0.63489336, z: 0.13528311}
+      size: 0.023236262
+      floorHeight: -0.9353908
+      smoothness: 1.4555014
+    - centre: {x: -0.46811977, y: -0.6968811, z: -0.5433421}
+      size: 0.02112502
+      floorHeight: -1.0971106
+      smoothness: 1.4845309
+  shapeNoise:
+    numLayers: 4
+    lacunarity: 2
+    persistence: 0.5
+    scale: 0.97
+    elevation: 0
+    verticalShift: 0
+    offset: {x: 0, y: 0, z: 0}
+  ridgeNoise:
+    numLayers: 4
+    lacunarity: 5
+    persistence: 0.5
+    scale: 1.82
+    power: 2
+    elevation: -2.84
+    gain: 0.5
+    verticalShift: 0
+    peakSmoothing: 3
+    offset: {x: 0, y: 0, z: 0}
+  ridgeNoise2:
+    numLayers: 5
+    lacunarity: 0
+    persistence: 0.5
+    scale: 0
+    power: 0.5
+    elevation: 3
+    gain: 1
+    verticalShift: 0
+    peakSmoothing: 0
+    offset: {x: 0, y: 0, z: 0}
+  testParams: {x: 0, y: 0, z: 1, w: 23.11}
