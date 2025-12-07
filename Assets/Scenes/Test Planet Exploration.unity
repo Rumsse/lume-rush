@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &27147367
+--- !u!1 &358797367
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,25 +127,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 27147368}
+  - component: {fileID: 358797368}
   m_Layer: 0
-  m_Name: "co z zmienn\u0105 grawitacj\u0105? planety obecnie nie maj\u0105 warto\u015Bci
-    gravitacji"
+  m_Name: -ReadMe!!-
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &27147368
+--- !u!4 &358797368
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 27147367}
+  m_GameObject: {fileID: 358797367}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 55.64685, y: 0, z: 223.5257}
+  m_LocalPosition: {x: -29.04626, y: -0, z: -4934.981}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -279,7 +278,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &462704585
+--- !u!1 &552681014
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -287,25 +286,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 462704586}
+  - component: {fileID: 552681015}
   m_Layer: 0
-  m_Name: "w gravity area point mo\u017Cna zmienia\u0107 transform - ciekawa logika
-    pod zmienn\u0105 grawitacje w trakcie gry jako random event"
+  m_Name: template planet z miro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &462704586
+--- !u!4 &552681015
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 462704585}
+  m_GameObject: {fileID: 552681014}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 55.64685, y: 0, z: 223.5257}
+  m_LocalPosition: {x: -1.90943, y: -0, z: -4908.182}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -327,7 +325,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &849969774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,6 +370,7 @@ GameObject:
   - component: {fileID: 974406838}
   - component: {fileID: 974406837}
   - component: {fileID: 974406836}
+  - component: {fileID: 974406841}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -528,38 +527,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 29.092, y: 0, z: 0}
---- !u!1 &997190568
-GameObject:
+--- !u!114 &974406841
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 997190569}
-  m_Layer: 0
-  m_Name: "przy wyborze planety b\u0119dzie si\u0119 zmienia\u0107 lista presetu
-    planety w spawner manager"
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &997190569
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 997190568}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -29.04663, y: 0, z: -4934.9814}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 974406835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ca94e2d12074332bc6643cb1b5e4c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CustomPostProcessing
 --- !u!1 &1487426881
 GameObject:
   m_ObjectHideFlags: 0
@@ -968,6 +947,5 @@ SceneRoots:
   - {fileID: 849969775}
   - {fileID: 1881436720}
   - {fileID: 974406840}
-  - {fileID: 997190569}
-  - {fileID: 27147368}
-  - {fileID: 462704586}
+  - {fileID: 358797368}
+  - {fileID: 552681015}
