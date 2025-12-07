@@ -18,16 +18,16 @@ MonoBehaviour:
   perturbVertices: 1
   perturbCompute: {fileID: 7200000, guid: c95c667630d66481daf208e2a7a4d95d, type: 3}
   perturbStrength: 0
-  oceanDepthMultiplier: 15.5
+  oceanDepthMultiplier: 21.3
   oceanFloorDepth: 2.55
   oceanFloorSmoothing: 0.61
-  mountainBlend: 40
+  mountainBlend: 3.45
   continentNoise:
-    numLayers: 6
+    numLayers: 4
     lacunarity: 4.63
-    persistence: 0.06
-    scale: 0.84
-    elevation: 4
+    persistence: 0.08
+    scale: 0.83
+    elevation: 0.4
     verticalShift: 0
     offset: {x: 0, y: 0, z: 0}
   maskNoise:
