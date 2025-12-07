@@ -1,136 +1,131 @@
-using System;
-using System.Linq;
-using System.Reflection;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlanetSpawnManager : MonoBehaviour
+public class PlanetSpawnerManager : MonoBehaviour
 {
-    [SerializeField] PlanetSpawnSettings settings;
-    [SerializeField]
-    bool randomizeSeedEverySpawn = true;
+    #region Inspector
+    public List<CelestialBodySettings> presets = new List<CelestialBodySettings>();
+    public int spawnCount = 5;
+    public float spawnRadius = 200f;
+    public Vector2 scaleRange = new Vector2(5f, 20f);
+    public bool randomizeSeed = true;
+    public int seedMin = 0;
+    public int seedMax = int.MaxValue - 1;
+    public bool parentUnderThis = true;
 
-    #region Unity
-
-    void Awake() => settings = settings != null ? settings : CreateDefaultSettings();
-
-    void Start()
-    {
-        if (settings.spawnOnStart)
-            SpawnPlanet();
-    }
-
+    [Header("Gravity / Tag / Layer")]
+    public bool addGravityArea = true;
+    [Min(0.01f)] public float gravityAreaMultiplier = 1.5f; // sphere collider radius in local (will be scaled by planet scale)
+    public bool gravityAreaIsTrigger = true;
+    public string gravityComponentTypeName = "GravityAreaPoint";
+    public string planetTag = "Planet";
+    public string planetLayerName = "Planet";
     #endregion
 
-    #region API
+    void Start() => SpawnAll();
 
-    public GameObject SpawnPlanet() => SpawnPlanet(settings.spawnPosition, Quaternion.Euler(settings.spawnEuler), settings.parent, null);
-
-    public GameObject SpawnPlanet(int forcedSeed) => SpawnPlanet(settings.spawnPosition, Quaternion.Euler(settings.spawnEuler), settings.parent, forcedSeed);
-
-    public GameObject SpawnPlanet(Vector3 position, Quaternion rotation, Transform parent = null, int? forcedSeed = null)
+    #region Spawning
+    public void SpawnAll()
     {
-        if (settings == null || settings.planetPrefab == null)
-            return null;
+        if (presets == null || presets.Count == 0 || spawnCount <= 0) return;
 
-        var go = Instantiate(settings.planetPrefab, position, rotation, parent);
-        var seed = forcedSeed ?? (randomizeSeedEverySpawn ? UnityEngine.Random.Range(settings.seedMin, settings.seedMax) : (int?)null);
-        if (seed.HasValue)
-            ApplySeedToShapeScriptables(go, seed.Value);
-        return go;
+        for (int i = 0; i < spawnCount; i++)
+            SpawnOne(i);
     }
 
-    #endregion
-
-    #region Internal reflection helpers
-
-    void ApplySeedToShapeScriptables(GameObject root, int seed)
+    void SpawnOne(int index)
     {
-        var comps = root.GetComponentsInChildren<MonoBehaviour>(true);
-        foreach (var comp in comps)
+        var preset = presets[Random.Range(0, presets.Count)];
+        if (!preset) return;
+
+        var runtimeSettings = Instantiate(preset);
+        if (runtimeSettings.shape) runtimeSettings.shape = Instantiate(runtimeSettings.shape);
+        if (runtimeSettings.shading) runtimeSettings.shading = Instantiate(runtimeSettings.shading);
+
+        if (randomizeSeed && runtimeSettings.shape)
+            runtimeSettings.shape.seed = Random.Range(seedMin, seedMax);
+
+        var go = new GameObject($"Planet_{index}");
+        if (parentUnderThis) go.transform.parent = transform;
+
+        go.transform.position = Random.onUnitSphere * spawnRadius;
+        float s = Random.Range(scaleRange.x, scaleRange.y);
+        go.transform.localScale = Vector3.one * s;
+
+        var generator = go.AddComponent<CelestialBodyGenerator>();
+        generator.resolutionSettings = new CelestialBodyGenerator.ResolutionSettings();
+        generator.body = runtimeSettings;
+
+        // tag & layer on planet root
+        try { go.tag = planetTag; } catch { Debug.LogWarning($"Tag '{planetTag}' not found. Set tag manually."); }
+        int layer = LayerMask.NameToLayer(planetLayerName);
+        if (layer >= 0) go.layer = layer;
+        else Debug.LogWarning($"Layer '{planetLayerName}' not found. Set layer manually.");
+
+        // add child gravity area as SphereCollider + optional gravity script
+        if (addGravityArea)
         {
-            if (comp == null) // missing script
-                continue;
+            var gravityGO = new GameObject("Gravity Area");
+            gravityGO.transform.parent = go.transform;
+            gravityGO.transform.localPosition = Vector3.zero;
+            gravityGO.transform.localRotation = Quaternion.identity;
+            gravityGO.transform.localScale = Vector3.one * 1.75f;
 
-            var t = comp.GetType();
-            var fields = t.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            foreach (var f in fields)
-            {
-                if (!typeof(ScriptableObject).IsAssignableFrom(f.FieldType))
-                    continue;
+            var sc = gravityGO.AddComponent<SphereCollider>();
+            sc.isTrigger = gravityAreaIsTrigger;
+            sc.radius = gravityAreaMultiplier;
 
-                var original = f.GetValue(comp) as ScriptableObject;
-                if (original == null)
-                    continue;
+            // ensure child uses same layer as planet
+            gravityGO.layer = go.layer;
 
-                if (!FieldOrTypeNameSuggestsShape(f))
-                    continue;
+            // then reset child layer to Default so only parent keeps Planet layer
+            gravityGO.layer = 0;
 
-                var clone = Instantiate(original);
-                TrySetSeed(clone, seed);
-                f.SetValue(comp, clone);
-            }
-
-            var props = t.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                         .Where(p => p.CanWrite && typeof(ScriptableObject).IsAssignableFrom(p.PropertyType));
-            foreach (var p in props)
-            {
-                if (!PropertyOrTypeNameSuggestsShape(p))
-                    continue;
-
-                var original = p.GetValue(comp) as ScriptableObject;
-                if (original == null)
-                    continue;
-
-                var clone = Instantiate(original);
-                TrySetSeed(clone, seed);
-                p.SetValue(comp, clone);
-            }
-        }
-    }
-
-    static bool FieldOrTypeNameSuggestsShape(FieldInfo f)
-    {
-        var n = f.Name.ToLowerInvariant();
-        var type = f.FieldType.Name.ToLowerInvariant();
-        return n.Contains("shape") || n.Contains("shapeSettings") || type.Contains("shape") || type.Contains("shapesettings");
-    }
-
-    static bool PropertyOrTypeNameSuggestsShape(PropertyInfo p)
-    {
-        var n = p.Name.ToLowerInvariant();
-        var type = p.PropertyType.Name.ToLowerInvariant();
-        return n.Contains("shape") || n.Contains("shapeSettings") || type.Contains("shape") || type.Contains("shapesettings");
-    }
-
-    static void TrySetSeed(ScriptableObject so, int seed)
-    {
-        var t = so.GetType();
-        var f = t.GetField("seed", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-        if (f != null && (f.FieldType == typeof(int) || f.FieldType == typeof(long)))
-        {
-            if (f.FieldType == typeof(int))
-                f.SetValue(so, seed);
+            // try to attach gravity component by type name (reflection fallback)
+            var type = System.Type.GetType(gravityComponentTypeName) ?? System.Type.GetType($"{gravityComponentTypeName},Assembly-CSharp");
+            if (type != null && typeof(Component).IsAssignableFrom(type))
+                gravityGO.AddComponent(type);
             else
-                f.SetValue(so, (long)seed);
-            return;
+                Debug.LogWarning($"Gravity component '{gravityComponentTypeName}' not found. Add it to the project or change the name in the spawner.");
         }
 
-        var p = t.GetProperty("seed", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-        if (p != null && p.CanWrite && (p.PropertyType == typeof(int) || p.PropertyType == typeof(long)))
+        StartCoroutine(EnsureGeneratorVisible(generator));
+
+        if (index == 0)
         {
-            if (p.PropertyType == typeof(int))
-                p.SetValue(so, seed);
-            else
-                p.SetValue(so, (long)seed);
+            var cam = FindObjectOfType<ThrirdPersonPlanetCamera>();
+            if (cam == null)
+            {
+                var mainCam = Camera.main;
+                if (mainCam != null) cam = mainCam.GetComponent<ThrirdPersonPlanetCamera>();
+            }
+            if (cam != null)
+                cam.SetJumpLookTarget(go.transform);
         }
     }
 
-    #endregion
-
-    PlanetSpawnSettings CreateDefaultSettings()
+    IEnumerator EnsureGeneratorVisible(CelestialBodyGenerator generator)
     {
-        var s = ScriptableObject.CreateInstance<PlanetSpawnSettings>();
-        s.spawnOnStart = false;
-        return s;
+        const int maxFrames = 30;
+        int frame = 0;
+        Transform terrainChild = null;
+        while (frame++ < maxFrames)
+        {
+            if (generator == null) yield break;
+            terrainChild = generator.transform.Find("Terrain Mesh");
+            if (terrainChild != null)
+            {
+                var mf = terrainChild.GetComponent<MeshFilter>();
+                if (mf != null && mf.sharedMesh == null)
+                    generator.SetLOD(0);
+                yield break;
+            }
+            yield return null;
+        }
+
+        if (generator != null)
+            generator.SetLOD(0);
     }
+    #endregion
 }
