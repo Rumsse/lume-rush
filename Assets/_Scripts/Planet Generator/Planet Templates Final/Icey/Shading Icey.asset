@@ -10,37 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83a436a8ab50b445abf81aaf5383b802, type: 3}
-  m_Name: Shading 1
+  m_Name: Shading Icey
   m_EditorClassIdentifier: 
   randomize: 0
-  seed: 10
-  terrainMaterial: {fileID: 2100000, guid: bd06784a9da6e49b5bdcbd7e817f6dd8, type: 2}
+  seed: -1587
+  terrainMaterial: {fileID: 2100000, guid: 6d6c1240fdca15a4fa314f8194105c0d, type: 2}
   hasOcean: 1
-  oceanLevel: 1
-  oceanSettings: {fileID: 11400000, guid: b7d25c2d053fc4e5aa1f6a155407177a, type: 2}
+  oceanLevel: 0.92
+  oceanSettings: {fileID: 11400000, guid: d1b3a9d1fb9867841869b4406a7677fe, type: 2}
   shadingDataCompute: {fileID: 7200000, guid: f3a2904f78271471481822700022a157, type: 3}
   customizedCols:
-    shoreCol: {r: 0.050401952, g: 0.02985938, b: 0.103773594, a: 0}
-    flatColA1: {r: 0, g: 0, b: 0, a: 0}
-    flatColA2: {r: 0.16037738, g: 0.084431715, b: 0.06430225, a: 0}
-    flatColB1: {r: 0.13333334, g: 0.013880724, b: 0, a: 0}
-    flatColB2: {r: 0, g: 0, b: 0, a: 1}
-    steepColA: {r: 0.16981131, g: 0.05224328, b: 0.044054825, a: 0}
-    steepColB: {r: 0.3962264, g: 0.2518942, b: 0, a: 0}
+    shoreCol: {r: 0.40392157, g: 0.21568628, b: 0.42352942, a: 0}
+    flatColA1: {r: 0.32156864, g: 0.16862746, b: 0.7490196, a: 0}
+    flatColA2: {r: 0.7783019, g: 1, b: 0.95711106, a: 0}
+    flatColB1: {r: 0.21960784, g: 0.2784314, b: 0.42352942, a: 0}
+    flatColB2: {r: 0.5518868, g: 0.8184801, b: 1, a: 1}
+    steepColA: {r: 0.46471164, g: 0.5179631, b: 0.5566038, a: 0}
+    steepColB: {r: 0.66245013, g: 0.58739763, b: 0.754717, a: 0}
   randomizedCols:
-    shoreCol: {r: 0.76405346, g: 0.46724305, b: 0.5310442, a: 1}
-    flatColA1: {r: 0.78110427, g: 0.21544062, b: 0.8, a: 1}
-    flatColA2: {r: 0, g: 0, b: 0, a: 0}
-    flatColB1: {r: 0.8, g: 0.16, b: 0.7329083, a: 1}
-    flatColB2: {r: 0, g: 0, b: 0, a: 0}
-    steepColA: {r: 0.3687545, g: 0.3250932, b: 0.46809393, a: 1}
-    steepColB: {r: 0.18568319, g: 0.22279131, b: 0.23210399, a: 1}
+    shoreCol: {r: 0.40220332, g: 0.21703622, b: 0.42478544, a: 1}
+    flatColA1: {r: 0.3227969, g: 0.16751145, b: 0.7478505, a: 1}
+    flatColA2: {r: 0.16, g: 0.7286722, b: 0.8, a: 1}
+    flatColB1: {r: 0.22093552, g: 0.2788204, b: 0.4243526, a: 1}
+    flatColB2: {r: 0.11188585, g: 0.32442304, b: 0.5594293, a: 1}
+    steepColA: {r: 0.22271523, g: 0.36751914, b: 0.31933045, a: 1}
+    steepColB: {r: 0.16, g: 0.2, b: 0.1724105, a: 1}
   detailWarpNoise:
     numLayers: 4
     lacunarity: 2
     persistence: 0.5
     scale: 1
-    elevation: 33.6
+    elevation: 17.1
     verticalShift: 0
     offset: {x: 0, y: 0, z: 0}
   detailNoise:
@@ -48,7 +48,7 @@ MonoBehaviour:
     lacunarity: 2
     persistence: 0.5
     scale: 0.89
-    elevation: -1.25
+    elevation: 9.32
     verticalShift: 0
     offset: {x: 1.35, y: 0, z: 0}
   largeNoise:
@@ -56,14 +56,14 @@ MonoBehaviour:
     lacunarity: 2
     persistence: 0.26
     scale: 0.425
-    elevation: 1
+    elevation: -2.08
     verticalShift: 0
     offset: {x: 0, y: 0, z: 0}
   smallNoise:
     numLayers: 4
     lacunarity: 2
     persistence: 0.5
-    scale: 5
+    scale: 6.34
     elevation: 1
     verticalShift: 0
     offset: {x: 0, y: 0, z: 0}
@@ -80,6 +80,6 @@ MonoBehaviour:
     lacunarity: 2
     persistence: 0.5
     scale: 1
-    elevation: 5.37
+    elevation: 2
     verticalShift: 0
     offset: {x: 0, y: 0, z: 0}

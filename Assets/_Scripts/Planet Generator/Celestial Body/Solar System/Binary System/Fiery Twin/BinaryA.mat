@@ -188,8 +188,8 @@ Material:
     - _ColorR: {r: 0.6428245, g: 0.6981132, b: 0, a: 1}
     - _EjectaCol: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FlatColA: {r: 0, g: 0, b: 0, a: 0}
-    - _FlatColB: {r: 0.13333334, g: 0.013880724, b: 0, a: 0}
+    - _FlatColA: {r: 1, g: 1, b: 1, a: 0}
+    - _FlatColB: {r: 0, g: 0.11788455, b: 0.13207549, a: 0}
     - _FresnelCol: {r: 0.7830189, g: 0.00000006534019, b: 0, a: 1}
     - _GrassCol: {r: 0.4033858, g: 0.4433962, b: 0.064836234, a: 1}
     - _Params: {r: 0.14, g: 0, b: 2.12, a: 20}
@@ -200,10 +200,10 @@ Material:
     - _SandCol: {r: 1, g: 1, b: 1, a: 1}
     - _SecondaryColA: {r: 1, g: 1, b: 1, a: 1}
     - _SecondaryColB: {r: 1, g: 1, b: 1, a: 1}
-    - _ShoreCol: {r: 0.050401952, g: 0.02985938, b: 0.103773594, a: 0}
+    - _ShoreCol: {r: 0, g: 0, b: 0, a: 0}
     - _SnowCol: {r: 1, g: 1, b: 1, a: 1}
-    - _SteepColA: {r: 0.16981131, g: 0.05224328, b: 0.044054825, a: 0}
-    - _SteepColB: {r: 0.3962264, g: 0.2518942, b: 0, a: 0}
+    - _SteepColA: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 0}
+    - _SteepColB: {r: 1, g: 1, b: 1, a: 0}
     - _TestParams: {r: 5, g: 0.18, b: 1.58, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1703e57b0719a6459ada6cf20c0b533, type: 3}
-  m_Name: Vulcanic Planet
+  m_Name: Vulcanic Planet test
   m_EditorClassIdentifier: Assembly-CSharp::PlanetSpawnSettings
   planetPrefab: {fileID: 8123137777780912630, guid: 797600a41611b8a4a9bbbace8aae119e, type: 3}
   spawnOnStart: 1

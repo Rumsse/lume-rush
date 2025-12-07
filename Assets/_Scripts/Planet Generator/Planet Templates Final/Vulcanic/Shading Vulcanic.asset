@@ -10,31 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83a436a8ab50b445abf81aaf5383b802, type: 3}
-  m_Name: Shading 2
+  m_Name: Shading Vulcanic
   m_EditorClassIdentifier: 
-  randomize: 1
-  seed: -3073
-  terrainMaterial: {fileID: 2100000, guid: bd06784a9da6e49b5bdcbd7e817f6dd8, type: 2}
+  randomize: 0
+  seed: 10
+  terrainMaterial: {fileID: 2100000, guid: c54e2d75b68e7824b93e7df2f27e5248, type: 2}
   hasOcean: 1
   oceanLevel: 1
-  oceanSettings: {fileID: 11400000, guid: b7d25c2d053fc4e5aa1f6a155407177a, type: 2}
+  oceanSettings: {fileID: 11400000, guid: 29f5282e81d6f43409f136e887ac2b63, type: 2}
   shadingDataCompute: {fileID: 7200000, guid: f3a2904f78271471481822700022a157, type: 3}
   customizedCols:
-    shoreCol: {r: 0.2735849, g: 0.042586334, b: 0.046278406, a: 0}
+    shoreCol: {r: 0.050401952, g: 0.02985938, b: 0.103773594, a: 0}
     flatColA1: {r: 0, g: 0, b: 0, a: 0}
-    flatColA2: {r: 0.41411534, g: 0.43911102, b: 0.6226415, a: 0}
+    flatColA2: {r: 0.16037738, g: 0.084431715, b: 0.06430225, a: 0}
     flatColB1: {r: 0.13333334, g: 0.013880724, b: 0, a: 0}
     flatColB2: {r: 0, g: 0, b: 0, a: 1}
     steepColA: {r: 0.16981131, g: 0.05224328, b: 0.044054825, a: 0}
     steepColB: {r: 0.3962264, g: 0.2518942, b: 0, a: 0}
   randomizedCols:
-    shoreCol: {r: 0.703247, g: 0.64570695, b: 0.35366654, a: 1}
-    flatColA1: {r: 0.8, g: 0.65320426, b: 0.23482895, a: 1}
-    flatColA2: {r: 0.8, g: 0.16, b: 0.23543926, a: 1}
-    flatColB1: {r: 0.8, g: 0.43719992, b: 0.5398094, a: 1}
-    flatColB2: {r: 0.8, g: 0.78877026, b: 0.34049153, a: 1}
-    steepColA: {r: 0.07660136, g: 0.15647484, b: 0.21798895, a: 1}
-    steepColB: {r: 0.5124525, g: 0.110410765, b: 0.55205387, a: 1}
+    shoreCol: {r: 0.76405346, g: 0.46724305, b: 0.5310442, a: 1}
+    flatColA1: {r: 0.78110427, g: 0.21544062, b: 0.8, a: 1}
+    flatColA2: {r: 0, g: 0, b: 0, a: 0}
+    flatColB1: {r: 0.8, g: 0.16, b: 0.7329083, a: 1}
+    flatColB2: {r: 0, g: 0, b: 0, a: 0}
+    steepColA: {r: 0.3687545, g: 0.3250932, b: 0.46809393, a: 1}
+    steepColB: {r: 0.18568319, g: 0.22279131, b: 0.23210399, a: 1}
   detailWarpNoise:
     numLayers: 4
     lacunarity: 2
