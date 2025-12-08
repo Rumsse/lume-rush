@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 358797368}
   m_Layer: 0
-  m_Name: -ReadMe!!-
+  m_Name: -ReadMe!!- in Scripts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -538,7 +538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlanetSpawnerManager
   presets:
-  - {fileID: 11400000, guid: 74252b8e50f38f2419d99d6882b4bf3c, type: 2}
+  - {fileID: 11400000, guid: 2e906eb5b6146594ab36af443a126cfc, type: 2}
   spawnCount: 1
   spawnRadius: 1
   scaleRange: {x: 25, y: 32}
