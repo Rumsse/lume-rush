@@ -782,6 +782,14 @@ MonoBehaviour:
     m_Bits: 4294967295
   collisionRadius: 0.35
   collisionOffset: 0.25
+  jumpDistanceMultiplier: 0.6
+  jumpExtraHeight: 0.8
+  jumpPitchAdd: 12
+  jumpDetectThreshold: 0.6
+  jumpTransitionSpeed: 6
+  jumpLookTarget: {fileID: 0}
+  useJumpLookTarget: 1
+  lookSmoothTime: 0.18
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
