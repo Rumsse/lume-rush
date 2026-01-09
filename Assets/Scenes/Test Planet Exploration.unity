@@ -519,7 +519,7 @@ GameObject:
   - component: {fileID: 1487426883}
   - component: {fileID: 1487426882}
   m_Layer: 0
-  m_Name: Spawner
+  m_Name: Planet Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -538,7 +538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlanetSpawnerManager
   presets:
-  - {fileID: 11400000, guid: 2e906eb5b6146594ab36af443a126cfc, type: 2}
+  - {fileID: 11400000, guid: 949bbffc76c3b3a48b57255ff923e43d, type: 2}
   spawnCount: 1
   spawnRadius: 1
   scaleRange: {x: 25, y: 32}
@@ -561,12 +561,64 @@ Transform:
   m_GameObject: {fileID: 1487426881}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 50, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1900194244}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1641459695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1641459696}
+  - component: {fileID: 1641459697}
+  m_Layer: 0
+  m_Name: Resource Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1641459696
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641459695}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1641459697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641459695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b8739ae7483128499e132a39dc2999f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ResourceGenerator
+  planetTag: Planet
+  resourcePrefabs:
+  - {fileID: 3303876102699440384, guid: 216c7ac0211ebff4fa5f25213d3bd2fe, type: 3}
+  - {fileID: 3303876102699440384, guid: 2067cf2a4a8dd944391eab922f5764d7, type: 3}
+  numberOfResources: 100
+  spawnOffset: 0.5
+  collisionCheckRadius: 1
 --- !u!1 &1710927633
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,7 +762,7 @@ Transform:
   m_GameObject: {fileID: 1881436719}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 43, z: 0}
+  m_LocalPosition: {x: 0, y: 28.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -904,16 +956,16 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1487426883}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 408933981}
-  - {fileID: 1487426883}
-  - {fileID: 1900194244}
   - {fileID: 849969775}
+  - {fileID: 1487426883}
+  - {fileID: 1641459696}
   - {fileID: 1881436720}
   - {fileID: 974406840}
   - {fileID: 358797368}
