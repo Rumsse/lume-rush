@@ -11,7 +11,7 @@ public class PlayerPlanetMovement : MonoBehaviour
 
     [SerializeField] public float _speed = 15f;
     [SerializeField] public float _turnSpeed = 1500f;
-    [SerializeField] private float _groundCheckRadius = 0.3f;
+    [SerializeField] private Vector3 _groundCheckBoxSize = new Vector3(1.2f, 0.2f, 1.8f);
     [SerializeField] private float _jumpForce = 500f;
 
     [Header("Air control")]
@@ -42,7 +42,7 @@ public class PlayerPlanetMovement : MonoBehaviour
     {
         _horizontal = Input.GetAxisRaw("Horizontal");
         _vertical = Input.GetAxisRaw("Vertical");
-        _isGrounded = _groundCheck != null && Physics.CheckSphere(_groundCheck.position, _groundCheckRadius, _groundMask);
+        _isGrounded = _groundCheck != null && Physics.CheckBox(_groundCheck.position, _groundCheckBoxSize * 0.5f, _groundCheck.rotation, _groundMask);
 
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
             _rigidbody.AddForce(-_gravityBody.GravityDirection * _jumpForce, ForceMode.Impulse);
@@ -92,6 +92,9 @@ public class PlayerPlanetMovement : MonoBehaviour
     {
         if (_groundCheck == null) return;
         Gizmos.color = _isGrounded ? Color.green : Color.red;
-        Gizmos.DrawWireSphere(_groundCheck.position, _groundCheckRadius);
+        Matrix4x4 old = Gizmos.matrix;
+        Gizmos.matrix = Matrix4x4.TRS(_groundCheck.position, _groundCheck.rotation, Vector3.one);
+        Gizmos.DrawWireCube(Vector3.zero, _groundCheckBoxSize);
+        Gizmos.matrix = old;
     }
 }

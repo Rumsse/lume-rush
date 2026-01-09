@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a436a8ab50b445abf81aaf5383b802, type: 3}
+  m_Name: Shading Vulcanic
+  m_EditorClassIdentifier: 
+  randomize: 0
+  seed: 10
+  terrainMaterial: {fileID: 2100000, guid: c54e2d75b68e7824b93e7df2f27e5248, type: 2}
+  hasOcean: 1
+  oceanLevel: 1
+  oceanSettings: {fileID: 11400000, guid: 29f5282e81d6f43409f136e887ac2b63, type: 2}
+  shadingDataCompute: {fileID: 7200000, guid: f3a2904f78271471481822700022a157, type: 3}
+  customizedCols:
+    shoreCol: {r: 0.050401952, g: 0.02985938, b: 0.103773594, a: 0}
+    flatColA1: {r: 0, g: 0, b: 0, a: 0}
+    flatColA2: {r: 0.16037738, g: 0.084431715, b: 0.06430225, a: 0}
+    flatColB1: {r: 0.13333334, g: 0.013880724, b: 0, a: 0}
+    flatColB2: {r: 0, g: 0, b: 0, a: 1}
+    steepColA: {r: 0.16981131, g: 0.05224328, b: 0.044054825, a: 0}
+    steepColB: {r: 0.3962264, g: 0.2518942, b: 0, a: 0}
+  randomizedCols:
+    shoreCol: {r: 0.76405346, g: 0.46724305, b: 0.5310442, a: 1}
+    flatColA1: {r: 0.78110427, g: 0.21544062, b: 0.8, a: 1}
+    flatColA2: {r: 0, g: 0, b: 0, a: 0}
+    flatColB1: {r: 0.8, g: 0.16, b: 0.7329083, a: 1}
+    flatColB2: {r: 0, g: 0, b: 0, a: 0}
+    steepColA: {r: 0.3687545, g: 0.3250932, b: 0.46809393, a: 1}
+    steepColB: {r: 0.18568319, g: 0.22279131, b: 0.23210399, a: 1}
+  detailWarpNoise:
+    numLayers: 4
+    lacunarity: 2
+    persistence: 0.5
+    scale: 1
+    elevation: 33.6
+    verticalShift: 0
+    offset: {x: 0, y: 0, z: 0}
+  detailNoise:
+    numLayers: 4
+    lacunarity: 2
+    persistence: 0.5
+    scale: 0.89
+    elevation: -1.25
+    verticalShift: 0
+    offset: {x: 1.35, y: 0, z: 0}
+  largeNoise:
+    numLayers: 4
+    lacunarity: 2
+    persistence: 0.26
+    scale: 0.425
+    elevation: 1
+    verticalShift: 0
+    offset: {x: 0, y: 0, z: 0}
+  smallNoise:
+    numLayers: 4
+    lacunarity: 2
+    persistence: 0.5
+    scale: 5
+    elevation: 1
+    verticalShift: 0
+    offset: {x: 0, y: 0, z: 0}
+  noise2:
+    numLayers: 4
+    lacunarity: 2
+    persistence: 0.5
+    scale: 0.6
+    elevation: 1
+    verticalShift: 0
+    offset: {x: 0, y: 0, z: 0}
+  warp2:
+    numLayers: 4
+    lacunarity: 2
+    persistence: 0.5
+    scale: 1
+    elevation: 5.37
+    verticalShift: 0
+    offset: {x: 0, y: 0, z: 0}

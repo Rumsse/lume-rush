@@ -4,7 +4,6 @@ using UnityEngine;
 public class ThrirdPersonPlanetCamera : MonoBehaviour
 {
     #region Inspector
-
     [SerializeField] Transform target;
     [SerializeField] float distance = 5f;
     [SerializeField] float heightOffset = 1.6f;
@@ -28,34 +27,27 @@ public class ThrirdPersonPlanetCamera : MonoBehaviour
 
     [Header("Look smoothing")]
     [SerializeField][Range(0.01f, 1f)] float lookSmoothTime = 0.18f;
-
     #endregion
 
     #region State
-
     Vector3 velocity;
     Vector3 lastForward = Vector3.forward;
-
     Rigidbody targetRb;
     float currentDistance;
     float currentHeight;
     float currentPitch;
     float distanceVel;
     float heightVel;
-
     Vector3 currentLookPoint;
     Vector3 lookVelocity;
-
     #endregion
 
     void Start()
     {
         if (target == null)
             target = GameObject.FindGameObjectWithTag("Player")?.transform;
-
         if (target != null)
             targetRb = target.GetComponentInParent<Rigidbody>();
-
         currentDistance = distance;
         currentHeight = heightOffset;
         currentPitch = pitchAngle;
@@ -99,7 +91,6 @@ public class ThrirdPersonPlanetCamera : MonoBehaviour
         if (isJumping && useJumpLookTarget && jumpLookTarget != null)
             desiredLookPoint = jumpLookTarget.position;
 
-        // Smooth the lookAt point to avoid sudden snapping
         currentLookPoint = Vector3.SmoothDamp(currentLookPoint, desiredLookPoint, ref lookVelocity, lookSmoothTime);
 
         Vector3 lookDir = (currentLookPoint - transform.position).normalized;
@@ -126,4 +117,7 @@ public class ThrirdPersonPlanetCamera : MonoBehaviour
             return hit.point - dir.normalized * (collisionOffset + collisionRadius);
         return desired;
     }
+
+    // public setter - prefer this over reflection or adding extra manager scripts
+    public void SetJumpLookTarget(Transform t) => jumpLookTarget = t;
 }
