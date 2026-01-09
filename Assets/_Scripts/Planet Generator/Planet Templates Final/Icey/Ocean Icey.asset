@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   depthMultiplier: 216.6
   alphaMultiplier: 180
-  colA: {r: 1, g: 1, b: 1, a: 1}
+  colA: {r: 0.3726415, g: 0.39766508, b: 1, a: 1}
   colB: {r: 0.5990566, g: 0.8615937, b: 1, a: 1}
   specularCol: {r: 1, g: 1, b: 1, a: 1}
   waveNormalA: {fileID: 2800000, guid: 22ce6bfd05a7041529cf1bc4de37ed57, type: 3}
   waveNormalB: {fileID: 2800000, guid: 2735e2726ca46411398278a9fa8a26d4, type: 3}
   waveStrength: 0.075
-  waveScale: 13.38
+  waveScale: 3.98
   waveSpeed: 0
   smoothness: 0.857
   testParams: {x: 0, y: 7.19, z: 0.7, w: 9.4}

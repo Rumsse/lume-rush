@@ -6,13 +6,21 @@ public class PlayerPlanetMovement : MonoBehaviour
 {
     #region Inspector
 
+    [SerializeField] private Animator _animator;
     [SerializeField] private LayerMask _groundMask;
     [SerializeField] private Transform _groundCheck;
 
     [SerializeField] public float _speed = 15f;
     [SerializeField] public float _turnSpeed = 1500f;
     [SerializeField] private Vector3 _groundCheckBoxSize = new Vector3(1.2f, 0.2f, 1.8f);
-    [SerializeField] private float _jumpForce = 500f;
+
+    [Range(50f, 350f)]
+    [SerializeField] private float _jumpForce = 100f;
+
+    [Header("Dash (Sprint)")]
+    [SerializeField] private float _dashForce = 40f;
+    [SerializeField] private float _dashDuration = 0.2f;
+    [SerializeField] private float _dashCooldown = 1.5f;
 
     [Header("Air control")]
     [SerializeField][Range(0f, 1f)] private float _airMoveMultiplier = 0.6f;
@@ -27,6 +35,8 @@ public class PlayerPlanetMovement : MonoBehaviour
     private float _horizontal;
     private float _vertical;
     private bool _isGrounded;
+    private bool _isDashing;
+    private float _dashTimer;
 
     #endregion
 
@@ -36,6 +46,8 @@ public class PlayerPlanetMovement : MonoBehaviour
         _gravityBody = GetComponent<GravityBody>();
         _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
         _rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+
+        _jumpForce = Mathf.Clamp(_jumpForce, 0f, 500f);
     }
 
     void Update()
@@ -44,12 +56,20 @@ public class PlayerPlanetMovement : MonoBehaviour
         _vertical = Input.GetAxisRaw("Vertical");
         _isGrounded = _groundCheck != null && Physics.CheckBox(_groundCheck.position, _groundCheckBoxSize * 0.5f, _groundCheck.rotation, _groundMask);
 
-        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
-            _rigidbody.AddForce(-_gravityBody.GravityDirection * _jumpForce, ForceMode.Impulse);
+        if (Input.GetKey(KeyCode.Space) && _isGrounded)
+            Jump();
+
+        if (Input.GetKey(KeyCode.LeftShift) && !_isDashing && _dashTimer <= 0f)
+            StartCoroutine(PerformDash());
+
+        UpdateAnimatorParameters();
+        UpdateDashCooldown();
     }
 
     void FixedUpdate()
     {
+        if (_isDashing) return;
+
         Vector3 gravityDir = _gravityBody != null ? _gravityBody.GravityDirection : Vector3.zero;
         Vector3 gravityUp = gravityDir != Vector3.zero ? -gravityDir.normalized : transform.up;
 
@@ -86,6 +106,45 @@ public class PlayerPlanetMovement : MonoBehaviour
             Vector3 horizontalVelocity = Vector3.ProjectOnPlane(_rigidbody.linearVelocity, gravityUp);
             _rigidbody.AddForce(-horizontalVelocity * 5f, ForceMode.Acceleration);
         }
+    }
+
+    #region Jump & Dash
+
+    private void Jump()
+    {
+        _rigidbody.AddForce(-_gravityBody.GravityDirection * _jumpForce, ForceMode.Impulse);
+        //_animator.SetTrigger("Jump");
+    }
+
+    private IEnumerator PerformDash()
+    {
+        _isDashing = true;
+        //_animator.SetTrigger("Dash");
+
+        Vector3 dashDirection = transform.forward.normalized;
+        _rigidbody.AddForce(dashDirection * _dashForce, ForceMode.VelocityChange);
+
+        yield return new WaitForSeconds(_dashDuration);
+
+        _isDashing = false;
+        _dashTimer = _dashCooldown;
+    }
+
+    private void UpdateDashCooldown()
+    {
+        if (_dashTimer > 0f)
+            _dashTimer -= Time.deltaTime;
+    }
+
+    #endregion
+
+    private void UpdateAnimatorParameters()
+    {
+        Vector3 horizontalVelocity = Vector3.ProjectOnPlane(_rigidbody.linearVelocity, -_gravityBody.GravityDirection);
+        float speed = horizontalVelocity.magnitude;
+
+        _animator.SetFloat("Speed", speed);
+        //_animator.SetBool("IsGrounded", _isGrounded); 
     }
 
     void OnDrawGizmosSelected()

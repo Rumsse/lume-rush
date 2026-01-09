@@ -19,8 +19,8 @@ MonoBehaviour:
   specularCol: {r: 1, g: 1, b: 1, a: 1}
   waveNormalA: {fileID: 2800000, guid: 22ce6bfd05a7041529cf1bc4de37ed57, type: 3}
   waveNormalB: {fileID: 2800000, guid: 2735e2726ca46411398278a9fa8a26d4, type: 3}
-  waveStrength: 0.166
-  waveScale: 18.6
+  waveStrength: 0.157
+  waveScale: 6.2
   waveSpeed: 0.5
   smoothness: 0.842
   testParams: {x: 0, y: 7.19, z: 0.7, w: 9.4}
