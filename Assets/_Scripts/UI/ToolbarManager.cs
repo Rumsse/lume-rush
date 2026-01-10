@@ -36,4 +36,17 @@ public class ToolbarManager : MonoBehaviour
         Debug.LogWarning("Brak wolnego slotu w toolbarze!");
         return false;
     }
+
+    public List<ToolbarSlot> GetSlots()
+    {
+        return slots;
+    }
+
+    public void ClearToolbar()
+    {
+        foreach (var slot in slots)
+        {
+            slot.Clear();
+        }
+    }
 }

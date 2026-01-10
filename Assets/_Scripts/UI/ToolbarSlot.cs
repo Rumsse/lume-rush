@@ -32,6 +32,16 @@ public class ToolbarSlot
         }
     }
 
+    public void Clear()
+    {
+        currentItemName = null;
+        currentItemIcon = null;
+
+        var icon = slotElement.Q<VisualElement>("Icon");
+        icon.style.backgroundImage = null;
+        icon.visible = false;
+    }
+
     public bool IsEmpty()
     {
         return currentItemName == null;

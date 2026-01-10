@@ -4,14 +4,27 @@ using UnityEngine;
 public class PlayerInteraction : MonoBehaviour
 {
     InteractionDetector interactionDetector;
+    SpaceShipStorage nearbyShipStorage;
 
     void Awake() => interactionDetector = GetComponent<InteractionDetector>();
 
     void Update()
     {
-        if (interactionDetector.CurrentInteractable != null && Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            TryPickUp(interactionDetector.CurrentInteractable);
+            if (interactionDetector.CurrentInteractable != null)
+            {
+                TryPickUp(interactionDetector.CurrentInteractable);
+            }
+            else if (nearbyShipStorage != null)
+            {
+                DepositItemsToShip();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q) && nearbyShipStorage != null)
+        {
+            nearbyShipStorage.DebugShipInventory(); 
         }
     }
 
@@ -28,6 +41,28 @@ public class PlayerInteraction : MonoBehaviour
         else
         {
             Debug.Log($"Cannot pick up item: {itemData.itemName}. Toolbar is full!");
+        }
+    }
+
+    void DepositItemsToShip()
+    {
+        var toolbarSlots = ToolbarManager.Instance.GetSlots();
+        nearbyShipStorage.AddToStorage(toolbarSlots);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("SpaceShip"))
+        {
+            nearbyShipStorage = other.GetComponent<SpaceShipStorage>();
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("SpaceShip"))
+        {
+            nearbyShipStorage = null;
         }
     }
 }
