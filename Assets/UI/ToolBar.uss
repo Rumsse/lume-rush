@@ -1,8 +1,11 @@
 VisualElement {
 }
 
+.background {
+}
+
 .slot {
 }
 
-.background {
+.icon {
 }
