@@ -1,245 +1,269 @@
-﻿
-Shader "Celestial/Earth"
+﻿Shader "Celestial/Earth"
 {
-	Properties
-	{
-		[Header(Flat Terrain)]
-		_ShoreLow("Shore Low", Color) = (0,0,0,1)
-		_ShoreHigh("Shore High", Color) = (0,0,0,1)
-		_FlatLowA("Flat Low A", Color) = (0,0,0,1)
-		_FlatHighA("Flat High A", Color) = (0,0,0,1)
+    Properties
+    {
+        [Header(Flat Terrain)]
+        _ShoreLow("Shore Low", Color) = (0,0,0,1)
+        _ShoreHigh("Shore High", Color) = (0,0,0,1)
+        _FlatLowA("Flat Low A", Color) = (0,0,0,1)
+        _FlatHighA("Flat High A", Color) = (0,0,0,1)
+        _FlatLowB("Flat Low B", Color) = (0,0,0,1)
+        _FlatHighB("Flat High B", Color) = (0,0,0,1)
 
-		_FlatLowB("Flat Low B", Color) = (0,0,0,1)
-		_FlatHighB("Flat High B", Color) = (0,0,0,1)
+        _FlatColBlend("Colour Blend", Range(0,3)) = 1.5
+        _FlatColBlendNoise("Blend Noise", Range(0,1)) = 0.3
+        _ShoreHeight("Shore Height", Range(0,0.2)) = 0.05
+        _ShoreBlend("Shore Blend", Range(0,0.2)) = 0.03
+        _MaxFlatHeight("Max Flat Height", Range(0,1)) = 0.5
 
-		_FlatColBlend("Colour Blend", Range(0,3)) = 1.5
-		_FlatColBlendNoise("Blend Noise", Range(0,1)) = 0.3
-		_ShoreHeight("Shore Height", Range(0,0.2)) = 0.05
-		_ShoreBlend("Shore Blend", Range(0,0.2)) = 0.03
-		_MaxFlatHeight("Max Flat Height", Range(0,1)) = 0.5
+        [Header(Steep Terrain)]
+        _SteepLow("Steep Colour Low", Color) = (0,0,0,1)
+        _SteepHigh("Steep Colour High", Color) = (0,0,0,1)
+        _SteepBands("Steep Bands", Range(1,20)) = 8
+        _SteepBandStrength("Band Strength", Range(-1,1)) = 0.5
 
-		[Header(Steep Terrain)]
-		_SteepLow("Steep Colour Low", Color) = (0,0,0,1)
-		_SteepHigh("Steep Colour High", Color) = (0,0,0,1)
-		_SteepBands("Steep Bands", Range(1, 20)) = 8
-		_SteepBandStrength("Band Strength", Range(-1,1)) = 0.5
+        [Header(Flat to Steep Transition)]
+        _SteepnessThreshold("Steep Threshold", Range(0,1)) = 0.5
+        _FlatToSteepBlend("Flat to Steep Blend", Range(0,0.3)) = 0.1
+        _FlatToSteepNoise("Flat to Steep Noise", Range(0,0.2)) = 0.1
 
-		[Header(Flat to Steep Transition)]
-		_SteepnessThreshold("Steep Threshold", Range(0,1)) = 0.5
-		_FlatToSteepBlend("Flat to Steep Blend", Range(0,0.3)) = 0.1
-		_FlatToSteepNoise("Flat to Steep Noise", Range(0,0.2)) = 0.1
+        [Header(Snowy Poles)]
+        [Toggle] _UseSnowyPoles("Use Poles", Float) = 0
+        _SnowCol("Snow Colour", Color) = (1,1,1,1)
+        _SnowLongitude("Snow Longitude", Range(0,1)) = 0.8
+        _SnowBlend("Snow Blend", Range(0,0.2)) = 0.1
+        _SnowSpecular("Snow Specular", Range(0,1)) = 1
+        _SnowHighlight("Snow Highlight", Range(1,2)) = 1.2
+        _SnowNoiseA("Snow Noise A", Range(0,10)) = 5
+        _SnowNoiseB("Snow Noise B", Range(0,10)) = 4
 
-		[Header(Snowy Poles)]
-		[Toggle()]
-      _UseSnowyPoles("Use Poles", float) = 0
-		_SnowCol("Snow Colour", Color) = (1,1,1,1)
-		_SnowLongitude("Snow Longitude", Range(0,1)) = 0.8
-		_SnowBlend("Snow Blend", Range(0, 0.2)) = 0.1
-		_SnowSpecular("Snow Specular", Range(0,1)) = 1
-		_SnowHighlight("Snow Highlight", Range(1,2)) = 1.2
-		_SnowNoiseA("Snow Noise A", Range(0,10)) = 5
-		_SnowNoiseB("Snow Noise B", Range(0,10)) = 4
+        [Header(Noise)]
+        [NoScaleOffset]_NoiseTex("Noise Texture", 2D) = "white" {}
+        _NoiseScale("Noise Scale", Float) = 1
+        _NoiseScale2("Noise Scale2", Float) = 1
 
-		[Header(Noise)]
-		[NoScaleOffset] _NoiseTex ("Noise Texture", 2D) = "white" {}
-		_NoiseScale("Noise Scale", Float) = 1
-		_NoiseScale2("Noise Scale2", Float) = 1
+        [Header(Other)]
+        _FresnelCol("Fresnel Colour", Color) = (1,1,1,1)
+        _FresnelStrengthNear("Fresnel Strength Min", Float) = 2
+        _FresnelStrengthFar("Fresnel Strength Max", Float) = 5
+        _FresnelPow("Fresnel Power", Float) = 2
+        _Glossiness("Smoothness", Range(0,1)) = 0.5
+        _Metallic("Metallic", Range(0,1)) = 0
 
-		[Header(Other)]
-		_FresnelCol("Fresnel Colour", Color) = (1,1,1,1)
-		_FresnelStrengthNear("Fresnel Strength Min", float) = 2
-		_FresnelStrengthFar("Fresnel Strength Max", float) = 5
-		_FresnelPow("Fresnel Power", float) = 2
-		_Glossiness ("Smoothness", Range(0,1)) = 0.5
-		_Metallic ("Metallic", Range(0,1)) = 0.0
+        _TestParams("Test Params", Vector) = (0,0,0,0)
+    }
 
-	
+    SubShader
+    {
+        Tags { "RenderPipeline"="UniversalPipeline" "RenderType"="Opaque" }
+        LOD 300
 
-		_TestParams ("Test Params", Vector) = (0,0,0,0)
-	
-	}
-	SubShader
-	{
-		Tags { "RenderType"="Opaque" }
-		LOD 200
+        Pass
+        {
+            Name "ForwardLit"
+            Tags { "LightMode"="UniversalForward" }
 
-		CGPROGRAM
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma target 4.5
 
-		// Physically based Standard lighting model, and enable shadows on all light types
-		#pragma surface surf Standard fullforwardshadows vertex:vert
-		#pragma target 3.5
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/SpaceTransforms.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Macros.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Input.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
-		#include "../Includes/Triplanar.cginc"
-		#include "../Includes/Math.cginc"
+            #include "../Includes/Triplanar.cginc"
+            #include "../Includes/Math.cginc"
 
-		float4 _TestParams;
-		float4 _FresnelCol;
-		float _FresnelStrengthNear;
-		float _FresnelStrengthFar;
-		float _FresnelPow;
-		float bodyScale;
+            TEXTURE2D(_NoiseTex);
+            SAMPLER(sampler_NoiseTex);
 
-		struct Input
-		{
-			float2 uv_MainTex;
-			float3 worldPos;
-			float4 terrainData;
-			float3 vertPos;
-			float3 normal;
-			float4 tangent;
-			float fresnel;
-		};
+            CBUFFER_START(UnityPerMaterial)
+            float4 _ShoreLow,_ShoreHigh,_FlatLowA,_FlatHighA,_FlatLowB,_FlatHighB;
+            float4 _SteepLow,_SteepHigh,_SnowCol,_FresnelCol,_TestParams;
 
-		void vert (inout appdata_full v, out Input o)
-		{
-			UNITY_INITIALIZE_OUTPUT(Input, o);
-			o.vertPos = v.vertex;
-			o.normal = v.normal;
-			o.terrainData = v.texcoord;
-			o.tangent = v.tangent;
+            float _FlatColBlend,_FlatColBlendNoise,_ShoreHeight,_ShoreBlend,_MaxFlatHeight;
+            float _SteepBands,_SteepBandStrength;
+            float _SteepnessThreshold,_FlatToSteepBlend,_FlatToSteepNoise;
 
-			// Fresnel (fade out when close to body)
-			float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
-			float3 bodyWorldCentre = mul(unity_ObjectToWorld, float4(0, 0, 0, 1)).xyz;
-			float camRadiiFromSurface = (length(bodyWorldCentre - _WorldSpaceCameraPos.xyz) - bodyScale) / bodyScale;
-			float fresnelT = smoothstep(0,1,camRadiiFromSurface);
-			float3 viewDir = normalize(worldPos - _WorldSpaceCameraPos.xyz);
-			float3 normWorld = normalize(mul(unity_ObjectToWorld, float4(v.normal,0)));
-			float fresStrength = lerp(_FresnelStrengthNear, _FresnelStrengthFar, fresnelT);
-			o.fresnel = saturate(fresStrength * pow(1 + dot(viewDir, normWorld), _FresnelPow));
-		}
+            float _UseSnowyPoles,_SnowLongitude,_SnowBlend,_SnowSpecular,_SnowHighlight,_SnowNoiseA,_SnowNoiseB;
+            float _NoiseScale,_NoiseScale2;
+            float _Glossiness,_Metallic;
+            float _FresnelStrengthNear,_FresnelStrengthFar,_FresnelPow;
 
-		// Flat terrain:
-		float4 _ShoreLow;
-		float4 _ShoreHigh;
+            float2 heightMinMax;
+            float oceanLevel;
+            float bodyScale;
+            CBUFFER_END
 
-		float4 _FlatLowA;
-		float4 _FlatHighA;
-		float4 _FlatLowB;
-		float4 _FlatHighB;
+            struct Attributes
+            {
+                float4 positionOS : POSITION;
+                float3 normalOS   : NORMAL;
+                float4 tangentOS  : TANGENT;
+                float4 texcoord   : TEXCOORD0;
+            };
 
-		float _FlatColBlend;
-		float _FlatColBlendNoise;
-		float _ShoreHeight;
-		float _ShoreBlend;
-		float _MaxFlatHeight;
+            struct Varyings
+            {
+                float4 positionCS : SV_POSITION;
+                float3 positionWS : TEXCOORD0;
+                float3 positionOS : TEXCOORD1;
+                float3 normalWS   : TEXCOORD2;
+                float4 terrain    : TEXCOORD3;
+                float  fresnel    : TEXCOORD4;
+            };
 
-		// Steep terrain
-		float4 _SteepLow;
-		float4 _SteepHigh;
-		float _SteepBands;
-		float _SteepBandStrength;
+            Varyings vert (Attributes v)
+            {
+                Varyings o;
+                o.positionOS = v.positionOS.xyz;
+                o.positionWS = TransformObjectToWorld(v.positionOS.xyz);
+                o.positionCS = TransformWorldToHClip(o.positionWS);
+                o.normalWS = TransformObjectToWorldNormal(v.normalOS);
+                o.terrain = v.texcoord;
 
-		// Flat to steep transition
-		float _SteepnessThreshold;
-		float _FlatToSteepBlend;
-		float _FlatToSteepNoise;
+                float3 bodyCentreWS = TransformObjectToWorld(float3(0,0,0));
+                float camRadiiFromSurface = (distance(bodyCentreWS, _WorldSpaceCameraPos) - bodyScale) / bodyScale;
+                float fresnelT = saturate(camRadiiFromSurface);
+                float3 viewDir = normalize(o.positionWS - _WorldSpaceCameraPos);
+                float fresStrength = lerp(_FresnelStrengthNear,_FresnelStrengthFar,fresnelT);
+                o.fresnel = saturate(fresStrength * pow(1 + dot(viewDir, normalize(o.normalWS)), _FresnelPow));
+                return o;
+            }
 
-		// Snowy poles
-		float _UseSnowyPoles;
-		float3 _SnowCol;
-		float _SnowLongitude;
-		float _SnowBlend;
-		float _SnowSpecular;
-		float _SnowHighlight;
-		float _SnowNoiseA;
-		float _SnowNoiseB;
+            float4 TriplanarSample(Texture2D tex, SamplerState samp, float3 position, float3 normal, float scale)
+            {
+                float2 uvX = position.zy * scale;
+                float2 uvY = position.xz * scale;
+                float2 uvZ = position.xy * scale;
 
-		// Other:
-		float _Glossiness;
-		float _Metallic;
+                float4 colX = SAMPLE_TEXTURE2D(tex, samp, uvX);
+                float4 colY = SAMPLE_TEXTURE2D(tex, samp, uvY);
+                float4 colZ = SAMPLE_TEXTURE2D(tex, samp, uvZ);
 
-		sampler2D _NoiseTex;
-		sampler2D _SnowNormal;
-		float _NoiseScale;
-		float _NoiseScale2;
-	
+                float3 blendWeight = normal * normal;
+                blendWeight /= dot(blendWeight, float3(1,1,1));
 
-		// Height data:
-		float2 heightMinMax;
-		float oceanLevel;
+                return colX * blendWeight.x + colY * blendWeight.y + colZ * blendWeight.z;
+            }
 
+            float3 ViewDirWS(float3 posWS) { return normalize(GetWorldSpaceViewDir(posWS)); }
 
+            // Bezpieczna inicjalizacja InputData dla URP 6000.x
+            void Celestial_InitializeInputData(float3 pWS, float3 nWS, float3 vWS, out InputData input)
+            {
+                ZERO_INITIALIZE(InputData, input);
+                input.positionWS = pWS;
+                input.normalWS = normalize(nWS);
+                input.viewDirectionWS = normalize(vWS);
+                input.shadowCoord = float4(0,0,0,0);
+                input.fogCoord = 0;
+                input.bakedGI = float3(0,0,0);
+                // nie ustawiamy input.occlusion – to pole jest w SurfaceData
+            }
 
-		fixed4 LightingNoLighting(SurfaceOutput s, fixed3 lightDir, fixed atten)
-		{
-			fixed4 c;
-			c.rgb = s.Albedo * 0.8; 
-			c.a = s.Alpha;
-			return c;
-		}
+            float4 frag (Varyings i) : SV_Target
+            {
+                float3 N = normalize(i.normalWS);
+                float3 V = ViewDirWS(i.positionWS);
 
-		void surf (Input IN, inout SurfaceOutputStandard o)
-		{
-		
-			// Calculate steepness: 0 where totally flat, 1 at max steepness
-			float3 sphereNormal = normalize(IN.vertPos);
-			float steepness = 1 - dot (sphereNormal, IN.normal);
-			steepness = remap01(steepness, 0, 0.65);
+                // ===== Steepness =====
+                float3 sphereNormal = normalize(i.positionOS);
+                float steepness = 1 - dot(sphereNormal, N);
+                steepness = remap01(steepness, 0, 0.65);
 
-			// Calculate heights
-			float terrainHeight = length(IN.vertPos);
-			float shoreHeight = lerp(heightMinMax.x, 1, oceanLevel);
-			float aboveShoreHeight01 = remap01(terrainHeight, shoreHeight, heightMinMax.y);
-			float flatHeight01 = remap01(aboveShoreHeight01, 0, _MaxFlatHeight);
+                // ===== Height =====
+                float terrainHeight = length(i.positionOS);
+                float shoreHeight = lerp(heightMinMax.x, 1, oceanLevel);
+                float aboveShore01 = remap01(terrainHeight, shoreHeight, heightMinMax.y);
+                float flatHeight01 = remap01(aboveShore01, 0, _MaxFlatHeight);
 
-			// Sample noise texture at two different scales
-			float4 texNoise = triplanar(IN.vertPos, IN.normal, _NoiseScale, _NoiseTex);
-			float4 texNoise2 = triplanar(IN.vertPos, IN.normal, _NoiseScale2, _NoiseTex);
+                // ===== Noise =====
+                float4 noise1 = TriplanarSample(_NoiseTex, sampler_NoiseTex, i.positionOS, N, _NoiseScale);
+                float4 noise2 = TriplanarSample(_NoiseTex, sampler_NoiseTex, i.positionOS, N, _NoiseScale2);
 
-			// Flat terrain colour A and B
-			float flatColBlendWeight = Blend(0, _FlatColBlend, (flatHeight01-.5) + (texNoise.b - 0.5) * _FlatColBlendNoise);
-			float3 flatTerrainColA = lerp(_FlatLowA, _FlatHighA, flatColBlendWeight);
-			flatTerrainColA = lerp(flatTerrainColA, (_FlatLowA + _FlatHighA) / 2, texNoise.a);
-			float3 flatTerrainColB = lerp(_FlatLowB, _FlatHighB, flatColBlendWeight);
-			flatTerrainColB = lerp(flatTerrainColB, (_FlatLowB + _FlatHighB) / 2, texNoise.a);
+                // ===== Flat terrain =====
+                float flatColBlend = Blend(0,_FlatColBlend,(flatHeight01-0.5)+(noise1.b-0.5)*_FlatColBlendNoise);
 
-			// Biome
-			float biomeWeight = Blend(_TestParams.x, _TestParams.y,IN.terrainData.x);
-			biomeWeight = Blend(0, _TestParams.z, IN.vertPos.x + IN.terrainData.x * _TestParams.x + IN.terrainData.y * _TestParams.y);
-			float3 flatTerrainCol = lerp(flatTerrainColA, flatTerrainColB, biomeWeight);
+                float3 flatA = lerp(_FlatLowA.rgb,_FlatHighA.rgb,flatColBlend);
+                flatA = lerp(flatA,(_FlatLowA.rgb+_FlatHighA.rgb)*0.5,noise1.a);
 
-			// Shore
-			float shoreBlendWeight = 1-Blend(_ShoreHeight, _ShoreBlend, flatHeight01);
-			float4 shoreCol = lerp(_ShoreLow, _ShoreHigh, remap01(aboveShoreHeight01, 0, _ShoreHeight));
-			shoreCol = lerp(shoreCol, (_ShoreLow + _ShoreHigh) / 2, texNoise.g);
-			flatTerrainCol = lerp(flatTerrainCol, shoreCol, shoreBlendWeight);
+                float3 flatB = lerp(_FlatLowB.rgb,_FlatHighB.rgb,flatColBlend);
+                flatB = lerp(flatB,(_FlatLowB.rgb+_FlatHighB.rgb)*0.5,noise1.a);
 
-			// Steep terrain colour
-			float3 sphereTangent = normalize(float3(-sphereNormal.z, 0, sphereNormal.x));
-			float3 normalTangent = normalize(IN.normal - sphereNormal * dot(IN.normal, sphereNormal));
-			float banding = dot(sphereTangent, normalTangent) * .5 + .5;
-			banding = (int)(banding * (_SteepBands + 1)) / _SteepBands;
-			banding = (abs(banding - 0.5) * 2 - 0.5) * _SteepBandStrength;
-			float3 steepTerrainCol = lerp(_SteepLow, _SteepHigh, aboveShoreHeight01 + banding);
-			
-			// Flat to steep colour transition
-			float flatBlendNoise = (texNoise2.r - 0.5) * _FlatToSteepNoise;
-			float flatStrength = 1 - Blend(_SteepnessThreshold + flatBlendNoise, _FlatToSteepBlend, steepness);
-			float flatHeightFalloff = 1 - Blend(_MaxFlatHeight + flatBlendNoise, _FlatToSteepBlend, aboveShoreHeight01);
-			flatStrength *= flatHeightFalloff;
-			
-			// Snowy poles
-			float3 snowCol = 0;
-			float snowWeight = 0;
-			float snowLineNoise = IN.terrainData.y * _SnowNoiseA * 0.01 + (texNoise.b-0.5) * _SnowNoiseB * 0.01;
-			snowWeight = Blend(_SnowLongitude, _SnowBlend, abs(IN.vertPos.y + snowLineNoise)) * _UseSnowyPoles;
-			float snowSpeckle = 1 - texNoise2.g * 0.5 * 0.1;
-			snowCol = _SnowCol * lerp (1, _SnowHighlight, aboveShoreHeight01 + banding) * snowSpeckle;
+                float biome = Blend(_TestParams.x,_TestParams.y,i.terrain.x);
+                biome = Blend(0,_TestParams.z, i.positionOS.x + i.terrain.x * _TestParams.x + i.terrain.y * _TestParams.y);
 
-			// Set surface colour
-			float3 compositeCol = lerp(steepTerrainCol, flatTerrainCol, flatStrength);
-			compositeCol = lerp(compositeCol, snowCol, snowWeight);
-			compositeCol = lerp(compositeCol, _FresnelCol, IN.fresnel);
-			o.Albedo = compositeCol;
+                float3 flatCol = lerp(flatA,flatB,biome);
 
-			// Glossiness
-			float glossiness = dot(o.Albedo, 1) / 3 * _Glossiness;
-			glossiness = max(glossiness, snowWeight * _SnowSpecular);
-			o.Smoothness = glossiness;
-			o.Metallic = _Metallic;
-		}
-		ENDCG
-	}
-	FallBack "Diffuse"
+                // ===== Shore =====
+                float shoreBlendW = 1 - Blend(_ShoreHeight,_ShoreBlend,flatHeight01);
+                float3 shoreCol = lerp(_ShoreLow.rgb,_ShoreHigh.rgb,remap01(aboveShore01,0,_ShoreHeight));
+                shoreCol = lerp(shoreCol,(_ShoreLow.rgb+_ShoreHigh.rgb)*0.5,noise1.g);
+
+                flatCol = lerp(flatCol,shoreCol,shoreBlendW);
+
+                // ===== Steep terrain =====
+                float3 sphereTangent = normalize(float3(-sphereNormal.z,0,sphereNormal.x));
+                float3 normalTangent = normalize(N - sphereNormal * dot(N,sphereNormal));
+
+                float banding = dot(sphereTangent,normalTangent)*0.5+0.5;
+                banding = floor(banding*(_SteepBands+1))/_SteepBands;
+                banding = (abs(banding-0.5)*2-0.5)*_SteepBandStrength;
+
+                float3 steepCol = lerp(_SteepLow.rgb,_SteepHigh.rgb,aboveShore01+banding);
+
+                // ===== Flat to steep =====
+                float flatNoise = (noise2.r-0.5)*_FlatToSteepNoise;
+                float flatStrength = 1-Blend(_SteepnessThreshold+flatNoise,_FlatToSteepBlend,steepness);
+                float flatFalloff = 1-Blend(_MaxFlatHeight+flatNoise,_FlatToSteepBlend,aboveShore01);
+                flatStrength *= flatFalloff;
+
+                // ===== Snow =====
+                float snowLineNoise = i.terrain.y*_SnowNoiseA*0.01 + (noise1.b-0.5)*_SnowNoiseB*0.01;
+                float snowWeight = Blend(_SnowLongitude,_SnowBlend,abs(i.positionOS.y+snowLineNoise)) * _UseSnowyPoles;
+
+                float snowSpeckle = 1 - noise2.g * 0.05;
+                float3 snowCol = _SnowCol.rgb * lerp(1,_SnowHighlight,aboveShore01+banding) * snowSpeckle;
+
+                // ===== Composite =====
+                float3 col = lerp(steepCol,flatCol,flatStrength);
+                col = lerp(col,snowCol,snowWeight);
+                col = lerp(col,_FresnelCol.rgb,i.fresnel);
+
+                // ===== PBR =====
+                SurfaceData surface; 
+                ZERO_INITIALIZE(SurfaceData, surface);
+                surface.albedo = col;
+                surface.normalTS = float3(0,0,1);
+
+                #if defined(_SPECULAR_SETUP)
+                    surface.specular = float3(0.04, 0.04, 0.04);
+                #else
+                    surface.metallic = _Metallic;
+                #endif
+
+                float avg = (col.r + col.g + col.b) * (1.0/3.0);
+                surface.smoothness = max(avg * _Glossiness, snowWeight * _SnowSpecular);
+                surface.emission = 0;
+                surface.occlusion = 1;
+                surface.alpha = 1;
+
+                #if defined(_CLEARCOAT) || defined(_CLEARCOATMAP)
+                    surface.clearCoatMask = 0;
+                    surface.clearCoatSmoothness = 0;
+                #endif
+
+                InputData inputData;
+                Celestial_InitializeInputData(i.positionWS, N, V, inputData);
+
+                return UniversalFragmentPBR(inputData, surface);
+            }
+            ENDHLSL
+        }
+    }
 }
