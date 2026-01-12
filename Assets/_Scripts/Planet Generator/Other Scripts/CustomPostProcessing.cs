@@ -14,7 +14,7 @@ public class CustomPostProcessing : MonoBehaviour {
 
 	void GetMaterials () {
 		if (effectManager == null) {
-			effectManager = FindObjectOfType<BodyEffectManager> ();
+			effectManager = Object.FindFirstObjectByType<BodyEffectManager>();
 		}
 		if (effectManager) {
 			materials = effectManager.GetMaterials ();
@@ -50,15 +50,9 @@ public class CustomPostProcessing : MonoBehaviour {
 		renderTargets.Add (dest);
 
 		for (int i = 0; i < materials.Count; i++) {
-			// Bit does the following:
-			// - sets _MainTex property on material to the source texture
-			// - sets the render target to the destination texture
-			// - draws a full-screen quad
-			// This copies the src texture to the dest texture, with whatever modifications the shader makes
 			Graphics.Blit (renderSources[i], renderTargets[i], materials[i]);
 		}
 
-		// Release all temporary render texture so they can be reused
 		for (int i = 0; i < renderTargets.Count - 1; i++) {
 			RenderTexture.ReleaseTemporary (renderTargets[i]);
 		}

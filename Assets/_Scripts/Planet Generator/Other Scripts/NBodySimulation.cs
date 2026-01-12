@@ -7,8 +7,7 @@ public class NBodySimulation : MonoBehaviour {
     static NBodySimulation instance;
 
     void Awake () {
-
-        bodies = FindObjectsOfType<CelestialBody> ();
+        bodies = FindObjectsByType<CelestialBody>(FindObjectsSortMode.None);
         Time.fixedDeltaTime = Universe.physicsTimeStep;
         Debug.Log ("Setting fixedDeltaTime to: " + Universe.physicsTimeStep);
     }
@@ -48,7 +47,7 @@ public class NBodySimulation : MonoBehaviour {
     static NBodySimulation Instance {
         get {
             if (instance == null) {
-                instance = FindObjectOfType<NBodySimulation> ();
+                instance = FindFirstObjectByType<NBodySimulation>();
             }
             return instance;
         }

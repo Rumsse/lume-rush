@@ -18,7 +18,6 @@ public class OceanRendererFeature : ScriptableRendererFeature
 
         public OceanRenderPass()
         {
-            // Wa¿ne: Renderujemy przed post-processingiem Unity
             renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
         }
 
@@ -27,13 +26,11 @@ public class OceanRendererFeature : ScriptableRendererFeature
             material = OceanEffect.CurrentOceanMaterial;
             if (material == null) return;
 
-            // Pobieramy dane kamery i zasobów
             UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
             UniversalCameraData cameraData = frameData.Get<UniversalCameraData>();
 
             TextureHandle source = resourceData.activeColorTexture;
 
-            // 1. POPRAWKA: Tworzenie TextureDesc (zamiast RenderTextureDescriptor)
             var cameraDesc = cameraData.cameraTargetDescriptor;
             TextureDesc desc = new TextureDesc(cameraDesc.width, cameraDesc.height);
             desc.colorFormat = cameraDesc.graphicsFormat;
@@ -43,27 +40,21 @@ public class OceanRendererFeature : ScriptableRendererFeature
 
             TextureHandle tempTexture = renderGraph.CreateTexture(desc);
 
-            // 2. POPRAWKA: U¿ywamy AddUnsafePass, aby mieæ dostêp do CommandBuffer
             using (var builder = renderGraph.AddUnsafePass<PassData>("Ocean Effect Pass", out var passData))
             {
                 passData.material = material;
                 passData.source = source;
                 passData.tempTexture = tempTexture;
 
-                // Deklarujemy zale¿noœci
                 builder.UseTexture(source, AccessFlags.ReadWrite);
                 builder.UseTexture(tempTexture, AccessFlags.ReadWrite);
 
                 builder.SetRenderFunc((PassData data, UnsafeGraphContext context) =>
                 {
-                    // 3. POPRAWKA: Konwersja na natywny CommandBuffer
                     CommandBuffer cmd = CommandBufferHelpers.GetNativeCommandBuffer(context.cmd);
 
-                    // Krok 1: Kamera -> Temp (z materia³em Oceanu)
-                    // Blitter.BlitCameraTexture automatycznie ustawia _BlitTexture w shaderze
                     Blitter.BlitCameraTexture(cmd, data.source, data.tempTexture, data.material, 0);
 
-                    // Krok 2: Temp -> Kamera (kopia powrotna)
                     Blitter.BlitCameraTexture(cmd, data.tempTexture, data.source);
                 });
             }

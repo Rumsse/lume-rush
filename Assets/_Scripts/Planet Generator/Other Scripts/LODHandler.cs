@@ -20,7 +20,7 @@ public class LODHandler : MonoBehaviour {
 
 	void Start () {
 		if (Application.isPlaying) {
-			bodies = FindObjectsOfType<CelestialBody> ();
+			bodies = FindObjectsByType<CelestialBody>(FindObjectsSortMode.None);
 			generators = new CelestialBodyGenerator[bodies.Length];
 			for (int i = 0; i < generators.Length; i++) {
 				generators[i] = bodies[i].GetComponentInChildren<CelestialBodyGenerator> ();

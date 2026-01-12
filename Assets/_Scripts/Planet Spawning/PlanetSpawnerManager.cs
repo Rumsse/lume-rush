@@ -94,12 +94,7 @@ public class PlanetSpawnerManager : MonoBehaviour
 
         if (index == 0)
         {
-            var cam = FindObjectOfType<ThrirdPersonPlanetCamera>();
-            if (cam == null)
-            {
-                var mainCam = Camera.main;
-                if (mainCam != null) cam = mainCam.GetComponent<ThrirdPersonPlanetCamera>();
-            }
+            var cam = Object.FindFirstObjectByType<ThrirdPersonPlanetCamera>();
             if (cam != null)
                 cam.SetJumpLookTarget(go.transform);
         }

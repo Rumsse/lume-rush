@@ -4,7 +4,6 @@ public class OceanEffect : PostProcessingEffect
 {
     Light light;
 
-    // Dodajemy statyczną referencję, aby Renderer Feature miał dostęp do materiału
     public static Material CurrentOceanMaterial;
 
     public void Update(CelestialBodyGenerator generator, Shader shader)
@@ -12,31 +11,21 @@ public class OceanEffect : PostProcessingEffect
         if (material == null || material.shader != shader)
             material = new Material(shader);
 
-        // Przypisz materiał do zmiennej statycznej
         CurrentOceanMaterial = material;
-
-        // Debug: sprawdź czy materiał faktycznie został przypisany
-        if (CurrentOceanMaterial == null)
-        {
-            Debug.LogError("[OceanEffect] CurrentOceanMaterial nie zostało przypisane (null).", generator.gameObject);
-            Debug.Assert(false, "[OceanEffect] CurrentOceanMaterial jest null po przypisaniu.");
-        }
-        else
-        {
-            Debug.Log($"[OceanEffect] CurrentOceanMaterial przypisany: {CurrentOceanMaterial.name}", generator.gameObject);
-        }
 
         if (light == null)
         {
+            var lights = GameObject.FindObjectsByType<Light>(FindObjectsSortMode.None);
+            foreach (var l in lights)
+                if (l.type == LightType.Directional) { light = l; break; }
+
             /*var sunCaster = GameObject.FindObjectOfType<SunShadowCaster>();
             if (sunCaster != null)
                 light = sunCaster.GetComponent<Light>();*/
             //else
             //{
-                // Fallback na pierwsze lepsze światło kierunkowe
-                var lights = GameObject.FindObjectsOfType<Light>();
-                foreach (var l in lights)
-                    if (l.type == LightType.Directional) { light = l; break; }
+            // Fallback na pierwsze lepsze światło kierunkowe
+
             //}
         }
 
@@ -49,12 +38,8 @@ public class OceanEffect : PostProcessingEffect
         if (light != null)
         {
             Vector3 dir = -light.transform.forward;
-            // Normalizacja jest ważna
             material.SetVector("dirToSun", dir.normalized);
         }
-
-        // Ta linijka w URP jest zbędna, usuwamy ją:
-        // if (Camera.main != null) Camera.main.depthTextureMode |= DepthTextureMode.Depth;
 
         generator.body.shading.SetOceanProperties(material);
     }

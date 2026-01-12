@@ -5,7 +5,6 @@ using UnityEngine;
 [ExecuteAlways]
 public class BodyEffectManager : MonoBehaviour
 {
-
     public static BodyEffectManager Instance;
 
     public Shader oceanShader;
@@ -15,43 +14,24 @@ public class BodyEffectManager : MonoBehaviour
     OceanEffect[] oceanEffects;
     List<Material> postProcessingMaterials = new List<Material>();
 
-    // Flaga, żeby nie spamować konsoli tysiącem logów na sekundę
-    private bool debugLoggedOnce = false;
 
     void OnEnable()
     {
         Instance = this;
-        Debug.Log("🟢 [BodyEffectManager] OnEnable - Manager włączony!");
         Init();
     }
 
     void Init()
     {
         if (generators == null || generators.Count == 0)
-        {
-            generators = new List<CelestialBodyGenerator>(FindObjectsOfType<CelestialBodyGenerator>());
-            Debug.Log($"🔍 [BodyEffectManager] Znaleziono {generators.Count} planet.");
-        }
+            generators = new List<CelestialBodyGenerator>(FindObjectsByType<CelestialBodyGenerator>(FindObjectsSortMode.None));
 
         if (displayOceans && (oceanEffects == null || oceanEffects.Length != generators.Count))
-        {
             oceanEffects = new OceanEffect[generators.Count];
-        }
     }
 
     void Update()
     {
-        // Logika debugowania - wykona się tylko raz
-        if (!debugLoggedOnce)
-        {
-            if (oceanShader == null) Debug.LogError("🔴 [BodyEffectManager] BRAK SHADERA! Przypisz plik Ocean_URP w Inspectorze.");
-            else Debug.Log("🟢 [BodyEffectManager] Shader jest przypisany.");
-
-            if (generators.Count == 0) Debug.LogWarning("🟠 [BodyEffectManager] Nie widzę żadnych planet (CelestialBodyGenerator).");
-
-            debugLoggedOnce = true;
-        }
-
         PrepareMaterials();
     }
 
@@ -61,7 +41,6 @@ public class BodyEffectManager : MonoBehaviour
 
         Init();
 
-        // Czyścimy listę
         postProcessingMaterials.Clear();
 
         for (int i = 0; i < generators.Count; i++)
@@ -73,14 +52,12 @@ public class BodyEffectManager : MonoBehaviour
             {
                 if (oceanEffects[i] == null) oceanEffects[i] = new OceanEffect();
 
-                // To jest kluczowy moment
                 oceanEffects[i].Update(generator, oceanShader);
 
                 Material mat = oceanEffects[i].GetMaterial();
                 if (mat != null)
                 {
                     postProcessingMaterials.Add(mat);
-                    // Debug.Log($"🌊 Dodano materiał oceanu dla planety: {generator.name}"); // Odkomentuj jeśli chcesz spam
                 }
             }
         }
@@ -88,8 +65,6 @@ public class BodyEffectManager : MonoBehaviour
 
     public List<Material> GetMaterials()
     {
-        // Sprawdzamy czy Renderer Feature w ogóle o to pyta
-        // Debug.Log("Renderer Feature pobiera materiały..."); 
         return postProcessingMaterials;
     }
 }

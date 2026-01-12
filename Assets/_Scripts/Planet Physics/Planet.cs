@@ -5,7 +5,7 @@ using UnityEngine;
 public class Planet : MonoBehaviour
 {
     #region Inspector
-    [SerializeField] float triggerMargin = 0.02f;
+    //[SerializeField] float triggerMargin = 0.02f;
     [SerializeField] float gravityRadiusMultiplier = 1.6f;
     #endregion
 
