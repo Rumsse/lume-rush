@@ -54,6 +54,11 @@
                 return o;
             }
 
+            float3 BlendNormalRNM(float3 n1, float3 n2) {
+                float3 t = float3(n1.xy + n2.xy, n1.z * n2.z);
+                return normalize(t);
+            }
+
             float4 Frag(Varyings input) : SV_Target {
                 float2 uv = input.uv;
                 float4 originalCol = SAMPLE_TEXTURE2D(_BlitTexture, sampler_BlitTexture, uv);
@@ -104,8 +109,12 @@
                 float2 waveOffsetA = float2(time * waveSpeed, time * waveSpeed * 0.8);
                 float2 waveOffsetB = float2(-time * waveSpeed * 0.8, -time * waveSpeed * 0.3);
 
-                float3 waveNormal = triplanarNormal(hitPosWS - oceanCentre, oceanNormal, waveNormalScale / planetScale, waveOffsetA, TEXTURE2D_ARGS(waveNormalA, sampler_waveNormalA));
-                waveNormal = triplanarNormal(hitPosWS - oceanCentre, waveNormal, waveNormalScale / planetScale, waveOffsetB, TEXTURE2D_ARGS(waveNormalB, sampler_waveNormalB));
+                float3 triPos = hitPosWS - oceanCentre;
+                float scale = waveNormalScale / planetScale;
+
+                float3 nA = triplanarNormal(triPos, oceanNormal, scale, waveOffsetA, TEXTURE2D_ARGS(waveNormalA, sampler_waveNormalA));
+                float3 nB = triplanarNormal(triPos, oceanNormal, scale, waveOffsetB, TEXTURE2D_ARGS(waveNormalB, sampler_waveNormalB));
+                float3 waveNormal = BlendNormalRNM(nA, nB);
                 waveNormal = normalize(lerp(oceanNormal, waveNormal, waveStrength));
 
                 float3 L = normalize(dirToSun);

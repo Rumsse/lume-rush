@@ -28,16 +28,16 @@ public class OceanEffect : PostProcessingEffect
 
         if (light == null)
         {
-            var sunCaster = GameObject.FindObjectOfType<SunShadowCaster>();
+            /*var sunCaster = GameObject.FindObjectOfType<SunShadowCaster>();
             if (sunCaster != null)
-                light = sunCaster.GetComponent<Light>();
-            else
-            {
+                light = sunCaster.GetComponent<Light>();*/
+            //else
+            //{
                 // Fallback na pierwsze lepsze światło kierunkowe
                 var lights = GameObject.FindObjectsOfType<Light>();
                 foreach (var l in lights)
                     if (l.type == LightType.Directional) { light = l; break; }
-            }
+            //}
         }
 
         Vector3 centre = generator.transform.position;

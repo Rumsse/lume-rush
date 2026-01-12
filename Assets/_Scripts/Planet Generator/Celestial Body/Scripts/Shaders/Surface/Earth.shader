@@ -49,6 +49,7 @@
         _FresnelPow("Fresnel Power", Float) = 2
         _Glossiness("Smoothness", Range(0,1)) = 0.5
         _Metallic("Metallic", Range(0,1)) = 0
+        //_ShadowBrightness("Shadow Brightness", Range(0, 1)) = 0.15
 
         _TestParams("Test Params", Vector) = (0,0,0,0)
     }
@@ -67,6 +68,9 @@
             #pragma vertex vert
             #pragma fragment frag
             #pragma target 4.5
+
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+            #pragma multi_compile _ _SHADOWS_SOFT
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
@@ -93,6 +97,7 @@
             float _NoiseScale,_NoiseScale2;
             float _Glossiness,_Metallic;
             float _FresnelStrengthNear,_FresnelStrengthFar,_FresnelPow;
+            //float _ShadowBrightness;
 
             float2 heightMinMax;
             float oceanLevel;
@@ -153,17 +158,15 @@
 
             float3 ViewDirWS(float3 posWS) { return normalize(GetWorldSpaceViewDir(posWS)); }
 
-            // Bezpieczna inicjalizacja InputData dla URP 6000.x
             void Celestial_InitializeInputData(float3 pWS, float3 nWS, float3 vWS, out InputData input)
             {
                 ZERO_INITIALIZE(InputData, input);
                 input.positionWS = pWS;
                 input.normalWS = normalize(nWS);
                 input.viewDirectionWS = normalize(vWS);
-                input.shadowCoord = float4(0,0,0,0);
+                input.shadowCoord = TransformWorldToShadowCoord(pWS);
                 input.fogCoord = 0;
-                input.bakedGI = float3(0,0,0);
-                // nie ustawiamy input.occlusion – to pole jest w SurfaceData
+                input.bakedGI = SampleSH(input.normalWS);
             }
 
             float4 frag (Varyings i) : SV_Target
@@ -262,6 +265,8 @@
                 Celestial_InitializeInputData(i.positionWS, N, V, inputData);
 
                 return UniversalFragmentPBR(inputData, surface);
+
+                //return float4(col, 1);
             }
             ENDHLSL
         }
