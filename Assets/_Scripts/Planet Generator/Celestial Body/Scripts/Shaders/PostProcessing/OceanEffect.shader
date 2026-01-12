@@ -1,127 +1,163 @@
 ﻿Shader "Hidden/Ocean"
 {
-	Properties
-	{
-		_MainTex ("Texture", 2D) = "white" {}
-		_OceanAmbient ("Ocean Ambient", Range(0,1)) = 0.15
-	}
-	SubShader
-	{
-		// No culling or depth
-		Cull Off ZWrite Off ZTest Always
+    Properties
+    {
+        _OceanAmbient ("Ocean Ambient", Range(0,1)) = 0.15
+    }
 
-		Pass
-		{
-			CGPROGRAM
-			#pragma vertex vert
-			#pragma fragment frag
+    SubShader
+    {
+        Tags { "RenderPipeline" = "UniversalPipeline" }
+        ZTest Always ZWrite Off Cull Off
 
-			#include "UnityCG.cginc"
-			#include "../Includes/Math.cginc"
-			#include "../Includes/Triplanar.cginc"
+        Pass
+        {
+            Name "OceanPostProcess"
 
-			struct appdata {
-				float4 vertex : POSITION;
-				float2 uv : TEXCOORD0;
-			};
+            HLSLPROGRAM
+            #pragma vertex Vert
+            #pragma fragment Frag
 
-			struct v2f {
-				float4 pos : SV_POSITION;
-				float2 uv : TEXCOORD0;
-				float3 viewVector : TEXCOORD1;
-			};
+            // --- BIBLIOTEKI URP ---
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
 
-			v2f vert (appdata v) {
-				v2f output;
-				output.pos = UnityObjectToClipPos(v.vertex);
-				output.uv = v.uv;
-				float3 viewVector = mul(unity_CameraInvProjection, float4(v.uv * 2 - 1, 0, -1));
-				output.viewVector = mul(unity_CameraToWorld, float4(viewVector,0));
-				return output;
-			}
+            // --- TWOJE BIBLIOTEKI (Upewnij się, że ścieżki są poprawne!) ---
+            #include "../Includes/Math.cginc"
+            #include "../Includes/Triplanar.cginc"
 
-			float4 colA;
-			float4 colB;
-			float4 specularCol;
-			float depthMultiplier;
-			float alphaMultiplier;
-			float smoothness;
-			float _OceanAmbient;
+            // --- TEKSTURY ---
+            // W Unity 6 Blitter zawsze używa tej nazwy dla wejścia:
+            TEXTURE2D(_BlitTexture);
+            SAMPLER(sampler_BlitTexture);
 
-			sampler2D waveNormalA;
-			sampler2D waveNormalB;
-			float waveStrength;
-			float waveNormalScale;
-			float waveSpeed;
+            TEXTURE2D(waveNormalA);
+            SAMPLER(sampler_waveNormalA);
 
-			sampler2D _MainTex;
-			sampler2D _CameraDepthTexture;
-			float4 params;
+            TEXTURE2D(waveNormalB);
+            SAMPLER(sampler_waveNormalB);
 
-			float planetScale;
-			float3 oceanCentre;
-			float oceanRadius;
-			float3 dirToSun;
+            // --- ZMIENNE (UNIFORMY) ---
+            float4 colA;
+            float4 colB;
+            float4 specularCol;
 
-			fixed4 frag (v2f i) : SV_Target
-			{
-				fixed4 originalCol = tex2D(_MainTex, i.uv);
+            float depthMultiplier;
+            float alphaMultiplier;
+            float smoothness;
+            float _OceanAmbient;
 
-				float3 rayPos = _WorldSpaceCameraPos;
-				float viewLength = length(i.viewVector);
-				float3 rayDir = i.viewVector / viewLength;
+            float waveStrength;
+            float waveNormalScale;
+            float waveSpeed;
 
-				float nonlin_depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv);
-				float sceneDepth = LinearEyeDepth(nonlin_depth) * viewLength;
+            float planetScale;
+            float3 oceanCentre;
+            float oceanRadius;
+            float3 dirToSun;
 
-				float2 hitInfo = raySphere(oceanCentre, oceanRadius, rayPos, rayDir);
-				float dstToOcean = hitInfo.x;
-				float dstThroughOcean = hitInfo.y;
-				float3 rayOceanIntersectPos = rayPos + rayDir * dstToOcean - oceanCentre;
+            // --- STRUKTURY ---
+            // Używamy VertexID, bo Blitter rysuje proceduralny trójkąt
+            struct Attributes
+            {
+                uint vertexID : SV_VertexID;
+            };
 
-				float oceanViewDepth = min(dstThroughOcean, sceneDepth - dstToOcean);
+            struct Varyings
+            {
+                float4 positionCS : SV_POSITION;
+                float2 uv : TEXCOORD0;
+            };
 
-				if (oceanViewDepth > 0) {
-					float3 clipPlanePos = rayPos + i.viewVector * _ProjectionParams.y;
+            // --- VERTEX SHADER ---
+            Varyings Vert(Attributes input)
+            {
+                Varyings output;
+                // Magiczna funkcja URP generująca trójkąt na cały ekran
+                output.positionCS = GetFullScreenTriangleVertexPosition(input.vertexID);
+                output.uv = GetFullScreenTriangleTexCoord(input.vertexID);
+                return output;
+            }
 
-					float dstAboveWater = length(clipPlanePos - oceanCentre) - oceanRadius;
+            // --- FRAGMENT SHADER ---
+            float4 Frag(Varyings input) : SV_Target
+            {
+                float2 uv = input.uv;
 
-					float t = 1 - exp(-oceanViewDepth / planetScale * depthMultiplier);
-					float alpha =  1-exp(-oceanViewDepth / planetScale * alphaMultiplier);
-					float4 oceanCol = lerp(colA, colB, t);
+                // 1. Pobierz oryginalny obraz gry
+                float4 originalCol = SAMPLE_TEXTURE2D(_BlitTexture, sampler_BlitTexture, uv);
 
-					float3 oceanSphereNormal = normalize(rayOceanIntersectPos);
+                // 2. Odtwórz pozycję i kierunek w świecie (To naprawia czarny ekran!)
+                float3 rayPos = GetCameraPositionWS();
+                
+                // Rekonstrukcja pozycji świata na podstawie UV i głębi (Far Plane)
+                // To zastępuje stare 'i.viewDirWS' z Vertex shadera
+                float3 worldPosAtFarPlane = ComputeWorldSpacePosition(uv, 0.0, UNITY_MATRIX_I_VP); // 0.0 = Far plane w Reverse-Z
+                float3 rayDir = normalize(worldPosAtFarPlane - rayPos);
 
-					float2 waveOffsetA = float2(_Time.x * waveSpeed, _Time.x * waveSpeed * 0.8);
-					float2 waveOffsetB = float2(_Time.x * waveSpeed * - 0.8, _Time.x * waveSpeed * -0.3);
-					float3 waveNormal = triplanarNormal(rayOceanIntersectPos, oceanSphereNormal, waveNormalScale / planetScale, waveOffsetA, waveNormalA);
-					waveNormal = triplanarNormal(rayOceanIntersectPos, waveNormal, waveNormalScale / planetScale, waveOffsetB, waveNormalB);
-					waveNormal = normalize(lerp(oceanSphereNormal, waveNormal, waveStrength));
+                // 3. Pobierz głębię sceny
+                float rawDepth = SampleSceneDepth(uv);
+                float sceneDepth = LinearEyeDepth(rawDepth, _ZBufferParams);
 
-					// normalize dirToSun (bezpieczeństwo) i zastosuj ambient/half-lambert-like fallback
-					float3 L = normalize(dirToSun);
-					float lambert = saturate(dot(oceanSphereNormal, L));
+                // 4. Logika Oceanu (Twoja oryginalna matematyka)
+                float2 hitInfo = raySphere(oceanCentre, oceanRadius, rayPos, rayDir);
+                float dstToOcean = hitInfo.x;
+                float dstThroughOcean = hitInfo.y;
 
-					// ambient fallback: minimalna jasność zdefiniowana przez _OceanAmbient
-					float diffuseLighting = max(_OceanAmbient, lambert);
+                float oceanViewDepth = min(dstThroughOcean, sceneDepth - dstToOcean);
 
-					// opcjonalnie: half-lambert zamiennie:
-					// float diffuseLighting = lambert * 0.5 + 0.5;
-					// diffuseLighting = max(diffuseLighting, _OceanAmbient);
+                if (oceanViewDepth > 0)
+                {
+                    float3 hitPosWS = rayPos + rayDir * dstToOcean;
+                    float3 oceanNormal = normalize(hitPosWS - oceanCentre);
 
-					float specularAngle = acos(dot(normalize(L - rayDir), waveNormal));
-					float specularExponent = specularAngle / (1 - smoothness);
-					float specularHighlight = exp(-specularExponent * specularExponent);
+                    float t = 1 - exp(-oceanViewDepth / planetScale * depthMultiplier);
+                    float alpha = 1 - exp(-oceanViewDepth / planetScale * alphaMultiplier);
 
-					oceanCol *= diffuseLighting;
-					oceanCol += specularHighlight * (dstAboveWater > 0) * specularCol;
+                    float4 oceanCol = lerp(colA, colB, t);
 
-					return originalCol * (1-alpha) + oceanCol * alpha;
-				}
+                    // Fale
+                    float time = _Time.y;
+                    float2 waveOffsetA = float2(time * waveSpeed, time * waveSpeed * 0.8);
+                    float2 waveOffsetB = float2(-time * waveSpeed * 0.8, -time * waveSpeed * 0.3);
 
-				return originalCol;
-			}
-			ENDCG
-		}
-	}
+                    float3 waveNormal = triplanarNormal(
+                        hitPosWS - oceanCentre,
+                        oceanNormal,
+                        waveNormalScale / planetScale,
+                        waveOffsetA,
+                        TEXTURE2D_ARGS(waveNormalA, sampler_waveNormalA)
+                    );
+
+                    waveNormal = triplanarNormal(
+                        hitPosWS - oceanCentre,
+                        waveNormal,
+                        waveNormalScale / planetScale,
+                        waveOffsetB,
+                        TEXTURE2D_ARGS(waveNormalB, sampler_waveNormalB)
+                    );
+
+                    waveNormal = normalize(lerp(oceanNormal, waveNormal, waveStrength));
+
+                    // Oświetlenie
+                    float3 L = normalize(dirToSun);
+                    float lambert = saturate(dot(oceanNormal, L));
+                    float diffuseLighting = max(_OceanAmbient, lambert);
+
+                    float3 H = normalize(L - rayDir);
+                    float specAngle = saturate(dot(H, waveNormal));
+                    float specular = pow(specAngle, 1.0 / max(0.001, 1 - smoothness));
+
+                    oceanCol.rgb *= diffuseLighting;
+                    oceanCol.rgb += specular * specularCol.rgb;
+
+                    return lerp(originalCol, oceanCol, alpha);
+                }
+
+                return originalCol;
+            }
+            ENDHLSL
+        }
+    }
 }
