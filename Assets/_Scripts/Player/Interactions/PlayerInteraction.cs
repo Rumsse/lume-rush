@@ -12,20 +12,12 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (interactionDetector.CurrentInteractable != null)
-            {
-                TryPickUp(interactionDetector.CurrentInteractable);
-            }
-            else if (nearbyShipStorage != null)
-            {
-                DepositItemsToShip();
-            }
+            var interactable = interactionDetector.CurrentInteractable;
+            if (interactable != null) TryPickUp(interactable);
+            else if (nearbyShipStorage != null) DepositItemsToShip();
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && nearbyShipStorage != null)
-        {
-            nearbyShipStorage.DebugShipInventory(); 
-        }
+        if (Input.GetKeyDown(KeyCode.Q) && nearbyShipStorage != null) nearbyShipStorage.DebugShipInventory();
     }
 
     void TryPickUp(Interactable interactable)
@@ -35,13 +27,11 @@ public class PlayerInteraction : MonoBehaviour
 
         if (ToolbarManager.Instance.AddItem(itemData.itemName, itemData.itemIcon))
         {
+            interactable.SetHighlighted(false);
             interactable.gameObject.SetActive(false);
             Debug.Log($"Picked up item: {itemData.itemName}");
         }
-        else
-        {
-            Debug.Log($"Cannot pick up item: {itemData.itemName}. Toolbar is full!");
-        }
+        else Debug.Log($"Cannot pick up item: {itemData.itemName}. Toolbar is full!");
     }
 
     void DepositItemsToShip()
@@ -52,17 +42,11 @@ public class PlayerInteraction : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("SpaceShip"))
-        {
-            nearbyShipStorage = other.GetComponent<SpaceShipStorage>();
-        }
+        if (other.CompareTag("SpaceShip")) nearbyShipStorage = other.GetComponent<SpaceShipStorage>();
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("SpaceShip"))
-        {
-            nearbyShipStorage = null;
-        }
+        if (other.CompareTag("SpaceShip")) nearbyShipStorage = null;
     }
 }

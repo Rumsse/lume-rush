@@ -230,7 +230,7 @@ MonoBehaviour:
     m_Bits: 192
   _groundCheck: {fileID: 5405421735785248261}
   _speed: 9
-  _turnSpeed: 140
+  _turnSpeed: 165
   _groundCheckBoxSize: {x: 1.04, y: 0.2, z: 1.14}
   _jumpForce: 150
   _dashForce: 10
@@ -266,6 +266,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   DetectionRadius: 2.5
+  MaxColliders: 16
 --- !u!114 &4638441540728265665
 MonoBehaviour:
   m_ObjectHideFlags: 0

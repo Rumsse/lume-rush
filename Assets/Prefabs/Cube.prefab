@@ -69,6 +69,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: bcf07f50d48e38d4a899134db1c96e9e, type: 2}
+  - {fileID: 2100000, guid: 9a894eda46c992f4aae79fc8b8788484, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -126,3 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interactable
   itemData: {fileID: 11400000, guid: 5d12b5c3d63090c4793ce0ebc5a03dbc, type: 2}
+  thicknessProperty: _OutlineThickness
+  colorProperty: _OutlineColor
+  highlightThickness: 1.15
+  targetMaterialIndex: -1
