@@ -1,4 +1,4 @@
-#include "/SimplexNoise.cginc"
+#include "SimplexNoise.cginc"
 
 float simpleNoise(float3 pos, int numLayers, float scale, float persistence, float lacunarity, float multiplier) {
 	float noiseSum = 0;

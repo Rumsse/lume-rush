@@ -117,6 +117,7 @@ Material:
     - _PoleBiomeStart: 0.844
     - _RockNormalMapStrength: 0
     - _RockNormalScale: 21.16
+    - _ShadowBrightness: 0.15
     - _ShoreBlend: 0.032
     - _ShoreHeight: 0.061
     - _SmoothnessTextureChannel: 0
@@ -130,7 +131,7 @@ Material:
     - _SnowNormalMapStrength: 0.948
     - _SnowNormalScale: 21.39
     - _SnowNormalStrength: 0
-    - _SnowSpecular: 0.704
+    - _SnowSpecular: 0.244
     - _SnowTextureScale: 2.5
     - _SpeckleStrength: 1
     - _SpecularHighlights: 1
