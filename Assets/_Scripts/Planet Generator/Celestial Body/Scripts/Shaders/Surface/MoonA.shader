@@ -56,6 +56,9 @@
             #pragma fragment frag
             #pragma target 4.5
 
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+            #pragma multi_compile _ _SHADOWS_SOFT
+
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/SpaceTransforms.hlsl"
@@ -169,9 +172,10 @@
                 input.positionWS = pWS;
                 input.normalWS = normalize(nWS);
                 input.viewDirectionWS = normalize(vWS);
-                input.shadowCoord = float4(0,0,0,0);
+
+                input.shadowCoord = TransformWorldToShadowCoord(pWS);
                 input.fogCoord = 0;
-                input.bakedGI = float3(0,0,0);
+                input.bakedGI = SampleSH(input.normalWS);
             }
 
             float4 frag(Varyings i) : SV_Target
