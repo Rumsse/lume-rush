@@ -475,8 +475,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 0.1
+  far clip plane: 10000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -717,7 +717,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oceanShader: {fileID: 4800000, guid: d03ae1df4c5324c888d341830e3620ad, type: 3}
-  atmosphereShader: {fileID: 4800000, guid: 0b97cbbc1e6a746c4b5f4c41e71a8eb7, type: 3}
   displayOceans: 1
 --- !u!4 &1900194244
 Transform:
