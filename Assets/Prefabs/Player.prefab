@@ -250,6 +250,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad52706c52d6e5f4da662407f541dfe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
+  cam: {fileID: 0}
+  pumpPrefab: {fileID: 8005319921480430843, guid: 2975f2279f777cd45a5d4188c2299996, type: 3}
+  placementMask:
+    serializedVersion: 2
+    m_Bits: 64
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 128
+  maxPlaceDistance: 5
+  placeLift: 0.02
+  pumpCheckHalfExtents: {x: 0.5, y: 0.5, z: 0.5}
+  outlineThicknessProperty: _OutlineThickness
+  outlineColorProperty: _OutlineColor
+  previewOutlineThickness: 1.6
+  canPlaceColor: {r: 0.2, g: 1, b: 0.5, a: 1}
+  blockedColor: {r: 1, g: 0.2, b: 0.2, a: 1}
+  rayDownOffset: 0.6
+  eyeHeight: 1.6
+  groundProbeUp: 2
+  groundProbeDown: 6
+  forwardProbe: 4.5
+  debugLogs: 1
 --- !u!114 &5902364194146086484
 MonoBehaviour:
   m_ObjectHideFlags: 0
