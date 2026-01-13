@@ -8,6 +8,7 @@ TagManager:
   - Resource
   - Item
   - SpaceShip
+  - Pump
   layers:
   - Default
   - TransparentFX

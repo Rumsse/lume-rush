@@ -30,6 +30,8 @@ public class PlacementController : MonoBehaviour
     [SerializeField] bool debugLogs = true;
 
     GameObject currentPrefab;
+    IPlacementReceiver receiver;
+
     GameObject ghost;
     Renderer[] ghostRenderers;
     bool placing;
@@ -52,12 +54,13 @@ public class PlacementController : MonoBehaviour
         if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape)) CancelPlacement();
     }
 
-    public void BeginPlacement(GameObject prefab)
+    public void BeginPlacement(GameObject prefab, IPlacementReceiver placementReceiver)
     {
         if (!EnsureCamera()) { if (debugLogs) Debug.Log("[PLC] No camera"); return; }
         if (!prefab) { if (debugLogs) Debug.Log("[PLC] Prefab is null"); return; }
         if (placing) return;
 
+        receiver = placementReceiver;
         currentPrefab = prefab;
         ghost = Instantiate(currentPrefab);
 
@@ -119,7 +122,7 @@ public class PlacementController : MonoBehaviour
         {
             origin = transform.position + Vector3.up * eyeHeight;
             dir = transform.forward;
-            if (debugLogs) Debug.Log("[PLC] No camera, using player forward");
+            Debug.Log("[PLC] No camera, using player forward");
         }
 
         if (Physics.Raycast(new Ray(origin, dir), out hit, maxPlaceDistance, placementMask, QueryTriggerInteraction.Collide)) return true;
@@ -181,7 +184,8 @@ public class PlacementController : MonoBehaviour
 
     void ConfirmPlacement()
     {
-        Instantiate(currentPrefab, placePos, placeRot);
+        var instance = Instantiate(currentPrefab, placePos, placeRot);
+        receiver?.OnPlaced(instance);
         if (debugLogs) Debug.Log("[PLC] ConfirmPlacement");
         CancelPlacement();
     }
@@ -191,6 +195,7 @@ public class PlacementController : MonoBehaviour
         placing = false;
         canPlace = false;
         currentPrefab = null;
+        receiver = null;
         if (ghost) Destroy(ghost);
         ghost = null;
         ghostRenderers = null;
@@ -212,7 +217,7 @@ public class PlacementController : MonoBehaviour
         for (int i = 0; i < cams.Length; i++)
             if (cams[i] && cams[i].isActiveAndEnabled) { cam = cams[i]; break; }
 
-        if (!cam && debugLogs)
+        if (!cam)
         {
 #if UNITY_2022_1_OR_NEWER
             var all = Object.FindObjectsByType<Camera>(FindObjectsInactive.Include, FindObjectsSortMode.None);

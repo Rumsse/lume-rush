@@ -6,7 +6,7 @@ public class Interactable : MonoBehaviour
 
     [SerializeField] string thicknessProperty = "_OutlineThickness";
     [SerializeField] string colorProperty = "_OutlineColor";
-    [SerializeField] float highlightThickness = 1.05f;
+    [SerializeField] float highlightThickness = 1.15f;
     [SerializeField] int targetMaterialIndex = -1;
 
     Renderer[] renderers;
@@ -16,7 +16,7 @@ public class Interactable : MonoBehaviour
 
     public string ItemName => itemData?.itemName;
     public Sprite ItemIcon => itemData?.itemIcon;
-    public bool CanBePickedUp => itemData != null && gameObject.activeInHierarchy;
+    public bool CanBePickedUp => gameObject.activeInHierarchy;
 
     void Awake()
     {

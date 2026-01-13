@@ -1,20 +1,26 @@
 using UnityEngine;
 
 [RequireComponent(typeof(InteractionDetector))]
-public class PlayerInteraction : MonoBehaviour
+public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 {
     InteractionDetector interactionDetector;
     SpaceShipStorage nearbyShipStorage;
 
     [SerializeField] PlacementController placement;
     [SerializeField] GameObject pumpPrefab;
+    [SerializeField] bool startWithPump = true;
+    [SerializeField] string pumpTag = "Pump";
     [SerializeField] bool debugLogs = true;
+
+    bool hasPump;
+    GameObject placedPump;
 
     void Awake()
     {
         interactionDetector = GetComponent<InteractionDetector>();
         if (!placement) placement = GetComponent<PlacementController>();
         if (!placement) placement = FindFirstObjectByType<PlacementController>();
+        hasPump = startWithPump;
     }
 
     void Update()
@@ -32,12 +38,22 @@ public class PlayerInteraction : MonoBehaviour
 
     void TryPickUp(Interactable interactable)
     {
+        var go = interactable.gameObject;
+        if (go.CompareTag(pumpTag))
+        {
+            hasPump = true;
+            if (placedPump == go) placedPump = null;
+            go.SetActive(false);
+            if (debugLogs) Debug.Log("[PI] Picked up pump");
+            return;
+        }
+
         var itemData = interactable.itemData;
         if (itemData == null) return;
 
         if (ToolbarManager.Instance.AddItem(itemData.itemName, itemData.itemIcon))
         {
-            interactable.gameObject.SetActive(false);
+            go.SetActive(false);
             if (debugLogs) Debug.Log($"[PI] Picked up: {itemData.itemName}");
         }
         else if (debugLogs) Debug.Log($"[PI] Toolbar full for: {itemData.itemName}");
@@ -53,7 +69,17 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (!placement) { if (debugLogs) Debug.Log("[PI] No PlacementController"); return; }
         if (!pumpPrefab) { if (debugLogs) Debug.Log("[PI] No pump prefab"); return; }
-        placement.BeginPlacement(pumpPrefab);
+        if (!hasPump) { if (debugLogs) Debug.Log("[PI] No pump to place"); return; }
+        if (placedPump) { if (debugLogs) Debug.Log("[PI] Pump already placed"); return; }
+        placement.BeginPlacement(pumpPrefab, this);
+    }
+
+    public void OnPlaced(GameObject instance)
+    {
+        placedPump = instance;
+        hasPump = false;
+        instance.tag = pumpTag;
+        if (debugLogs) Debug.Log("[PI] Pump placed");
     }
 
     void OnTriggerEnter(Collider other)
