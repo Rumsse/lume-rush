@@ -156,6 +156,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4638441540728265665}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2555966904752584968}
   m_SourcePrefab: {fileID: 100100000, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
 --- !u!1 &296901486032930419 stripped
 GameObject:
@@ -250,27 +253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad52706c52d6e5f4da662407f541dfe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
-  cam: {fileID: 0}
+  placement: {fileID: 2555966904752584968}
   pumpPrefab: {fileID: 8005319921480430843, guid: 2975f2279f777cd45a5d4188c2299996, type: 3}
-  placementMask:
-    serializedVersion: 2
-    m_Bits: 64
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 128
-  maxPlaceDistance: 5
-  placeLift: 0.02
-  pumpCheckHalfExtents: {x: 0.5, y: 0.5, z: 0.5}
-  outlineThicknessProperty: _OutlineThickness
-  outlineColorProperty: _OutlineColor
-  previewOutlineThickness: 1.6
-  canPlaceColor: {r: 0.2, g: 1, b: 0.5, a: 1}
-  blockedColor: {r: 1, g: 0.2, b: 0.2, a: 1}
-  rayDownOffset: 0.6
-  eyeHeight: 1.6
-  groundProbeUp: 2
-  groundProbeDown: 6
-  forwardProbe: 4.5
   debugLogs: 1
 --- !u!114 &5902364194146086484
 MonoBehaviour:
@@ -301,6 +285,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edfbc4843e992044bb041fae2c77ffe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GravityBody
+--- !u!114 &2555966904752584968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296901486032930419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863af35092788be4381b5d07ca08758f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlacementController
+  cam: {fileID: 0}
+  placementMask:
+    serializedVersion: 2
+    m_Bits: 64
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 128
+  shipMask:
+    serializedVersion: 2
+    m_Bits: 256
+  maxPlaceDistance: 6
+  placeLift: 0.8
+  checkHalfExtents: {x: 0.5, y: 0.5, z: 0.5}
+  minShipDistance: 25
+  shipTag: SpaceShip
+  rayDownOffset: 0.6
+  eyeHeight: 1.6
+  groundProbeUp: 2
+  groundProbeDown: 6
+  forwardProbe: 5
+  canPlaceMaterial: {fileID: 2100000, guid: 2378834cff8601a4096a50d9780d9238, type: 2}
+  blockedMaterial: {fileID: 2100000, guid: 2f23d094be872884dba642d00a511bda, type: 2}
+  debugLogs: 1
 --- !u!4 &1104823336287280329 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
