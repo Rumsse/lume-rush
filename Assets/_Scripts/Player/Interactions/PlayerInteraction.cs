@@ -15,6 +15,10 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
     bool hasPump;
     GameObject placedPump;
 
+    bool collecting;
+    LongerInteractable collectingTarget;
+    float collectTimer;
+
     void Awake()
     {
         interactionDetector = GetComponent<InteractionDetector>();
@@ -25,18 +29,34 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
     void Update()
     {
+        var interactable = interactionDetector.CurrentInteractable;
+
+        if (Input.GetKeyDown(KeyCode.F)) BeginPumpPlacement();
+
         if (Input.GetKeyDown(KeyCode.E))
         {
-            var interactable = interactionDetector.CurrentInteractable;
-            if (interactable != null) TryPickUp(interactable);
+            if (interactable != null)
+            {
+                if (interactable is LongerInteractable ti) BeginCollect(ti);
+                else ImmediatePickUp(interactable);
+            }
             else if (nearbyShipStorage != null) DepositItemsToShip();
         }
 
+        if (collecting)
+        {
+            if (interactable != collectingTarget || !Input.GetKey(KeyCode.E)) CancelCollect();
+            else
+            {
+                collectTimer += Time.deltaTime;
+                if (collectTimer >= collectingTarget.CollectTime) CompleteCollect();
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Q) && nearbyShipStorage != null) nearbyShipStorage.DebugShipInventory();
-        if (Input.GetKeyDown(KeyCode.F)) BeginPumpPlacement();
     }
 
-    void TryPickUp(Interactable interactable)
+    void ImmediatePickUp(Interactable interactable)
     {
         var go = interactable.gameObject;
         if (go.CompareTag(pumpTag))
@@ -57,6 +77,49 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
             if (debugLogs) Debug.Log($"[PI] Picked up: {itemData.itemName}");
         }
         else if (debugLogs) Debug.Log($"[PI] Toolbar full for: {itemData.itemName}");
+    }
+
+    void BeginCollect(LongerInteractable target)
+    {
+        if (collecting) return;
+        collectingTarget = target;
+        collectTimer = 0f;
+        collecting = true;
+        if (debugLogs) Debug.Log("[PI] Begin timed collect");
+    }
+
+    void CompleteCollect()
+    {
+        collecting = false;
+        var go = collectingTarget.gameObject;
+
+        if (go.CompareTag(pumpTag))
+        {
+            hasPump = true;
+            if (placedPump == go) placedPump = null;
+            go.SetActive(false);
+            if (debugLogs) Debug.Log("[PI] Timed collect pump");
+        }
+        else
+        {
+            var itemData = collectingTarget.itemData;
+            if (itemData != null && ToolbarManager.Instance.AddItem(itemData.itemName, itemData.itemIcon))
+            {
+                go.SetActive(false);
+                if (debugLogs) Debug.Log($"[PI] Timed collect: {itemData.itemName}");
+            }
+            else if (debugLogs) Debug.Log("[PI] Timed collect failed");
+        }
+
+        collectingTarget = null;
+    }
+
+    void CancelCollect()
+    {
+        collecting = false;
+        collectingTarget = null;
+        collectTimer = 0f;
+        if (debugLogs) Debug.Log("[PI] Cancel timed collect");
     }
 
     void DepositItemsToShip()
