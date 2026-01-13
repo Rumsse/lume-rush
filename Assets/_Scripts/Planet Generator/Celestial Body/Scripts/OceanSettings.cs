@@ -17,7 +17,6 @@ public class OceanSettings : ScriptableObject {
 	public float waveScale = 15;
 	public float waveSpeed = 0.5f;
 
-	//[Header("")]
 	[Range (0, 1)]
 	public float smoothness = 0.92f;
 	public Vector4 testParams;

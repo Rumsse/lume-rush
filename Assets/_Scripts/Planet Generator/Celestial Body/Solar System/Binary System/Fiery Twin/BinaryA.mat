@@ -189,7 +189,9 @@ Material:
     - _EjectaCol: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlatColA: {r: 1, g: 1, b: 1, a: 0}
+    - _FlatColA2: {r: 0, g: 0, b: 0, a: 0}
     - _FlatColB: {r: 0, g: 0.11788455, b: 0.13207549, a: 0}
+    - _FlatColB2: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelCol: {r: 0.7830189, g: 0.00000006534019, b: 0, a: 1}
     - _GrassCol: {r: 0.4033858, g: 0.4433962, b: 0.064836234, a: 1}
     - _Params: {r: 0.14, g: 0, b: 2.12, a: 20}

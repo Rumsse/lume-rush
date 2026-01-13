@@ -22,8 +22,8 @@ public class GravityDebugUI : MonoBehaviour {
 	}
 
 	static string[] GetGravityInfo (Vector3 point, CelestialBody ignore = null) {
-		CelestialBody[] bodies = GameObject.FindObjectsOfType<CelestialBody> ();
-		Vector3 totalAcc = Vector3.zero;
+		CelestialBody[] bodies = Object.FindObjectsByType<CelestialBody>(FindObjectsSortMode.None);
+        Vector3 totalAcc = Vector3.zero;
 
 		// gravity
 		var forceAndName = new List<FloatAndString> ();

@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8464565843439451967}
   - component: {fileID: 1039384552625286748}
   - component: {fileID: 5827747496397810012}
-  m_Layer: 0
+  - component: {fileID: -5522392140079027137}
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Resource
   m_Icon: {fileID: 0}
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.43446, y: -0, z: 0.75338}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalScale: {x: 0.030996501, y: 0.030996501, z: 0.030996501}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -67,7 +68,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bcf07f50d48e38d4a899134db1c96e9e, type: 2}
+  - {fileID: 2100000, guid: 9a894eda46c992f4aae79fc8b8788484, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,3 +114,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-5522392140079027137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3303876102699440384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e57b9c9d2cd47946a655835cd5d701c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Interactable
+  itemData: {fileID: 11400000, guid: 5d12b5c3d63090c4793ce0ebc5a03dbc, type: 2}
+  thicknessProperty: _OutlineThickness
+  colorProperty: _OutlineColor
+  highlightThickness: 1.15
+  targetMaterialIndex: -1

@@ -1,9 +1,11 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Camera))]
 public class ThrirdPersonPlanetCamera : MonoBehaviour
 {
     #region Inspector
+
     [SerializeField] Transform target;
     [SerializeField] float distance = 5f;
     [SerializeField] float heightOffset = 1.6f;
@@ -27,9 +29,11 @@ public class ThrirdPersonPlanetCamera : MonoBehaviour
 
     [Header("Look smoothing")]
     [SerializeField][Range(0.01f, 1f)] float lookSmoothTime = 0.18f;
+
     #endregion
 
     #region State
+
     Vector3 velocity;
     Vector3 lastForward = Vector3.forward;
     Rigidbody targetRb;
@@ -40,18 +44,28 @@ public class ThrirdPersonPlanetCamera : MonoBehaviour
     float heightVel;
     Vector3 currentLookPoint;
     Vector3 lookVelocity;
+
     #endregion
 
-    void Start()
+    void Start() => StartCoroutine(WaitForPlayerSpawn());
+
+    IEnumerator WaitForPlayerSpawn()
     {
+        yield return new WaitForSeconds(0.2f);
+
         if (target == null)
+        {
             target = GameObject.FindGameObjectWithTag("Player")?.transform;
-        if (target != null)
-            targetRb = target.GetComponentInParent<Rigidbody>();
+
+            if (target == null)
+                Debug.LogError("Player object with tag 'Player' not found in the scene!");
+        }
+
+        targetRb = target.GetComponentInParent<Rigidbody>();
         currentDistance = distance;
         currentHeight = heightOffset;
         currentPitch = pitchAngle;
-        currentLookPoint = target != null ? target.position + target.up * heightOffset : Vector3.zero;
+        currentLookPoint = target.position + target.up * heightOffset;
         lookVelocity = Vector3.zero;
     }
 
@@ -118,6 +132,5 @@ public class ThrirdPersonPlanetCamera : MonoBehaviour
         return desired;
     }
 
-    // public setter - prefer this over reflection or adding extra manager scripts
     public void SetJumpLookTarget(Transform t) => jumpLookTarget = t;
 }
