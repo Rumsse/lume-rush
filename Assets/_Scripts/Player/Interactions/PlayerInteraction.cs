@@ -14,6 +14,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
     bool hasPump;
     GameObject placedPump;
+    int carriedPumpFuel;
 
     bool collecting;
     LongerInteractable collectingTarget;
@@ -61,10 +62,12 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         var go = interactable.gameObject;
         if (go.CompareTag(pumpTag))
         {
+            var collector = go.GetComponent<PumpFuelCollector>();
+            if (collector) carriedPumpFuel += collector.ConsumeFuel();
             hasPump = true;
             if (placedPump == go) placedPump = null;
             go.SetActive(false);
-            if (debugLogs) Debug.Log("[PI] Picked up pump");
+            if (debugLogs) Debug.Log($"[PI] Picked up pump fuel={carriedPumpFuel}");
             return;
         }
 
@@ -95,10 +98,12 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
         if (go.CompareTag(pumpTag))
         {
+            var collector = go.GetComponent<PumpFuelCollector>();
+            if (collector) carriedPumpFuel += collector.ConsumeFuel();
             hasPump = true;
             if (placedPump == go) placedPump = null;
             go.SetActive(false);
-            if (debugLogs) Debug.Log("[PI] Timed collect pump");
+            if (debugLogs) Debug.Log($"[PI] Timed collect pump fuel={carriedPumpFuel}");
         }
         else
         {
@@ -126,6 +131,13 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
     {
         var toolbarSlots = ToolbarManager.Instance.GetSlots();
         nearbyShipStorage.AddToStorage(toolbarSlots);
+
+        if (carriedPumpFuel > 0)
+        {
+            nearbyShipStorage.AddFuel(carriedPumpFuel);
+            carriedPumpFuel = 0;
+            if (debugLogs) Debug.Log("[PI] Deposited pump fuel");
+        }
     }
 
     void BeginPumpPlacement()
@@ -142,6 +154,10 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         placedPump = instance;
         hasPump = false;
         instance.tag = pumpTag;
+
+        var collector = instance.GetComponent<PumpFuelCollector>();
+        if (collector) collector.BeginCollect();
+
         if (debugLogs) Debug.Log("[PI] Pump placed");
     }
 
