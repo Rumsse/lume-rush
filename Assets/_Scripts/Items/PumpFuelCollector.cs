@@ -18,8 +18,10 @@ public class PumpFuelCollector : MonoBehaviour
     float timer;
     bool collecting;
     bool charged;
+    bool producedOnce;
 
     public bool IsCharged => charged;
+    public bool ProducedOnce => producedOnce;
     public int FuelAmount => charged ? fuelAmount : 0;
 
     void Awake() => cam = Camera.main;
@@ -39,18 +41,22 @@ public class PumpFuelCollector : MonoBehaviour
 
     public void BeginCollect()
     {
+        if (producedOnce) return;
         charged = false;
         timer = 0f;
         collecting = true;
         EnsureUI();
+        SetUIActive(true);
         UpdateUI(0f);
     }
 
     public int ConsumeFuel()
     {
         if (!charged) return 0;
+        producedOnce = true;
         charged = false;
-        UpdateUI(0f);
+        collecting = false;
+        SetUIActive(false);
         return fuelAmount;
     }
 
@@ -64,7 +70,7 @@ public class PumpFuelCollector : MonoBehaviour
         uiTransform.localPosition = sliderOffset;
 
         slider = uiInstance.GetComponentInChildren<Slider>(true);
-        if (slider != null)
+        if (slider)
         {
             slider.minValue = 0f;
             slider.maxValue = 1f;
@@ -74,7 +80,7 @@ public class PumpFuelCollector : MonoBehaviour
         else
         {
             fillImage = uiInstance.GetComponentInChildren<Image>(true);
-            if (fillImage != null) fillImage.fillAmount = 0f;
+            if (fillImage) fillImage.fillAmount = 0f;
         }
     }
 
@@ -83,6 +89,12 @@ public class PumpFuelCollector : MonoBehaviour
         if (!uiInstance) EnsureUI();
         if (slider) slider.value = f;
         else if (fillImage) fillImage.fillAmount = f;
+    }
+
+    void SetUIActive(bool v)
+    {
+        if (!uiInstance) return;
+        uiInstance.SetActive(v);
     }
 
     void Billboard()

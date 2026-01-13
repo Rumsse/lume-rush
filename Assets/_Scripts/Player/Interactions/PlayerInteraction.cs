@@ -13,6 +13,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
     [SerializeField] bool debugLogs = true;
 
     bool hasPump;
+    bool pumpUsedUp;
     GameObject placedPump;
     int carriedPumpFuel;
 
@@ -62,6 +63,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         var go = interactable.gameObject;
         if (go.CompareTag(pumpTag))
         {
+            if (pumpUsedUp) { if (debugLogs) Debug.Log("[PI] Pump already used up"); return; }
             var collector = go.GetComponent<PumpFuelCollector>();
             if (collector) carriedPumpFuel += collector.ConsumeFuel();
             hasPump = true;
@@ -98,6 +100,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
         if (go.CompareTag(pumpTag))
         {
+            if (pumpUsedUp) { collectingTarget = null; return; }
             var collector = go.GetComponent<PumpFuelCollector>();
             if (collector) carriedPumpFuel += collector.ConsumeFuel();
             hasPump = true;
@@ -136,7 +139,10 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         {
             nearbyShipStorage.AddFuel(carriedPumpFuel);
             carriedPumpFuel = 0;
-            if (debugLogs) Debug.Log("[PI] Deposited pump fuel");
+            pumpUsedUp = true;
+            hasPump = false;
+            placedPump = null;
+            if (debugLogs) Debug.Log("[PI] Deposited pump fuel; pump disabled for future placement");
         }
     }
 
@@ -144,6 +150,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
     {
         if (!placement) { if (debugLogs) Debug.Log("[PI] No PlacementController"); return; }
         if (!pumpPrefab) { if (debugLogs) Debug.Log("[PI] No pump prefab"); return; }
+        if (pumpUsedUp) { if (debugLogs) Debug.Log("[PI] Pump placement disabled"); return; }
         if (!hasPump) { if (debugLogs) Debug.Log("[PI] No pump to place"); return; }
         if (placedPump) { if (debugLogs) Debug.Log("[PI] Pump already placed"); return; }
         placement.BeginPlacement(pumpPrefab, this);
@@ -153,6 +160,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
     {
         placedPump = instance;
         hasPump = false;
+        carriedPumpFuel = 0;
         instance.tag = pumpTag;
 
         var collector = instance.GetComponent<PumpFuelCollector>();
