@@ -4,10 +4,18 @@ using UnityEngine;
 public class ResourceGenerator : MonoBehaviour
 {
     [SerializeField] private string planetTag = "Planet";
+
+    [Header("Resources")]
     [SerializeField] private GameObject[] resourcePrefabs;
-    [SerializeField] private int numberOfResources = 100;
+    [SerializeField] private int[] resourceCounts;
+
+    [Header("Props")]
+    [SerializeField] private GameObject[] propPrefabs;
+    [SerializeField] private int[] propCounts;
+
     [SerializeField] private float spawnOffset = 0.5f;
     [SerializeField] private float collisionCheckRadius = 1.0f;
+    [SerializeField] private Vector3 rotationAdjustment = Vector3.zero;
 
     private Transform planet;
     private float planetRadius;
@@ -21,7 +29,8 @@ public class ResourceGenerator : MonoBehaviour
         FindPlanet();
         if (planet == null) yield break;
 
-        SpawnResources();
+        SpawnPrefabs(resourcePrefabs, resourceCounts);
+        SpawnPrefabs(propPrefabs, propCounts);
     }
 
     private void FindPlanet()
@@ -42,17 +51,28 @@ public class ResourceGenerator : MonoBehaviour
         return Mathf.Max(bounds.extents.x, bounds.extents.y, bounds.extents.z);
     }
 
-    private void SpawnResources()
+    private void SpawnPrefabs(GameObject[] prefabs, int[] counts)
     {
-        var spawnedResources = 0;
+        for (int i = 0; i < prefabs.Length; i++)
+        {
+            int toSpawn = counts.Length > i ? counts[i] : 0;
+            SpawnPrefabInstances(prefabs[i], toSpawn);
+        }
+    }
 
-        while (spawnedResources < numberOfResources)
+    private void SpawnPrefabInstances(GameObject prefab, int count)
+    {
+        int spawned = 0;
+
+        while (spawned < count)
         {
             if (TryGetRandomPointOnPlanet(out Vector3 spawnPosition, out Quaternion spawnRotation)
                 && !IsPositionOccupied(spawnPosition))
             {
-                Instantiate(GetRandomResourcePrefab(), spawnPosition, spawnRotation, planet);
-                spawnedResources++;
+                Quaternion adjustedRotation = spawnRotation * Quaternion.Euler(rotationAdjustment);
+
+                Instantiate(prefab, spawnPosition, adjustedRotation, planet);
+                spawned++;
             }
         }
     }
@@ -82,11 +102,9 @@ public class ResourceGenerator : MonoBehaviour
         var colliders = Physics.OverlapSphere(position, collisionCheckRadius);
         foreach (var collider in colliders)
         {
-            if (collider.CompareTag("Resource")) return true;
+            if (collider.CompareTag("Resource") || collider.CompareTag("Prop")) return true;
         }
 
         return false;
     }
-
-    private GameObject GetRandomResourcePrefab() => resourcePrefabs[Random.Range(0, resourcePrefabs.Length)];
 }
