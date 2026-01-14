@@ -18,8 +18,16 @@ public class ResourceGenerator : MonoBehaviour
         public GameObject prefab;
         public int count;
         public AlignAxis alignAxis;
-        public bool useCustomOffset;
         public float offset;
+        public bool avoidWater;
+        [HideInInspector] public bool initialized;
+    }
+
+    struct OceanInfo
+    {
+        public bool available;
+        public Vector3 centre;
+        public float radius;
     }
 
     #endregion
@@ -35,9 +43,14 @@ public class ResourceGenerator : MonoBehaviour
     [Header("Props")]
     [SerializeField] private SpawnItem[] props;
 
-    [SerializeField] private float spawnOffset = 0.5f;
     [SerializeField] private float collisionCheckRadius = 1.0f;
     [SerializeField] private Vector3 rotationAdjustment = Vector3.zero;
+
+    [Header("Water")]
+    [SerializeField] private float waterMargin = 0.05f;
+    [SerializeField] private float oceanResolveTimeout = 1f;
+
+    [SerializeField] private int maxAttemptsPerInstance = 64;
 
     #endregion
 
@@ -46,6 +59,7 @@ public class ResourceGenerator : MonoBehaviour
 
     private Transform planet;
     private float planetRadius;
+    private OceanInfo ocean;
 
     #endregion
 
@@ -61,8 +75,16 @@ public class ResourceGenerator : MonoBehaviour
         FindPlanet();
         if (planet == null) yield break;
 
+        if (AnyItemAvoidsWater()) yield return ResolveOceanInfoRoutine(oceanResolveTimeout);
+
         SpawnPrefabs(resources);
         SpawnPrefabs(props);
+    }
+
+    void OnValidate()
+    {
+        InitDefaults(resources);
+        InitDefaults(props);
     }
 
     #endregion
@@ -84,8 +106,8 @@ public class ResourceGenerator : MonoBehaviour
         var renderer = target.GetComponentInChildren<MeshRenderer>();
         if (renderer == null) return 0f;
 
-        var bounds = renderer.bounds;
-        return Mathf.Max(bounds.extents.x, bounds.extents.y, bounds.extents.z);
+        var b = renderer.bounds;
+        return Mathf.Max(b.extents.x, b.extents.y, b.extents.z);
     }
 
     private void SpawnPrefabs(SpawnItem[] items)
@@ -98,13 +120,16 @@ public class ResourceGenerator : MonoBehaviour
     {
         if (item.prefab == null || item.count <= 0) return;
 
-        var offset = item.useCustomOffset ? item.offset : spawnOffset;
         int spawned = 0;
+        int attempts = 0;
 
-        while (spawned < item.count)
+        while (spawned < item.count && attempts < item.count * Mathf.Max(1, maxAttemptsPerInstance))
         {
-            if (!TryGetRandomPointOnPlanet(offset, out Vector3 spawnPosition, out Vector3 normal)
-                || IsPositionOccupied(spawnPosition)) continue;
+            attempts++;
+
+            if (!TryGetRandomPointOnPlanet(item.offset, out Vector3 spawnPosition, out Vector3 normal)) continue;
+            if (item.avoidWater && ocean.available && IsUnderWater(spawnPosition - normal * item.offset)) continue;
+            if (IsPositionOccupied(spawnPosition)) continue;
 
             var align = Quaternion.FromToRotation(AxisToVector(item.alignAxis), normal);
             var randomAroundNormal = Quaternion.AngleAxis(Random.Range(0f, 360f), normal);
@@ -117,26 +142,26 @@ public class ResourceGenerator : MonoBehaviour
 
     private bool TryGetRandomPointOnPlanet(float offset, out Vector3 spawnPosition, out Vector3 normal)
     {
-        var randomDirection = Random.onUnitSphere;
-        var rayOrigin = planet.position + randomDirection * (planetRadius + offset);
+        var dir = Random.onUnitSphere;
+        var rayOrigin = planet.position + dir * (planetRadius + offset);
 
-        if (Physics.Raycast(rayOrigin, -randomDirection, out var hit, Mathf.Infinity))
+        if (!Physics.Raycast(rayOrigin, -dir, out var hit, Mathf.Infinity))
         {
-            if (hit.collider.transform != planet && !hit.collider.transform.IsChildOf(planet))
-            {
-                spawnPosition = Vector3.zero;
-                normal = Vector3.up;
-                return false;
-            }
-
-            spawnPosition = hit.point + hit.normal * offset;
-            normal = hit.normal;
-            return true;
+            spawnPosition = Vector3.zero;
+            normal = Vector3.up;
+            return false;
         }
 
-        spawnPosition = Vector3.zero;
-        normal = Vector3.up;
-        return false;
+        if (hit.collider.transform != planet && !hit.collider.transform.IsChildOf(planet))
+        {
+            spawnPosition = Vector3.zero;
+            normal = Vector3.up;
+            return false;
+        }
+
+        normal = hit.normal.normalized;
+        spawnPosition = hit.point + normal * offset;
+        return true;
     }
 
     private bool IsPositionOccupied(Vector3 position)
@@ -159,6 +184,82 @@ public class ResourceGenerator : MonoBehaviour
             AlignAxis.LeftX => Vector3.left,
             _ => Vector3.up
         };
+
+    #endregion
+
+
+    #region Ocean
+
+    IEnumerator ResolveOceanInfoRoutine(float timeout)
+    {
+        ResolveOceanInfo();
+        if (ocean.available) yield break;
+
+        float t = 0f;
+        var step = 0.05f;
+
+        while (t < timeout && !ocean.available)
+        {
+            yield return new WaitForSeconds(step);
+            t += step;
+            ResolveOceanInfo();
+        }
+    }
+
+    private void ResolveOceanInfo()
+    {
+        ocean = default;
+
+        var generator = planet ? planet.GetComponentInParent<CelestialBodyGenerator>() : null;
+        if (generator != null)
+        {
+            ocean.centre = generator.transform.position;
+            ocean.radius = generator.GetOceanRadius();
+            ocean.available = ocean.radius > 0f;
+            if (ocean.available) return;
+        }
+
+        if (OceanEffect.CurrentOceanMaterial != null)
+        {
+            var m = OceanEffect.CurrentOceanMaterial;
+            var centre = m.GetVector("oceanCentre");
+            var radius = m.GetFloat("oceanRadius");
+            if (radius > 0f)
+            {
+                ocean.centre = new Vector3(centre.x, centre.y, centre.z);
+                ocean.radius = radius;
+                ocean.available = true;
+            }
+        }
+    }
+
+    private bool IsUnderWater(Vector3 worldPoint)
+    {
+        if (!ocean.available) return false;
+        var d = Vector3.Distance(worldPoint, ocean.centre);
+        return d <= ocean.radius + waterMargin;
+    }
+
+    private bool AnyItemAvoidsWater()
+    {
+        for (int i = 0; i < resources.Length; i++)
+            if (resources[i].avoidWater) return true;
+
+        for (int i = 0; i < props.Length; i++)
+            if (props[i].avoidWater) return true;
+
+        return false;
+    }
+
+    private void InitDefaults(SpawnItem[] items)
+    {
+        for (int i = 0; i < items.Length; i++)
+            if (!items[i].initialized)
+            {
+                items[i].avoidWater = true;
+                items[i].initialized = true;
+            }
+    }
 
     #endregion
 }
