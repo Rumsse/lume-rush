@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 3303876102699440384}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.713399, w: 0.70075816}
-  m_LocalPosition: {x: 0.43446, y: 0, z: 0.75338}
-  m_LocalScale: {x: 0.026496762, y: 0.084998176, z: 0.024528211}
+  m_LocalPosition: {x: 0.491, y: 0.5, z: 0.75338}
+  m_LocalScale: {x: 0.07834074, y: 0.07685767, z: 0.078971095}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a1cb30e76ec2e4bba133c7fa2bcf5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LongerInteractable
-  itemData: {fileID: 11400000, guid: 72b0e1e7a399e87478feeee92c132192, type: 2}
+  resourceData: {fileID: 11400000, guid: 72b0e1e7a399e87478feeee92c132192, type: 2}
   thicknessProperty: _OutlineThickness
   colorProperty: _OutlineColor
   highlightThickness: 1.15

@@ -230,7 +230,7 @@ MonoBehaviour:
   _animator: {fileID: 6464128004846700211}
   _groundMask:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 704
   _groundCheck: {fileID: 5405421735785248261}
   _speed: 9
   _turnSpeed: 165
@@ -255,6 +255,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
   placement: {fileID: 2555966904752584968}
   pumpPrefab: {fileID: 8005319921480430843, guid: 2975f2279f777cd45a5d4188c2299996, type: 3}
+  startWithPump: 1
+  pumpTag: Pump
   debugLogs: 1
 --- !u!114 &5902364194146086484
 MonoBehaviour:
@@ -303,7 +305,7 @@ MonoBehaviour:
     m_Bits: 64
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 640
   shipMask:
     serializedVersion: 2
     m_Bits: 256

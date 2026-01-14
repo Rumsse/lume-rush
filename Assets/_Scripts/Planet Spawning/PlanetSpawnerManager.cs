@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlanetSpawnerManager : MonoBehaviour
 {
     #region Inspector
+
     public List<CelestialBodySettings> presets = new List<CelestialBodySettings>();
     public int spawnCount = 5;
     public float spawnRadius = 200f;
@@ -16,16 +17,18 @@ public class PlanetSpawnerManager : MonoBehaviour
 
     [Header("Gravity / Tag / Layer")]
     public bool addGravityArea = true;
-    [Min(0.01f)] public float gravityAreaMultiplier = 1.5f; // sphere collider radius in local (will be scaled by planet scale)
+    [Min(0.01f)] public float gravityAreaMultiplier = 1.5f;
     public bool gravityAreaIsTrigger = true;
     public string gravityComponentTypeName = "GravityAreaPoint";
     public string planetTag = "Planet";
     public string planetLayerName = "Planet";
+
     #endregion
 
     void Start() => SpawnAll();
 
     #region Spawning
+
     public void SpawnAll()
     {
         if (presets == null || presets.Count == 0 || spawnCount <= 0) return;
@@ -57,13 +60,11 @@ public class PlanetSpawnerManager : MonoBehaviour
         generator.resolutionSettings = new CelestialBodyGenerator.ResolutionSettings();
         generator.body = runtimeSettings;
 
-        // tag & layer on planet root
         try { go.tag = planetTag; } catch { Debug.LogWarning($"Tag '{planetTag}' not found. Set tag manually."); }
         int layer = LayerMask.NameToLayer(planetLayerName);
         if (layer >= 0) go.layer = layer;
         else Debug.LogWarning($"Layer '{planetLayerName}' not found. Set layer manually.");
 
-        // add child gravity area as SphereCollider + optional gravity script
         if (addGravityArea)
         {
             var gravityGO = new GameObject("Gravity Area");
@@ -76,19 +77,18 @@ public class PlanetSpawnerManager : MonoBehaviour
             sc.isTrigger = gravityAreaIsTrigger;
             sc.radius = gravityAreaMultiplier;
 
-            // ensure child uses same layer as planet
             gravityGO.layer = go.layer;
-
-            // then reset child layer to Default so only parent keeps Planet layer
             gravityGO.layer = 0;
 
-            // try to attach gravity component by type name (reflection fallback)
             var type = System.Type.GetType(gravityComponentTypeName) ?? System.Type.GetType($"{gravityComponentTypeName},Assembly-CSharp");
             if (type != null && typeof(Component).IsAssignableFrom(type))
                 gravityGO.AddComponent(type);
             else
                 Debug.LogWarning($"Gravity component '{gravityComponentTypeName}' not found. Add it to the project or change the name in the spawner.");
         }
+
+        var resGen = go.AddComponent<ResourceGenerator>();
+        resGen.ConfigureForPlanet(go.transform, runtimeSettings.resourceConfig);
 
         StartCoroutine(EnsureGeneratorVisible(generator));
 
@@ -122,5 +122,6 @@ public class PlanetSpawnerManager : MonoBehaviour
         if (generator != null)
             generator.SetLOD(0);
     }
+
     #endregion
 }

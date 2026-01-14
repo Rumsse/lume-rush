@@ -1,16 +1,27 @@
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(InteractionDetector))]
 public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 {
-    InteractionDetector interactionDetector;
-    SpaceShipStorage nearbyShipStorage;
+    #region Properties 
+
+    public static Action<bool> PumpStateChanged;
+    public static bool HasPumpGlobal;
+    public bool HasPump => hasPump;
 
     [SerializeField] PlacementController placement;
     [SerializeField] GameObject pumpPrefab;
     [SerializeField] bool startWithPump = true;
     [SerializeField] string pumpTag = "Pump";
     [SerializeField] bool debugLogs = true;
+
+    InteractionDetector interactionDetector;
+    SpaceShipStorage nearbyShipStorage;
+
+    #endregion
+
+    #region State
 
     bool hasPump;
     bool pumpUsedUp;
@@ -21,12 +32,17 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
     LongerInteractable collectingTarget;
     float collectTimer;
 
+    #endregion
+
+    #region Unity Callbacks
+
     void Awake()
     {
         interactionDetector = GetComponent<InteractionDetector>();
         if (!placement) placement = GetComponent<PlacementController>();
         if (!placement) placement = FindFirstObjectByType<PlacementController>();
         hasPump = startWithPump;
+        NotifyPumpState();
     }
 
     void Update()
@@ -58,6 +74,20 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         if (Input.GetKeyDown(KeyCode.Q) && nearbyShipStorage != null) nearbyShipStorage.DebugShipInventory();
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("SpaceShip")) nearbyShipStorage = other.GetComponent<SpaceShipStorage>();
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("SpaceShip")) nearbyShipStorage = null;
+    }
+
+    #endregion
+
+    #region Interaction
+
     void ImmediatePickUp(Interactable interactable)
     {
         var go = interactable.gameObject;
@@ -69,19 +99,20 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
             hasPump = true;
             if (placedPump == go) placedPump = null;
             go.SetActive(false);
+            NotifyPumpState();
             if (debugLogs) Debug.Log($"[PI] Picked up pump fuel={carriedPumpFuel}");
             return;
         }
 
-        var itemData = interactable.itemData;
-        if (itemData == null) return;
+        var resourceData = interactable.resourceData;
+        if (resourceData == null) return;
 
-        if (ToolbarManager.Instance.AddItem(itemData.itemName, itemData.itemIcon))
+        if (ToolbarManager.Instance.AddResource(resourceData.resourceName, resourceData.resourceIcon))
         {
             go.SetActive(false);
-            if (debugLogs) Debug.Log($"[PI] Picked up: {itemData.itemName}");
+            if (debugLogs) Debug.Log($"[PI] Picked up: {resourceData.resourceName}");
         }
-        else if (debugLogs) Debug.Log($"[PI] Toolbar full for: {itemData.itemName}");
+        else if (debugLogs) Debug.Log($"[PI] Toolbar full for: {resourceData.resourceName}");
     }
 
     void BeginCollect(LongerInteractable target)
@@ -106,15 +137,16 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
             hasPump = true;
             if (placedPump == go) placedPump = null;
             go.SetActive(false);
+            NotifyPumpState();
             if (debugLogs) Debug.Log($"[PI] Timed collect pump fuel={carriedPumpFuel}");
         }
         else
         {
-            var itemData = collectingTarget.itemData;
-            if (itemData != null && ToolbarManager.Instance.AddItem(itemData.itemName, itemData.itemIcon))
+            var resourceData = collectingTarget.resourceData;
+            if (resourceData != null && ToolbarManager.Instance.AddResource(resourceData.resourceName, resourceData.resourceIcon))
             {
                 go.SetActive(false);
-                if (debugLogs) Debug.Log($"[PI] Timed collect: {itemData.itemName}");
+                if (debugLogs) Debug.Log($"[PI] Timed collect: {resourceData.resourceName}");
             }
             else if (debugLogs) Debug.Log("[PI] Timed collect failed");
         }
@@ -130,6 +162,10 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         if (debugLogs) Debug.Log("[PI] Cancel timed collect");
     }
 
+    #endregion
+
+    #region Ship Storage
+
     void DepositItemsToShip()
     {
         var toolbarSlots = ToolbarManager.Instance.GetSlots();
@@ -142,9 +178,14 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
             pumpUsedUp = true;
             hasPump = false;
             placedPump = null;
+            NotifyPumpState();
             if (debugLogs) Debug.Log("[PI] Deposited pump fuel; pump disabled for future placement");
         }
     }
+
+    #endregion
+
+    #region Pump Placement
 
     void BeginPumpPlacement()
     {
@@ -166,16 +207,16 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         var collector = instance.GetComponent<PumpFuelCollector>();
         if (collector) collector.BeginCollect();
 
+        NotifyPumpState();
         if (debugLogs) Debug.Log("[PI] Pump placed");
     }
 
-    void OnTriggerEnter(Collider other)
+    void NotifyPumpState()
     {
-        if (other.CompareTag("SpaceShip")) nearbyShipStorage = other.GetComponent<SpaceShipStorage>();
+        HasPumpGlobal = hasPump;
+        PumpStateChanged?.Invoke(hasPump);
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("SpaceShip")) nearbyShipStorage = null;
-    }
+    #endregion
+
 }

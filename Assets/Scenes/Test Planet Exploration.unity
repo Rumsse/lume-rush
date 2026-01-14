@@ -119,6 +119,81 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &40030725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 40030726}
+  - component: {fileID: 40030728}
+  - component: {fileID: 40030727}
+  m_Layer: 5
+  m_Name: Pump
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &40030726
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40030725}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5810107, y: 0.701619, z: 0.701619}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 732625004}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &40030727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40030725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.090087116, g: 0.080366686, b: 0.13207549, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &40030728
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40030725}
+  m_CullTransparentMesh: 1
 --- !u!1 &313476935
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,6 +443,7 @@ GameObject:
   - component: {fileID: 646939306}
   - component: {fileID: 646939305}
   - component: {fileID: 646939304}
+  - component: {fileID: 646939308}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -404,10 +480,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -451,6 +527,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1534221619}
+  - {fileID: 732625004}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -458,6 +535,95 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &646939308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 646939303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88c7528a7381f7b40a70d946ffefd983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIController
+  pumpIcon: {fileID: 732625003}
+--- !u!1 &732625003
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 732625004}
+  - component: {fileID: 732625007}
+  - component: {fileID: 732625006}
+  m_Layer: 5
+  m_Name: Pump
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &732625004
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732625003}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.87499, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 40030726}
+  m_Father: {fileID: 646939307}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -863, y: -443}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &732625006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732625003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.24705884, g: 0.24705884, b: 0.24705884, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &732625007
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732625003}
+  m_CullTransparentMesh: 1
 --- !u!1 &841687799
 GameObject:
   m_ObjectHideFlags: 0
@@ -5618,9 +5784,9 @@ MonoBehaviour:
   playerPrefab: {fileID: 296901486032930419, guid: 4035ee3a776b52c43bc75d26d299f7af, type: 3}
   shipPrefab: {fileID: 4254210452362608757, guid: ffb50c5327422e84eaa8d4b75c425c6d, type: 3}
   spawnOffset: 0.5
-  collisionCheckRadius: 0.5
+  collisionCheckRadius: 0.23
   shipSpawnDistance: 1
-  shipHeightAboveSurface: 2
+  shipHeightAboveSurface: 3
   maxSearchAttempts: 50
 --- !u!1 &1487426881
 GameObject:
@@ -5652,7 +5818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlanetSpawnerManager
   presets:
-  - {fileID: 11400000, guid: 74252b8e50f38f2419d99d6882b4bf3c, type: 2}
+  - {fileID: 11400000, guid: 2e906eb5b6146594ab36af443a126cfc, type: 2}
   spawnCount: 1
   spawnRadius: 1
   scaleRange: {x: 25, y: 32}
@@ -5696,7 +5862,7 @@ GameObject:
   - component: {fileID: 1534221621}
   - component: {fileID: 1534221620}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5849,12 +6015,12 @@ GameObject:
   - component: {fileID: 1641459696}
   - component: {fileID: 1641459697}
   m_Layer: 0
-  m_Name: Resource Spawner
+  m_Name: Resource Spawner - only for testing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1641459696
 Transform:
   m_ObjectHideFlags: 0
@@ -5882,13 +6048,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b8739ae7483128499e132a39dc2999f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceGenerator
+  config: {fileID: 11400000, guid: a2fa9b3e0ec26784a960f9c96de253e5, type: 2}
   planetTag: Planet
-  resourcePrefabs:
-  - {fileID: 3303876102699440384, guid: 216c7ac0211ebff4fa5f25213d3bd2fe, type: 3}
-  - {fileID: 3303876102699440384, guid: 2067cf2a4a8dd944391eab922f5764d7, type: 3}
-  numberOfResources: 40
-  spawnOffset: 0.5
-  collisionCheckRadius: 1
+  resources:
+  - prefab: {fileID: 3303876102699440384, guid: 216c7ac0211ebff4fa5f25213d3bd2fe, type: 3}
+    count: 70
+    alignAxis: 2
+    offset: 0.44
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 3303876102699440384, guid: 2067cf2a4a8dd944391eab922f5764d7, type: 3}
+    count: 10
+    alignAxis: 0
+    offset: 1
+    avoidWater: 1
+    initialized: 1
+  props:
+  - prefab: {fileID: 6560850403121340390, guid: 7635ca88c243f174d9d91095d551c7bc, type: 3}
+    count: 20
+    alignAxis: 5
+    offset: 0.28
+    avoidWater: 0
+    initialized: 1
+  - prefab: {fileID: 3665985450732430756, guid: 719e3c47227962941b16320d368c4e1d, type: 3}
+    count: 4
+    alignAxis: 0
+    offset: 0
+    avoidWater: 0
+    initialized: 1
+  - prefab: {fileID: 7081744774346349682, guid: 39840d882e7332246b330857f3687502, type: 3}
+    count: 7
+    alignAxis: 4
+    offset: 0.1
+    avoidWater: 0
+    initialized: 1
+  collisionCheckRadius: 1.5
+  rotationAdjustment: {x: 0, y: 180, z: 0}
+  waterMargin: 0.05
+  oceanResolveTimeout: 1
+  maxAttemptsPerInstance: 64
+  planetOverride: {fileID: 0}
 --- !u!1 &1900194242
 GameObject:
   m_ObjectHideFlags: 0
