@@ -65,7 +65,7 @@ MonoBehaviour:
   - prefab: {fileID: 2831152402347605785, guid: 53a6ce7ea296db442a92d03a7f4f2160, type: 3}
     count: 2
     alignAxis: 2
-    offset: 0
+    offset: -0.12
     avoidWater: 1
     initialized: 1
   - prefab: {fileID: 836178924529284968, guid: b5fc3f73041c0854ea1c171a4c2fd9f5, type: 3}
