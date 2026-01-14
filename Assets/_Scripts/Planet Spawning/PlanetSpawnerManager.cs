@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlanetSpawnerManager : MonoBehaviour
 {
     #region Inspector
+
     public List<CelestialBodySettings> presets = new List<CelestialBodySettings>();
     public int spawnCount = 5;
     public float spawnRadius = 200f;
@@ -21,11 +22,13 @@ public class PlanetSpawnerManager : MonoBehaviour
     public string gravityComponentTypeName = "GravityAreaPoint";
     public string planetTag = "Planet";
     public string planetLayerName = "Planet";
+
     #endregion
 
     void Start() => SpawnAll();
 
     #region Spawning
+
     public void SpawnAll()
     {
         if (presets == null || presets.Count == 0 || spawnCount <= 0) return;
@@ -119,5 +122,6 @@ public class PlanetSpawnerManager : MonoBehaviour
         if (generator != null)
             generator.SetLOD(0);
     }
+
     #endregion
 }

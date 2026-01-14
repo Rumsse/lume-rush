@@ -4,26 +4,26 @@ using UnityEngine.UIElements;
 public class ToolbarSlot
 {
     public VisualElement slotElement;
-    public string currentItemName;
-    public Sprite currentItemIcon;
+    public string currentResourceName;
+    public Sprite currentResourceIcon;
 
     public ToolbarSlot(VisualElement element)
     {
         slotElement = element;
-        currentItemName = null;
-        currentItemIcon = null;
+        currentResourceName = null;
+        currentResourceIcon = null;
     }
 
-    public void SetItem(string itemName, Sprite itemIcon)
+    public void SetItem(string resourceName, Sprite resourceIcon)
     {
-        currentItemName = itemName;
-        currentItemIcon = itemIcon;
+        currentResourceName = resourceName;
+        currentResourceIcon = resourceIcon;
 
         var icon = slotElement.Q<VisualElement>("Icon");
 
-        if (itemIcon != null)
+        if (resourceIcon != null)
         {
-            icon.style.backgroundImage = new StyleBackground(itemIcon.texture);
+            icon.style.backgroundImage = new StyleBackground(resourceIcon.texture);
             icon.visible = true;
         }
         else
@@ -34,8 +34,8 @@ public class ToolbarSlot
 
     public void Clear()
     {
-        currentItemName = null;
-        currentItemIcon = null;
+        currentResourceName = null;
+        currentResourceIcon = null;
 
         var icon = slotElement.Q<VisualElement>("Icon");
         icon.style.backgroundImage = null;
@@ -44,6 +44,6 @@ public class ToolbarSlot
 
     public bool IsEmpty()
     {
-        return currentItemName == null;
+        return currentResourceName == null;
     }
 }

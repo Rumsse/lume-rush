@@ -3,11 +3,17 @@ using UnityEngine.UI;
 
 public class PumpFuelCollector : MonoBehaviour
 {
+    #region Serialized
+
     [SerializeField] float collectDuration = 30f;
     [SerializeField] int fuelAmount = 1;
     [SerializeField] GameObject sliderPrefab;
     [SerializeField] Vector3 sliderOffset = new Vector3(0f, 1.2f, 0f);
     [SerializeField] bool faceCamera = true;
+
+    #endregion
+
+    #region UI & References
 
     GameObject uiInstance;
     Transform uiTransform;
@@ -15,14 +21,26 @@ public class PumpFuelCollector : MonoBehaviour
     Image fillImage;
     Camera cam;
 
+    #endregion
+
+    #region State
+
     float timer;
     bool collecting;
     bool charged;
     bool producedOnce;
 
+    #endregion
+
+    #region Properties
+
     public bool IsCharged => charged;
     public bool ProducedOnce => producedOnce;
     public int FuelAmount => charged ? fuelAmount : 0;
+
+    #endregion
+
+    #region Unity Callbacks
 
     void Awake() => cam = Camera.main;
 
@@ -38,6 +56,10 @@ public class PumpFuelCollector : MonoBehaviour
 
         if (faceCamera) Billboard();
     }
+
+    #endregion
+
+    #region API
 
     public void BeginCollect()
     {
@@ -59,6 +81,10 @@ public class PumpFuelCollector : MonoBehaviour
         SetUIActive(false);
         return fuelAmount;
     }
+
+    #endregion
+
+    #region UI
 
     void EnsureUI()
     {
@@ -106,4 +132,6 @@ public class PumpFuelCollector : MonoBehaviour
         var toCam = cam.transform.position - uiTransform.position;
         if (toCam.sqrMagnitude > 1e-6f) uiTransform.rotation = Quaternion.LookRotation(-toCam, Vector3.up);
     }
+
+    #endregion
 }

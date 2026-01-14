@@ -22,18 +22,18 @@ public class ToolbarManager : MonoBehaviour
         }
     }
 
-    public bool AddItem(string itemName, Sprite itemIcon)
+    public bool AddResource(string resourceName, Sprite resourceIcon)
     {
         foreach (var slot in slots)
         {
             if (slot.IsEmpty())
             {
-                slot.SetItem(itemName, itemIcon);
-                Debug.Log($"Dodano przedmiot {itemName} do Toolbara.");
+                slot.SetItem(resourceName, resourceIcon);
+                Debug.Log($"Resource added {resourceName} to the Toolbar.");
                 return true;
             }
         }
-        Debug.LogWarning("Brak wolnego slotu w toolbarze!");
+        Debug.LogWarning("No empty slot available in Toolbar!");
         return false;
     }
 

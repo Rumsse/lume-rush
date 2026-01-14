@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a1cb30e76ec2e4bba133c7fa2bcf5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LongerInteractable
-  itemData: {fileID: 11400000, guid: 72b0e1e7a399e87478feeee92c132192, type: 2}
+  resourceData: {fileID: 11400000, guid: 72b0e1e7a399e87478feeee92c132192, type: 2}
   thicknessProperty: _OutlineThickness
   colorProperty: _OutlineColor
   highlightThickness: 1.15

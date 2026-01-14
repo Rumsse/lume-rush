@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be071467e13500409e50d3962068b9e, type: 3}
   m_Name: resource2
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: R2
+  resourceName: R2
   prefab: {fileID: 3303876102699440384, guid: 2067cf2a4a8dd944391eab922f5764d7, type: 3}
-  itemIcon: {fileID: 21300000, guid: 9e51e95ea9deb1e45a33a0c85718da1b, type: 3}
+  resourceIcon: {fileID: 21300000, guid: 9e51e95ea9deb1e45a33a0c85718da1b, type: 3}

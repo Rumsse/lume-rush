@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    public ItemData itemData;
+    public ResourceData resourceData;
 
     [SerializeField] string thicknessProperty = "_OutlineThickness";
     [SerializeField] string colorProperty = "_OutlineColor";
@@ -14,8 +14,8 @@ public class Interactable : MonoBehaviour
     int thicknessId;
     int colorId;
 
-    public string ItemName => itemData?.itemName;
-    public Sprite ItemIcon => itemData?.itemIcon;
+    public string ResourceName => resourceData?.resourceName;
+    public Sprite ResourceIcon => resourceData?.resourceIcon;
     public bool CanBePickedUp => gameObject.activeInHierarchy;
 
     void Awake()

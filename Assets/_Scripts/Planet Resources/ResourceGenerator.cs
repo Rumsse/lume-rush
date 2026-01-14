@@ -6,6 +6,8 @@ using UnityEditor;
 
 public class ResourceGenerator : MonoBehaviour
 {
+    #region Types
+
     public enum AlignAxis { UpY, DownY, ForwardZ, BackwardZ, RightX, LeftX }
 
     [System.Serializable]
@@ -26,23 +28,32 @@ public class ResourceGenerator : MonoBehaviour
         public float radius;
     }
 
+    #endregion
+
+    #region Serialized
+
     [SerializeField] private ResourceGeneratorConfig config;
-
     [SerializeField] private string planetTag = "Planet";
-
     [SerializeField] private SpawnItem[] resources = System.Array.Empty<SpawnItem>();
     [SerializeField] private SpawnItem[] props = System.Array.Empty<SpawnItem>();
-
     [SerializeField] private float collisionCheckRadius = 1.0f;
     [SerializeField] private Vector3 rotationAdjustment = Vector3.zero;
     [SerializeField] private float waterMargin = 0.05f;
     [SerializeField] private float oceanResolveTimeout = 1f;
     [SerializeField] private int maxAttemptsPerInstance = 64;
-
     [SerializeField] private Transform planetOverride;
+
+    #endregion
+
+    #region Runtime
+
     private Transform planet;
     private float planetRadius;
     private OceanInfo ocean;
+
+    #endregion
+
+    #region Unity Callbacks
 
     void Start() => StartCoroutine(WaitForPlanetGeneration());
 
@@ -53,6 +64,10 @@ public class ResourceGenerator : MonoBehaviour
         SyncPreviewFromConfig();
     }
 
+    #endregion
+
+    #region Configuration API
+
     public void ConfigureForPlanet(Transform target, ResourceGeneratorConfig cfg)
     {
         planetOverride = target;
@@ -62,6 +77,10 @@ public class ResourceGenerator : MonoBehaviour
         EditorUtility.SetDirty(this);
 #endif
     }
+
+    #endregion
+
+    #region Generation Flow
 
     IEnumerator WaitForPlanetGeneration()
     {
@@ -177,6 +196,10 @@ public class ResourceGenerator : MonoBehaviour
             _ => Vector3.up
         };
 
+    #endregion
+
+    #region Ocean
+
     IEnumerator ResolveOceanInfoRoutine(float timeout)
     {
         ResolveOceanInfo();
@@ -240,6 +263,10 @@ public class ResourceGenerator : MonoBehaviour
         return false;
     }
 
+    #endregion
+
+    #region Active Config
+
     private SpawnItem[] ActiveResources => config ? config.resources : resources;
     private SpawnItem[] ActiveProps => config ? config.props : props;
 
@@ -250,6 +277,10 @@ public class ResourceGenerator : MonoBehaviour
     private int ActiveMaxAttemptsPerInstance => config ? config.maxAttemptsPerInstance : maxAttemptsPerInstance;
 
     private float ActiveOceanRadiusWithMargin => ocean.radius + ActiveWaterMargin;
+
+    #endregion
+
+    #region Helpers
 
     private void InitDefaults(SpawnItem[] items)
     {
@@ -273,4 +304,6 @@ public class ResourceGenerator : MonoBehaviour
         oceanResolveTimeout = config.oceanResolveTimeout;
         maxAttemptsPerInstance = config.maxAttemptsPerInstance;
     }
+
+    #endregion
 }

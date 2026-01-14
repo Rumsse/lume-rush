@@ -10,14 +10,14 @@ public class ResourceGeneratorEditor : Editor
 
         GUILayout.Space(8);
 
-        if (GUILayout.Button("Zapisz obecn¹ konfiguracjê jako ScriptableObject..."))
+        if (GUILayout.Button("Save current config as SO"))
             CreateConfigFromCurrent();
     }
 
     void CreateConfigFromCurrent()
     {
         var gen = (ResourceGenerator)target;
-        var path = EditorUtility.SaveFilePanelInProject("Utwórz Resource Generator Config", "ResourceGeneratorConfig", "asset", "");
+        var path = EditorUtility.SaveFilePanelInProject("Create Resource Generator Config", "ResourceGeneratorConfig", "asset", "");
         if (string.IsNullOrEmpty(path)) return;
 
         var asset = ScriptableObject.CreateInstance<ResourceGeneratorConfig>();
@@ -45,7 +45,7 @@ public class ResourceGeneratorEditor : Editor
 
         EditorUtility.SetDirty(asset);
         EditorUtility.SetDirty(gen);
-        Debug.Log($"Utworzono i przypisano konfiguracjê: {path}");
+        Debug.Log($"Config has been created and assigned: {path}");
     }
 
     ResourceGenerator.SpawnItem[] CopyItems(SerializedProperty arrayProp)

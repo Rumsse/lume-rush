@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ResourceGeneratorConfig", menuName = "Planets/Resource Generator Config")]
+[CreateAssetMenu(fileName = "ResourceGeneratorConfig", menuName = "Planet/Resource Generator Config")]
 public class ResourceGeneratorConfig : ScriptableObject
 {
     public ResourceGenerator.SpawnItem[] resources;
