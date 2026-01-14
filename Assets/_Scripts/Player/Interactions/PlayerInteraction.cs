@@ -1,8 +1,12 @@
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(InteractionDetector))]
 public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 {
+    public static Action<bool> PumpStateChanged;
+    public static bool HasPumpGlobal;
+
     InteractionDetector interactionDetector;
     SpaceShipStorage nearbyShipStorage;
 
@@ -21,12 +25,15 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
     LongerInteractable collectingTarget;
     float collectTimer;
 
+    public bool HasPump => hasPump;
+
     void Awake()
     {
         interactionDetector = GetComponent<InteractionDetector>();
         if (!placement) placement = GetComponent<PlacementController>();
         if (!placement) placement = FindFirstObjectByType<PlacementController>();
         hasPump = startWithPump;
+        NotifyPumpState();
     }
 
     void Update()
@@ -69,6 +76,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
             hasPump = true;
             if (placedPump == go) placedPump = null;
             go.SetActive(false);
+            NotifyPumpState();
             if (debugLogs) Debug.Log($"[PI] Picked up pump fuel={carriedPumpFuel}");
             return;
         }
@@ -106,6 +114,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
             hasPump = true;
             if (placedPump == go) placedPump = null;
             go.SetActive(false);
+            NotifyPumpState();
             if (debugLogs) Debug.Log($"[PI] Timed collect pump fuel={carriedPumpFuel}");
         }
         else
@@ -142,6 +151,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
             pumpUsedUp = true;
             hasPump = false;
             placedPump = null;
+            NotifyPumpState();
             if (debugLogs) Debug.Log("[PI] Deposited pump fuel; pump disabled for future placement");
         }
     }
@@ -166,6 +176,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         var collector = instance.GetComponent<PumpFuelCollector>();
         if (collector) collector.BeginCollect();
 
+        NotifyPumpState();
         if (debugLogs) Debug.Log("[PI] Pump placed");
     }
 
@@ -177,5 +188,11 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("SpaceShip")) nearbyShipStorage = null;
+    }
+
+    void NotifyPumpState()
+    {
+        HasPumpGlobal = hasPump;
+        PumpStateChanged?.Invoke(hasPump);
     }
 }
