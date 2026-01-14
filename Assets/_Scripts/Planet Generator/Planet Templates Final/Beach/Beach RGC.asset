@@ -22,7 +22,7 @@ MonoBehaviour:
   - prefab: {fileID: 3303876102699440384, guid: 2067cf2a4a8dd944391eab922f5764d7, type: 3}
     count: 20
     alignAxis: 0
-    offset: 1.9
+    offset: 1
     avoidWater: 1
     initialized: 1
   props:

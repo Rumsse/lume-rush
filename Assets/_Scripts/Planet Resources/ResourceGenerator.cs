@@ -1,16 +1,12 @@
 using System.Collections;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class ResourceGenerator : MonoBehaviour
 {
-    #region Types
-
-    public enum AlignAxis
-    {
-        UpY, DownY,
-        ForwardZ, BackwardZ,
-        RightX, LeftX
-    }
+    public enum AlignAxis { UpY, DownY, ForwardZ, BackwardZ, RightX, LeftX }
 
     [System.Serializable]
     public struct SpawnItem
@@ -30,25 +26,12 @@ public class ResourceGenerator : MonoBehaviour
         public float radius;
     }
 
-    #endregion
-
-
-    #region Config Reference
-
     [SerializeField] private ResourceGeneratorConfig config;
-
-    #endregion
-
-
-    #region Local Fallback (used if Config is not assigned)
 
     [SerializeField] private string planetTag = "Planet";
 
-    [Header("Resources")]
-    [SerializeField] private SpawnItem[] resources;
-
-    [Header("Props")]
-    [SerializeField] private SpawnItem[] props;
+    [SerializeField] private SpawnItem[] resources = System.Array.Empty<SpawnItem>();
+    [SerializeField] private SpawnItem[] props = System.Array.Empty<SpawnItem>();
 
     [SerializeField] private float collisionCheckRadius = 1.0f;
     [SerializeField] private Vector3 rotationAdjustment = Vector3.zero;
@@ -56,21 +39,29 @@ public class ResourceGenerator : MonoBehaviour
     [SerializeField] private float oceanResolveTimeout = 1f;
     [SerializeField] private int maxAttemptsPerInstance = 64;
 
-    #endregion
-
-
-    #region State
-
+    [SerializeField] private Transform planetOverride;
     private Transform planet;
     private float planetRadius;
     private OceanInfo ocean;
 
-    #endregion
-
-
-    #region Lifecycle
-
     void Start() => StartCoroutine(WaitForPlanetGeneration());
+
+    void OnValidate()
+    {
+        InitDefaults(resources);
+        InitDefaults(props);
+        SyncPreviewFromConfig();
+    }
+
+    public void ConfigureForPlanet(Transform target, ResourceGeneratorConfig cfg)
+    {
+        planetOverride = target;
+        config = cfg;
+        SyncPreviewFromConfig();
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+#endif
+    }
 
     IEnumerator WaitForPlanetGeneration()
     {
@@ -85,21 +76,17 @@ public class ResourceGenerator : MonoBehaviour
         SpawnPrefabs(ActiveProps);
     }
 
-    void OnValidate()
-    {
-        InitDefaults(resources);
-        InitDefaults(props);
-    }
-
-    #endregion
-
-
-    #region Generation
-
     private void FindPlanet()
     {
+        if (planetOverride)
+        {
+            planet = planetOverride;
+            planetRadius = CalculatePlanetRadius(planet);
+            return;
+        }
+
         var planetObject = GameObject.FindGameObjectWithTag(planetTag);
-        if (planetObject == null) return;
+        if (!planetObject) return;
 
         planet = planetObject.transform;
         planetRadius = CalculatePlanetRadius(planet);
@@ -108,7 +95,7 @@ public class ResourceGenerator : MonoBehaviour
     private float CalculatePlanetRadius(Transform target)
     {
         var renderer = target.GetComponentInChildren<MeshRenderer>();
-        if (renderer == null) return 0f;
+        if (!renderer) return 0f;
 
         var b = renderer.bounds;
         return Mathf.Max(b.extents.x, b.extents.y, b.extents.z);
@@ -122,7 +109,7 @@ public class ResourceGenerator : MonoBehaviour
 
     private void SpawnPrefabInstances(SpawnItem item)
     {
-        if (item.prefab == null || item.count <= 0) return;
+        if (!item.prefab || item.count <= 0) return;
 
         int spawned = 0;
         int attempts = 0;
@@ -190,11 +177,6 @@ public class ResourceGenerator : MonoBehaviour
             _ => Vector3.up
         };
 
-    #endregion
-
-
-    #region Ocean
-
     IEnumerator ResolveOceanInfoRoutine(float timeout)
     {
         ResolveOceanInfo();
@@ -216,7 +198,7 @@ public class ResourceGenerator : MonoBehaviour
         ocean = default;
 
         var generator = planet ? planet.GetComponentInParent<CelestialBodyGenerator>() : null;
-        if (generator != null)
+        if (generator)
         {
             ocean.centre = generator.transform.position;
             ocean.radius = generator.GetOceanRadius();
@@ -258,11 +240,6 @@ public class ResourceGenerator : MonoBehaviour
         return false;
     }
 
-    #endregion
-
-
-    #region Active Config Accessors
-
     private SpawnItem[] ActiveResources => config ? config.resources : resources;
     private SpawnItem[] ActiveProps => config ? config.props : props;
 
@@ -276,6 +253,7 @@ public class ResourceGenerator : MonoBehaviour
 
     private void InitDefaults(SpawnItem[] items)
     {
+        if (items == null) return;
         for (int i = 0; i < items.Length; i++)
             if (!items[i].initialized)
             {
@@ -284,5 +262,15 @@ public class ResourceGenerator : MonoBehaviour
             }
     }
 
-    #endregion
+    private void SyncPreviewFromConfig()
+    {
+        if (!config) return;
+        resources = config.resources ?? System.Array.Empty<SpawnItem>();
+        props = config.props ?? System.Array.Empty<SpawnItem>();
+        collisionCheckRadius = config.collisionCheckRadius;
+        rotationAdjustment = config.rotationAdjustment;
+        waterMargin = config.waterMargin;
+        oceanResolveTimeout = config.oceanResolveTimeout;
+        maxAttemptsPerInstance = config.maxAttemptsPerInstance;
+    }
 }

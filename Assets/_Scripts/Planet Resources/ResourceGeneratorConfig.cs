@@ -3,8 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ResourceGeneratorConfig", menuName = "Planets/Resource Generator Config")]
 public class ResourceGeneratorConfig : ScriptableObject
 {
-    #region Data
-
     public ResourceGenerator.SpawnItem[] resources;
     public ResourceGenerator.SpawnItem[] props;
 
@@ -13,11 +11,6 @@ public class ResourceGeneratorConfig : ScriptableObject
     public float waterMargin = 0.05f;
     public float oceanResolveTimeout = 1f;
     public int maxAttemptsPerInstance = 64;
-
-    #endregion
-
-
-    #region Validation
 
     void OnValidate()
     {
@@ -35,6 +28,4 @@ public class ResourceGeneratorConfig : ScriptableObject
                 items[i].initialized = true;
             }
     }
-
-    #endregion
 }
