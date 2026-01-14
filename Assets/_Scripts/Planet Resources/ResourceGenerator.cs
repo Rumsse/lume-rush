@@ -33,7 +33,14 @@ public class ResourceGenerator : MonoBehaviour
     #endregion
 
 
-    #region Config
+    #region Config Reference
+
+    [SerializeField] private ResourceGeneratorConfig config;
+
+    #endregion
+
+
+    #region Local Fallback (used if Config is not assigned)
 
     [SerializeField] private string planetTag = "Planet";
 
@@ -45,11 +52,8 @@ public class ResourceGenerator : MonoBehaviour
 
     [SerializeField] private float collisionCheckRadius = 1.0f;
     [SerializeField] private Vector3 rotationAdjustment = Vector3.zero;
-
-    [Header("Water")]
     [SerializeField] private float waterMargin = 0.05f;
     [SerializeField] private float oceanResolveTimeout = 1f;
-
     [SerializeField] private int maxAttemptsPerInstance = 64;
 
     #endregion
@@ -75,10 +79,10 @@ public class ResourceGenerator : MonoBehaviour
         FindPlanet();
         if (planet == null) yield break;
 
-        if (AnyItemAvoidsWater()) yield return ResolveOceanInfoRoutine(oceanResolveTimeout);
+        if (AnyItemAvoidsWater()) yield return ResolveOceanInfoRoutine(ActiveOceanResolveTimeout);
 
-        SpawnPrefabs(resources);
-        SpawnPrefabs(props);
+        SpawnPrefabs(ActiveResources);
+        SpawnPrefabs(ActiveProps);
     }
 
     void OnValidate()
@@ -122,8 +126,9 @@ public class ResourceGenerator : MonoBehaviour
 
         int spawned = 0;
         int attempts = 0;
+        int maxAttempts = item.count * Mathf.Max(1, ActiveMaxAttemptsPerInstance);
 
-        while (spawned < item.count && attempts < item.count * Mathf.Max(1, maxAttemptsPerInstance))
+        while (spawned < item.count && attempts < maxAttempts)
         {
             attempts++;
 
@@ -133,7 +138,7 @@ public class ResourceGenerator : MonoBehaviour
 
             var align = Quaternion.FromToRotation(AxisToVector(item.alignAxis), normal);
             var randomAroundNormal = Quaternion.AngleAxis(Random.Range(0f, 360f), normal);
-            var finalRotation = randomAroundNormal * align * Quaternion.Euler(rotationAdjustment);
+            var finalRotation = randomAroundNormal * align * Quaternion.Euler(ActiveRotationAdjustment);
 
             Instantiate(item.prefab, spawnPosition, finalRotation, planet);
             spawned++;
@@ -166,7 +171,7 @@ public class ResourceGenerator : MonoBehaviour
 
     private bool IsPositionOccupied(Vector3 position)
     {
-        var colliders = Physics.OverlapSphere(position, collisionCheckRadius);
+        var colliders = Physics.OverlapSphere(position, ActiveCollisionCheckRadius);
         for (int i = 0; i < colliders.Length; i++)
             if (colliders[i].CompareTag("Resource") || colliders[i].CompareTag("Prop")) return true;
 
@@ -237,19 +242,37 @@ public class ResourceGenerator : MonoBehaviour
     {
         if (!ocean.available) return false;
         var d = Vector3.Distance(worldPoint, ocean.centre);
-        return d <= ocean.radius + waterMargin;
+        return d <= ActiveOceanRadiusWithMargin;
     }
 
     private bool AnyItemAvoidsWater()
     {
-        for (int i = 0; i < resources.Length; i++)
-            if (resources[i].avoidWater) return true;
+        var r = ActiveResources;
+        for (int i = 0; i < r.Length; i++)
+            if (r[i].avoidWater) return true;
 
-        for (int i = 0; i < props.Length; i++)
-            if (props[i].avoidWater) return true;
+        var p = ActiveProps;
+        for (int i = 0; i < p.Length; i++)
+            if (p[i].avoidWater) return true;
 
         return false;
     }
+
+    #endregion
+
+
+    #region Active Config Accessors
+
+    private SpawnItem[] ActiveResources => config ? config.resources : resources;
+    private SpawnItem[] ActiveProps => config ? config.props : props;
+
+    private float ActiveCollisionCheckRadius => config ? config.collisionCheckRadius : collisionCheckRadius;
+    private Vector3 ActiveRotationAdjustment => config ? config.rotationAdjustment : rotationAdjustment;
+    private float ActiveWaterMargin => config ? config.waterMargin : waterMargin;
+    private float ActiveOceanResolveTimeout => config ? config.oceanResolveTimeout : oceanResolveTimeout;
+    private int ActiveMaxAttemptsPerInstance => config ? config.maxAttemptsPerInstance : maxAttemptsPerInstance;
+
+    private float ActiveOceanRadiusWithMargin => ocean.radius + ActiveWaterMargin;
 
     private void InitDefaults(SpawnItem[] items)
     {
