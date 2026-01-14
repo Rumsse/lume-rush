@@ -3,22 +3,54 @@ using UnityEngine;
 
 public class ResourceGenerator : MonoBehaviour
 {
+    #region Types
+
+    public enum AlignAxis
+    {
+        UpY, DownY,
+        ForwardZ, BackwardZ,
+        RightX, LeftX
+    }
+
+    [System.Serializable]
+    public struct SpawnItem
+    {
+        public GameObject prefab;
+        public int count;
+        public AlignAxis alignAxis;
+        public bool useCustomOffset;
+        public float offset;
+    }
+
+    #endregion
+
+
+    #region Config
+
     [SerializeField] private string planetTag = "Planet";
 
     [Header("Resources")]
-    [SerializeField] private GameObject[] resourcePrefabs;
-    [SerializeField] private int[] resourceCounts;
+    [SerializeField] private SpawnItem[] resources;
 
     [Header("Props")]
-    [SerializeField] private GameObject[] propPrefabs;
-    [SerializeField] private int[] propCounts;
+    [SerializeField] private SpawnItem[] props;
 
     [SerializeField] private float spawnOffset = 0.5f;
     [SerializeField] private float collisionCheckRadius = 1.0f;
     [SerializeField] private Vector3 rotationAdjustment = Vector3.zero;
 
+    #endregion
+
+
+    #region State
+
     private Transform planet;
     private float planetRadius;
+
+    #endregion
+
+
+    #region Lifecycle
 
     void Start() => StartCoroutine(WaitForPlanetGeneration());
 
@@ -29,9 +61,14 @@ public class ResourceGenerator : MonoBehaviour
         FindPlanet();
         if (planet == null) yield break;
 
-        SpawnPrefabs(resourcePrefabs, resourceCounts);
-        SpawnPrefabs(propPrefabs, propCounts);
+        SpawnPrefabs(resources);
+        SpawnPrefabs(props);
     }
+
+    #endregion
+
+
+    #region Generation
 
     private void FindPlanet()
     {
@@ -42,69 +79,86 @@ public class ResourceGenerator : MonoBehaviour
         planetRadius = CalculatePlanetRadius(planet);
     }
 
-    private float CalculatePlanetRadius(Transform planet)
+    private float CalculatePlanetRadius(Transform target)
     {
-        var renderer = planet.GetComponentInChildren<MeshRenderer>();
+        var renderer = target.GetComponentInChildren<MeshRenderer>();
         if (renderer == null) return 0f;
 
         var bounds = renderer.bounds;
         return Mathf.Max(bounds.extents.x, bounds.extents.y, bounds.extents.z);
     }
 
-    private void SpawnPrefabs(GameObject[] prefabs, int[] counts)
+    private void SpawnPrefabs(SpawnItem[] items)
     {
-        for (int i = 0; i < prefabs.Length; i++)
-        {
-            int toSpawn = counts.Length > i ? counts[i] : 0;
-            SpawnPrefabInstances(prefabs[i], toSpawn);
-        }
+        for (int i = 0; i < items.Length; i++)
+            SpawnPrefabInstances(items[i]);
     }
 
-    private void SpawnPrefabInstances(GameObject prefab, int count)
+    private void SpawnPrefabInstances(SpawnItem item)
     {
+        if (item.prefab == null || item.count <= 0) return;
+
+        var offset = item.useCustomOffset ? item.offset : spawnOffset;
         int spawned = 0;
 
-        while (spawned < count)
+        while (spawned < item.count)
         {
-            if (TryGetRandomPointOnPlanet(out Vector3 spawnPosition, out Quaternion spawnRotation)
-                && !IsPositionOccupied(spawnPosition))
-            {
-                Quaternion adjustedRotation = spawnRotation * Quaternion.Euler(rotationAdjustment);
+            if (!TryGetRandomPointOnPlanet(offset, out Vector3 spawnPosition, out Vector3 normal)
+                || IsPositionOccupied(spawnPosition)) continue;
 
-                Instantiate(prefab, spawnPosition, adjustedRotation, planet);
-                spawned++;
-            }
+            var align = Quaternion.FromToRotation(AxisToVector(item.alignAxis), normal);
+            var randomAroundNormal = Quaternion.AngleAxis(Random.Range(0f, 360f), normal);
+            var finalRotation = randomAroundNormal * align * Quaternion.Euler(rotationAdjustment);
+
+            Instantiate(item.prefab, spawnPosition, finalRotation, planet);
+            spawned++;
         }
     }
 
-    private bool TryGetRandomPointOnPlanet(out Vector3 spawnPosition, out Quaternion spawnRotation)
+    private bool TryGetRandomPointOnPlanet(float offset, out Vector3 spawnPosition, out Vector3 normal)
     {
         var randomDirection = Random.onUnitSphere;
-        var rayOrigin = planet.position + randomDirection * (planetRadius + spawnOffset);
+        var rayOrigin = planet.position + randomDirection * (planetRadius + offset);
 
         if (Physics.Raycast(rayOrigin, -randomDirection, out var hit, Mathf.Infinity))
         {
-            if (hit.collider.transform == planet || hit.collider.transform.IsChildOf(planet))
+            if (hit.collider.transform != planet && !hit.collider.transform.IsChildOf(planet))
             {
-                spawnPosition = hit.point + hit.normal * spawnOffset;
-                spawnRotation = Quaternion.LookRotation(hit.normal);
-                return true;
+                spawnPosition = Vector3.zero;
+                normal = Vector3.up;
+                return false;
             }
+
+            spawnPosition = hit.point + hit.normal * offset;
+            normal = hit.normal;
+            return true;
         }
 
         spawnPosition = Vector3.zero;
-        spawnRotation = Quaternion.identity;
+        normal = Vector3.up;
         return false;
     }
 
     private bool IsPositionOccupied(Vector3 position)
     {
         var colliders = Physics.OverlapSphere(position, collisionCheckRadius);
-        foreach (var collider in colliders)
-        {
-            if (collider.CompareTag("Resource") || collider.CompareTag("Prop")) return true;
-        }
+        for (int i = 0; i < colliders.Length; i++)
+            if (colliders[i].CompareTag("Resource") || colliders[i].CompareTag("Prop")) return true;
 
         return false;
     }
+
+    private static Vector3 AxisToVector(AlignAxis axis) =>
+        axis switch
+        {
+            AlignAxis.UpY => Vector3.up,
+            AlignAxis.DownY => Vector3.down,
+            AlignAxis.ForwardZ => Vector3.forward,
+            AlignAxis.BackwardZ => Vector3.back,
+            AlignAxis.RightX => Vector3.right,
+            AlignAxis.LeftX => Vector3.left,
+            _ => Vector3.up
+        };
+
+    #endregion
 }
