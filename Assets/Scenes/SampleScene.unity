@@ -782,6 +782,14 @@ MonoBehaviour:
     m_Bits: 4294967295
   collisionRadius: 0.35
   collisionOffset: 0.25
+  jumpDistanceMultiplier: 0.6
+  jumpExtraHeight: 0.8
+  jumpPitchAdd: 12
+  jumpDetectThreshold: 0.6
+  jumpTransitionSpeed: 6
+  jumpLookTarget: {fileID: 0}
+  useJumpLookTarget: 1
+  lookSmoothTime: 0.18
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,7 +1228,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12df97549712a5c4992b0df0889839a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerMargin: 0.02
   gravityRadiusMultiplier: 40.3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
