@@ -532,9 +532,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlanetSelectionManager
   starPrefab: {fileID: 4898414140566128282, guid: 7360992a0309afa4dbf2ea256d0e4149, type: 3}
+  planetPrefab: {fileID: 4898414140566128282, guid: 6c44578bec3d89a45a10c224c109b793, type: 3}
   planetUIPrefab: {fileID: 2857043314938098029, guid: 68c32a3a7ecd4114d899405c7e574ff8, type: 3}
   starParent: {fileID: 1946460694}
   planetsParentUI: {fileID: 1177373724}
+  orbitRange: {x: 30, y: 100}
   mainPlanetPreset: {fileID: 11400000, guid: 2e906eb5b6146594ab36af443a126cfc, type: 2}
   otherPlanetPresets:
   - {fileID: 11400000, guid: 74252b8e50f38f2419d99d6882b4bf3c, type: 2}
@@ -543,8 +545,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2a1cb691b0ffc49b4b8ca5edf4fb2044, type: 2}
   - {fileID: 11400000, guid: d127c8c2ea8c946d29d60dbd0028681a, type: 2}
   planetCount: 6
-  minOrbitDistance: 50
-  maxOrbitDistance: 200
 --- !u!4 &1527868712
 Transform:
   m_ObjectHideFlags: 0
@@ -646,13 +646,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1919270927}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12625693, y: -0, z: -0, w: 0.9919976}
-  m_LocalPosition: {x: 0, y: 49, z: -232}
+  m_LocalRotation: {x: 0.36405385, y: -0, z: -0, w: 0.9313779}
+  m_LocalPosition: {x: 0, y: 79.5, z: -92.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 14.507, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 42.699, y: 0, z: 0}
 --- !u!114 &1919270931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -723,7 +723,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.77019, y: 0.77019, z: 0.77019}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
