@@ -15,7 +15,6 @@ public class PlanetSpawnerManager : MonoBehaviour
     public int seedMax = int.MaxValue - 1;
     public bool parentUnderThis = true;
 
-    [Header("Gravity / Tag / Layer")]
     public bool addGravityArea = true;
     [Min(0.01f)] public float gravityAreaMultiplier = 1.5f;
     public bool gravityAreaIsTrigger = true;

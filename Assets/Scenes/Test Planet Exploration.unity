@@ -700,6 +700,120 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 732625003}
   m_CullTransparentMesh: 1
+--- !u!1 &804913363
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 804913365}
+  - component: {fileID: 804913364}
+  m_Layer: 0
+  m_Name: Resource Generator for Testing only
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &804913364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804913363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b8739ae7483128499e132a39dc2999f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ResourceGenerator
+  config: {fileID: 11400000, guid: bd459be59e77b5e4e9d6d1c880dd4e64, type: 2}
+  planetTag: Planet
+  resources:
+  - prefab: {fileID: 3303876102699440384, guid: 216c7ac0211ebff4fa5f25213d3bd2fe, type: 3}
+    count: 20
+    alignAxis: 2
+    offset: 0.44
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 3303876102699440384, guid: 2067cf2a4a8dd944391eab922f5764d7, type: 3}
+    count: 20
+    alignAxis: 0
+    offset: 1
+    avoidWater: 1
+    initialized: 1
+  props:
+  - prefab: {fileID: 6694583546888036852, guid: 44a69160b85c4084387fb49bf97e63b6, type: 3}
+    count: 20
+    alignAxis: 2
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 377340203115226895, guid: d8ae0a7c1b20a364cbea54cc00222a57, type: 3}
+    count: 4
+    alignAxis: 2
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 6560850403121340390, guid: 7635ca88c243f174d9d91095d551c7bc, type: 3}
+    count: 4
+    alignAxis: 5
+    offset: 0.28
+    avoidWater: 0
+    initialized: 1
+  - prefab: {fileID: 3665985450732430756, guid: 719e3c47227962941b16320d368c4e1d, type: 3}
+    count: 4
+    alignAxis: 0
+    offset: 0
+    avoidWater: 0
+    initialized: 1
+  - prefab: {fileID: 7081744774346349682, guid: 39840d882e7332246b330857f3687502, type: 3}
+    count: 7
+    alignAxis: 4
+    offset: 0.1
+    avoidWater: 0
+    initialized: 1
+  - prefab: {fileID: 5894937965277093485, guid: 21ac92e3ef0961142862ccb9c485d636, type: 3}
+    count: 3
+    alignAxis: 2
+    offset: -0.21
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 2831152402347605785, guid: 53a6ce7ea296db442a92d03a7f4f2160, type: 3}
+    count: 2
+    alignAxis: 2
+    offset: -0.12
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 836178924529284968, guid: b5fc3f73041c0854ea1c171a4c2fd9f5, type: 3}
+    count: 5
+    alignAxis: 0
+    offset: 0.5
+    avoidWater: 0
+    initialized: 1
+  collisionCheckRadius: 1.5
+  rotationAdjustment: {x: 0, y: 180, z: 0}
+  waterMargin: 0.05
+  oceanResolveTimeout: 1
+  maxAttemptsPerInstance: 64
+  planetOverride: {fileID: 0}
+--- !u!4 &804913365
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804913363}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.93061, y: 0, z: 1.9983}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &841687799
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,54 +859,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToolbarManager
   uiDocument: {fileID: 2051943264}
---- !u!1 &849969773
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 849969775}
-  - component: {fileID: 849969774}
-  m_Layer: 0
-  m_Name: LOD handler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &849969774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 849969773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa13f05cc15024a80933ac1b4972ac7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LODHandler
-  lod1Threshold: 0.1
-  lod2Threshold: 0.02
-  debug: 0
-  debugBody: {fileID: 0}
---- !u!4 &849969775
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 849969773}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.73971, y: 65.96863, z: -4893.38}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &882448942
 GameObject:
   m_ObjectHideFlags: 0
@@ -6123,9 +6189,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1900194244}
-  - {fileID: 1641459696}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1534221618
@@ -6322,7 +6386,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1539919974}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 214be5d217cc6cb49afd49ae6f79fcaa, type: 3}
   m_Name: 
@@ -6334,136 +6398,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2a1cb691b0ffc49b4b8ca5edf4fb2044, type: 2}
   - {fileID: 11400000, guid: d127c8c2ea8c946d29d60dbd0028681a, type: 2}
   - {fileID: 11400000, guid: e1a1d214c3b3b8b4cbd9adedab08a6ff, type: 2}
---- !u!1 &1641459695
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1641459696}
-  - component: {fileID: 1641459697}
-  m_Layer: 0
-  m_Name: Resource Spawner - only for testing
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1641459696
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1641459695}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1487426883}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1641459697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1641459695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b8739ae7483128499e132a39dc2999f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ResourceGenerator
-  config: {fileID: 11400000, guid: a2fa9b3e0ec26784a960f9c96de253e5, type: 2}
-  planetTag: Planet
-  resources:
-  - prefab: {fileID: 3303876102699440384, guid: 216c7ac0211ebff4fa5f25213d3bd2fe, type: 3}
-    count: 70
-    alignAxis: 2
-    offset: 0.44
-    avoidWater: 1
-    initialized: 1
-  - prefab: {fileID: 3303876102699440384, guid: 2067cf2a4a8dd944391eab922f5764d7, type: 3}
-    count: 10
-    alignAxis: 0
-    offset: 1
-    avoidWater: 1
-    initialized: 1
-  props:
-  - prefab: {fileID: 6560850403121340390, guid: 7635ca88c243f174d9d91095d551c7bc, type: 3}
-    count: 20
-    alignAxis: 5
-    offset: 0.28
-    avoidWater: 0
-    initialized: 1
-  - prefab: {fileID: 3665985450732430756, guid: 719e3c47227962941b16320d368c4e1d, type: 3}
-    count: 4
-    alignAxis: 0
-    offset: 0
-    avoidWater: 0
-    initialized: 1
-  - prefab: {fileID: 7081744774346349682, guid: 39840d882e7332246b330857f3687502, type: 3}
-    count: 7
-    alignAxis: 4
-    offset: 0.1
-    avoidWater: 0
-    initialized: 1
-  collisionCheckRadius: 1.5
-  rotationAdjustment: {x: 0, y: 180, z: 0}
-  waterMargin: 0.05
-  oceanResolveTimeout: 1
-  maxAttemptsPerInstance: 64
-  planetOverride: {fileID: 0}
---- !u!1 &1900194242
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1900194244}
-  - component: {fileID: 1900194243}
-  m_Layer: 0
-  m_Name: Body Effect Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1900194243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1900194242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccda2d169f3a34659a385308e2256732, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  oceanShader: {fileID: 4800000, guid: d03ae1df4c5324c888d341830e3620ad, type: 3}
-  displayOceans: 1
---- !u!4 &1900194244
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1900194242}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1487426883}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2051943263
 GameObject:
   m_ObjectHideFlags: 0
@@ -6524,12 +6458,12 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 408933981}
-  - {fileID: 849969775}
   - {fileID: 1347892909}
   - {fileID: 1487426883}
+  - {fileID: 804913365}
   - {fileID: 974406840}
-  - {fileID: 2051943265}
   - {fileID: 358797368}
   - {fileID: 1196517640}
+  - {fileID: 2051943265}
   - {fileID: 646939307}
   - {fileID: 313476938}
