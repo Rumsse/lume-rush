@@ -5917,6 +5917,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 841687800}
+  - {fileID: 1539919975}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1347892910
@@ -6092,6 +6093,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlanetSpawnerManager
   presets:
   - {fileID: 11400000, guid: 74252b8e50f38f2419d99d6882b4bf3c, type: 2}
+  - {fileID: 11400000, guid: 949bbffc76c3b3a48b57255ff923e43d, type: 2}
+  - {fileID: 11400000, guid: 2e906eb5b6146594ab36af443a126cfc, type: 2}
+  - {fileID: 11400000, guid: d127c8c2ea8c946d29d60dbd0028681a, type: 2}
+  - {fileID: 11400000, guid: 2a1cb691b0ffc49b4b8ca5edf4fb2044, type: 2}
+  - {fileID: 11400000, guid: e1a1d214c3b3b8b4cbd9adedab08a6ff, type: 2}
   spawnCount: 1
   spawnRadius: 1
   scaleRange: {x: 25, y: 32}
@@ -6277,6 +6283,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1534221618}
   m_CullTransparentMesh: 1
+--- !u!1 &1539919974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1539919975}
+  - component: {fileID: 1539919976}
+  m_Layer: 0
+  m_Name: Map Generation Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1539919975
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539919974}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -336.1009, y: 0, z: -50.13056}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1347892909}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1539919976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539919974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 214be5d217cc6cb49afd49ae6f79fcaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlanetGeneratorManager
+  planetPresets:
+  - {fileID: 11400000, guid: 2e906eb5b6146594ab36af443a126cfc, type: 2}
+  - {fileID: 11400000, guid: 74252b8e50f38f2419d99d6882b4bf3c, type: 2}
+  - {fileID: 11400000, guid: 949bbffc76c3b3a48b57255ff923e43d, type: 2}
+  - {fileID: 11400000, guid: 2a1cb691b0ffc49b4b8ca5edf4fb2044, type: 2}
+  - {fileID: 11400000, guid: d127c8c2ea8c946d29d60dbd0028681a, type: 2}
+  - {fileID: 11400000, guid: e1a1d214c3b3b8b4cbd9adedab08a6ff, type: 2}
 --- !u!1 &1641459695
 GameObject:
   m_ObjectHideFlags: 0
