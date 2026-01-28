@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1eae2955a5cc84bb21a266f2849449, type: 3}
   m_Name: Workshop0Data
   m_EditorClassIdentifier: Assembly-CSharp::SlotData
-  stationName: workshop
+  stationName: Workshop
   stationLevel: 0
   stationBaseSpeed: 10
   stationBaseSlotAmount: 2

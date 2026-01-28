@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,8 +6,10 @@ public class SlotInteraction : MonoBehaviour
 {
     public Ray ray;
     public Camera mainCam;
+    public SlotPanelController spc;
 
-    private GameObject cachedBuildSlot;
+    public SlotDataSO cachedSlotDataSO;
+    public GameObject cachedBuildSlot;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,6 +21,7 @@ public class SlotInteraction : MonoBehaviour
     {
         ray = new Ray(mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue()), transform.forward);
         CheckForColliders();
+        SlotPanelDataFill();
     }
 
     void CheckForColliders()
@@ -35,6 +39,33 @@ public class SlotInteraction : MonoBehaviour
             cachedBuildSlot = null;
         }
     }
+
+    void SlotPanelDataFill()
+    {
+        if(cachedBuildSlot != null)
+        {
+            cachedSlotDataSO = cachedBuildSlot.GetComponent<SlotController>().stationData;
+
+            if(cachedSlotDataSO.stationName != null)
+            {
+                spc.stationName = cachedSlotDataSO.stationName;
+            }
+
+            spc.stationLevel = cachedSlotDataSO.stationLevel;
+            spc.stationBaseSpeed = cachedSlotDataSO.stationBaseSpeed;
+            spc.stationBaseSlotAmount = cachedSlotDataSO.stationBaseSlotAmount;
+            spc.stationBaseSlotCapacity = cachedSlotDataSO.stationBaseSlotCapacity;
+            spc.stationBaseMaterialSaveChance = cachedSlotDataSO.stationBaseMaterialSaveChance;
+            spc.stationBaseCapacity = cachedSlotDataSO.stationBaseCapacity;
+        }
+        else
+        {
+            Debug.Log("No cached slot");
+        }
+    }
+
+
+    
 
     // Update is called once per frame
     void Update()

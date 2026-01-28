@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[CustomEditor(typeof(SlotData))]
+[CustomEditor(typeof(SlotDataSO))]
 public class SlotDataEditor : Editor
 {
     SerializedProperty stationName;
@@ -26,7 +26,7 @@ public class SlotDataEditor : Editor
     {
         serializedObject.Update();
 
-        SlotData sd = (SlotData)target;
+        SlotDataSO sd = (SlotDataSO)target;
 
         EditorGUILayout.PropertyField(stationName);
         EditorGUILayout.PropertyField(stationLevel);

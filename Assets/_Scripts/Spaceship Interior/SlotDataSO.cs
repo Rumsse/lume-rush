@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Station Data")]
-public class SlotData : ScriptableObject
+public class SlotDataSO : ScriptableObject
 {
     [SerializeField] public string stationName;
     [SerializeField] public int stationLevel;
