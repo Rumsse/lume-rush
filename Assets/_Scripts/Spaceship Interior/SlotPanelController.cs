@@ -1,46 +1,87 @@
-using System.Collections;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
-public class SlotPanelController : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
+
+public class SlotPanelController : MonoBehaviour
 {
     public GameObject panelUI;
     public StatsDisplay SD;
-    public Transform statParent;
+    public Canvas canvas;
 
-    public string stationName;
-    public int stationLevel;
-    public float stationBaseSpeed;
-    public float stationBaseSlotAmount;
-    public float stationBaseSlotCapacity;
-    public float stationBaseMaterialSaveChance;
-    public float stationBaseCapacity;
+    SlotController currentSlot;
 
-    public void PanelUIOff()
-    {
-        panelUI.SetActive(false);
-        foreach(TextMeshProUGUI stat in SD.statList)
-        {
-            Destroy(stat.gameObject);
-        }
-        SD.statList.Clear();
+    bool isLocked;
 
-    }
-    public void OnPointerExit(PointerEventData pointerEventData)
-    {
-        PanelUIOff();
-    }
 
-    public void OnPointerEnter(PointerEventData pointerEventData)
-    {
-        SD.UpdateStats();
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        if (panelUI.activeSelf && !isLocked)
+        {
+            UpdatePanelPosition();
+        }
+    }
+
+    public void LockPosition()
+    {
+        isLocked = true;
+    }
+
+    public void UnlockPosition()
+    {
+        isLocked = false;
+    }
+
+
+    public void Show(SlotController slot)
+    {
+        if (slot.stationData == null)
+        {
+            Hide();
+            return;
+        }
+
+
+        if (currentSlot == slot) return;
+
+
+        currentSlot = slot;
+        panelUI.SetActive(true);
+        SD.DisplayStats(slot.stationData);
+    }
+
+
+    public void Hide()
+    {
+        currentSlot = null;
+        SD.Clear();
+        panelUI.SetActive(false);
+    }
+
+
+    void UpdatePanelPosition()
+    {
+        RectTransform panelRect = panelUI.GetComponent<RectTransform>();
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+        canvas.transform as RectTransform,
+        mousePos,
+        canvas.worldCamera,
+        out Vector2 localPoint
+        );
+
+
+        panelRect.localPosition = Vector2.Lerp(
+        panelRect.localPosition,
+        localPoint + new Vector2(2f, -2f),
+        Time.deltaTime * 15f
+        );
+    }
+
+    public Vector2 GetCurrentPanelPosition()
+    {
+        RectTransform rect = panelUI.GetComponent<RectTransform>();
+        return rect.localPosition;
     }
 }

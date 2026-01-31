@@ -1,76 +1,100 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class SlotInteraction : MonoBehaviour
 {
-    public Ray ray;
-    public Camera mainCam;
-    public SlotPanelController spc;
+    [Header("References")]
+    [SerializeField] private Camera mainCam;
+    [SerializeField] private SlotPanelController slotPanel;
+    [SerializeField] private BuildMenuController buildMenu;
+    [SerializeField] private Canvas uiCanvas;
 
-    public SlotDataSO cachedSlotDataSO;
-    public GameObject cachedBuildSlot;
+    [Header("Raycast")]
+    [SerializeField] private LayerMask buildSlotMask;
+    [SerializeField] private float rayDistance = 100f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private SlotController hoveredSlot;
+
+    void Update()
     {
+        if (EventSystem.current != null &&
+            EventSystem.current.IsPointerOverGameObject())
+            return;
 
+        Ray ray = mainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+        HandleClick(ray);
+
+        if (buildMenu.IsOpen)
+            return;
+
+        HandleHover(ray);
     }
 
-    void CastARay()
+    void HandleClick(Ray ray)
     {
-        ray = new Ray(mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue()), transform.forward);
-        CheckForColliders();
-        SlotPanelDataFill();
+        if (!Mouse.current.leftButton.wasPressedThisFrame)
+            return;
+
+        if (!Physics.Raycast(ray, out RaycastHit hit, rayDistance, buildSlotMask))
+            return;
+
+        SlotController slot = hit.collider.GetComponent<SlotController>();
+        if (slot == null || !slot.IsEmpty)
+            return;
+
+        Vector2 clickPos = GetMouseLocalPosition();
+
+        ClearHover();
+        slotPanel.Hide();
+
+        buildMenu.Open(slot, clickPos);
     }
 
-    void CheckForColliders()
+    void HandleHover(Ray ray)
     {
-        if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.gameObject.tag == "BuildSlot")
+        if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, buildSlotMask))
         {
-            cachedBuildSlot = hit.collider.gameObject;
-            cachedBuildSlot.GetComponent<SlotController>()._selected = true;
-            cachedBuildSlot.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
-        }
-        else if (cachedBuildSlot != null)
-        {
-            cachedBuildSlot.GetComponent<SlotController>()._selected = false;
-            cachedBuildSlot.transform.localScale = new Vector3(1f, 1f, 1f);
-            cachedBuildSlot = null;
-        }
-    }
+            SlotController slot = hit.collider.GetComponent<SlotController>();
 
-    void SlotPanelDataFill()
-    {
-        if(cachedBuildSlot != null)
-        {
-            cachedSlotDataSO = cachedBuildSlot.GetComponent<SlotController>().stationData;
-
-            if(cachedSlotDataSO.stationName != null)
+            if (slot != null && slot != hoveredSlot)
             {
-                spc.stationName = cachedSlotDataSO.stationName;
+                ClearHover();
+                hoveredSlot = slot;
+                hoveredSlot.SetSelected(true);
+                slotPanel.Show(hoveredSlot);
             }
-
-            spc.stationLevel = cachedSlotDataSO.stationLevel;
-            spc.stationBaseSpeed = cachedSlotDataSO.stationBaseSpeed;
-            spc.stationBaseSlotAmount = cachedSlotDataSO.stationBaseSlotAmount;
-            spc.stationBaseSlotCapacity = cachedSlotDataSO.stationBaseSlotCapacity;
-            spc.stationBaseMaterialSaveChance = cachedSlotDataSO.stationBaseMaterialSaveChance;
-            spc.stationBaseCapacity = cachedSlotDataSO.stationBaseCapacity;
         }
         else
         {
-            Debug.Log("No cached slot");
+            ClearHover();
         }
     }
 
-
-    
-
-    // Update is called once per frame
-    void Update()
+    void ClearHover()
     {
-        CastARay();
+        if (hoveredSlot == null)
+            return;
+
+        hoveredSlot.SetSelected(false);
+        slotPanel.Hide();
+        hoveredSlot = null;
+    }
+
+    Vector2 GetMouseLocalPosition()
+    {
+        RectTransform canvasRect = uiCanvas.transform as RectTransform;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRect,
+            Mouse.current.position.ReadValue(),
+            uiCanvas.renderMode == RenderMode.ScreenSpaceOverlay
+                ? null
+                : uiCanvas.worldCamera,
+            out Vector2 localPoint
+        );
+
+        return localPoint;
     }
 }
-

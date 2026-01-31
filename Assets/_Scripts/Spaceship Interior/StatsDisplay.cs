@@ -1,102 +1,64 @@
-using NUnit.Framework;
-using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
+using UnityEngine;
 
 public class StatsDisplay : MonoBehaviour
 {
-    public SlotPanelController SPC;
     public TextMeshProUGUI stationNameText;
-
     public TextMeshProUGUI statTextPrefab;
-    private TextMeshProUGUI insStatText;
-
-    public List<TextMeshProUGUI> statList;
-
     public Transform statDisplayParent;
 
-    public string stationName;
-    public int stationLevel;
-    public float stationBaseSpeed;
-    public float stationBaseSlotAmount;
-    public float stationBaseSlotCapacity;
-    public float stationBaseMaterialSaveChance;
-    public float stationBaseCapacity;
 
-    public void DisplayStats()
+    public List<TextMeshProUGUI> statList = new();
+
+
+    public void DisplayStats(SlotDataSO data)
     {
-        if (stationName != null)
-        {
-            stationNameText.text = stationName;
+        Clear();
 
-            insStatText = Instantiate(statTextPrefab);
-            insStatText.text = "Station Level: " + stationLevel;
-            insStatText.name = "StationLevel";
-            insStatText.GetComponent<Transform>().SetParent(statDisplayParent);
-            statList.Add(insStatText);
 
-            if (stationBaseSpeed > 0)
-            {
-                insStatText = Instantiate(statTextPrefab);
-                insStatText.text = "Speed: " + stationBaseSpeed;
-                insStatText.name = "BaseSpeed";
-                insStatText.GetComponent<Transform>().SetParent(statDisplayParent);
-                statList.Add(insStatText);
-            }
+        stationNameText.text = data.stationName;
 
-            if (stationBaseCapacity > 0)
-            {
-                insStatText = Instantiate(statTextPrefab);
-                insStatText.text = "Capacity: " + stationBaseCapacity;
-                insStatText.name = "BaseCapacity";
-                insStatText.GetComponent<Transform>().SetParent(statDisplayParent);
-                statList.Add(insStatText);
-            }
 
-            if (stationBaseSlotAmount > 0)
-            {
-                insStatText = Instantiate(statTextPrefab);
-                insStatText.text = "Slot Amount: " + stationBaseSlotAmount;
-                insStatText.name = "BaseSlotAmount";
-                insStatText.GetComponent<Transform>().SetParent(statDisplayParent);
-                statList.Add(insStatText);
-            }
+        AddStat("Station Level", data.stationLevel);
+        AddStat("Speed", data.stationBaseSpeed);
+        AddStat("Capacity", data.stationBaseCapacity);
+        AddStat("Slot Amount", data.stationBaseSlotAmount);
+        AddStat("Slot Capacity", data.stationBaseSlotCapacity);
+        AddStat("Material Save Chance", data.stationBaseMaterialSaveChance, "%");
 
-            if (stationBaseSlotCapacity > 0)
-            {
-                insStatText = Instantiate(statTextPrefab);
-                insStatText.text = "Slot Capacity: " + stationBaseSlotCapacity;
-                insStatText.name = "BaseSlotCapacity";
-                insStatText.GetComponent<Transform>().SetParent(statDisplayParent);
-                statList.Add(insStatText);
-            }
-
-            if (stationBaseMaterialSaveChance > 0)
-            {
-                insStatText = Instantiate(statTextPrefab);
-                insStatText.text = "Material Save Chance: " + stationBaseMaterialSaveChance + "%";
-                insStatText.name = "BaseMaterialSaveChance";
-                insStatText.GetComponent<Transform>().SetParent(statDisplayParent);
-                statList.Add(insStatText);
-            }   
-        }
+        //Debug.Log($"Speed = {data.stationBaseSpeed}");
     }
 
-    public void UpdateStats()
+
+    void AddStat(string label, float value, string suffix = "")
     {
-        stationName = SPC.stationName;
-        stationLevel = SPC.stationLevel;
-        stationBaseSpeed = SPC.stationBaseSpeed;
-        stationBaseSlotAmount = SPC.stationBaseSlotAmount;
-        stationBaseSlotCapacity = SPC.stationBaseSlotCapacity;
-        stationBaseMaterialSaveChance = SPC.stationBaseMaterialSaveChance;
-        stationBaseCapacity = SPC.stationBaseCapacity;
+        if (value <= 0) return;
+
+
+        var stat = Instantiate(statTextPrefab, statDisplayParent);
+        stat.text = $"{label}: {value}{suffix}";
+        statList.Add(stat);
     }
 
-    // Update is called once per frame
-    void Update()
+
+    void AddStat(string label, int value)
     {
-        
+        if (value <= 0) return;
+
+
+        var stat = Instantiate(statTextPrefab, statDisplayParent);
+        stat.text = $"{label}: {value}";
+        statList.Add(stat);
+    }
+
+
+    public void Clear()
+    {
+        foreach (var stat in statList)
+            Destroy(stat.gameObject);
+
+
+        statList.Clear();
     }
 }

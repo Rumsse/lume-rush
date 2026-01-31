@@ -1,48 +1,43 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class SlotController : MonoBehaviour
 {
-    public bool _selected;
-    public SlotDataSO stationData;
-    public SlotInteraction SI;
-    public GameObject panelUI;
-    public Vector2 mousePos;
-    public Camera mainCam;
-    public StatsDisplay SD;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Header("Data")]
+    [SerializeField] public SlotDataSO stationData;
+
+    [Header("State")]
+    public bool IsSelected { get; private set; }
+
+    public bool IsEmpty => stationData == null;
+
+    public SlotDataSO StationData => stationData;
+
+    public void SetSelected(bool selected)
     {
-        
+        IsSelected = selected;
+    }
+    public void BuildStation(SlotDataSO data)
+    {
+        if (data == null)
+        {
+            Debug.LogWarning($"Trying to build NULL station on {name}");
+            return;
+        }
+
+        if (!IsEmpty)
+        {
+            Debug.LogWarning($"Slot {name} already has a station");
+            return;
+        }
+
+        stationData = data;
+
+        Debug.Log($"Built station: {data.stationName} on {name}");
     }
 
-    void OpenBuildUI()
+    public void ClearSlot()
     {
-        if (_selected == true)
-        {
-            panelUI.transform.position = new Vector2(Mouse.current.position.x.ReadValue() + (panelUI.GetComponent<RectTransform>().rect.size.x / 2) - 5, Mouse.current.position.y.ReadValue() - (panelUI.GetComponent<RectTransform>().rect.size.y / 2) + 5 );
-
-            if(panelUI.activeInHierarchy == false)
-            {
-                SD.UpdateStats();
-                SD.DisplayStats();
-                panelUI.SetActive(true);
-            }
-        }
-        else if (_selected == false && panelUI.activeInHierarchy == true)
-        {
-            foreach (TextMeshProUGUI stat in SD.statList)
-            {
-                Destroy(stat.gameObject);
-            }
-            SD.statList.Clear();
-            panelUI.SetActive(false);
-        }
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        OpenBuildUI();
+        stationData = null;
+        Debug.Log($"Cleared slot {name}");
     }
 }
