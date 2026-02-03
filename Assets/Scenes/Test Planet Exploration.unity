@@ -6203,9 +6203,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlanetSpawnerManager
   presets:
-  - {fileID: 11400000, guid: 74252b8e50f38f2419d99d6882b4bf3c, type: 2}
-  - {fileID: 11400000, guid: 949bbffc76c3b3a48b57255ff923e43d, type: 2}
   - {fileID: 11400000, guid: 2e906eb5b6146594ab36af443a126cfc, type: 2}
+  - {fileID: 11400000, guid: 949bbffc76c3b3a48b57255ff923e43d, type: 2}
+  - {fileID: 11400000, guid: 74252b8e50f38f2419d99d6882b4bf3c, type: 2}
   - {fileID: 11400000, guid: d127c8c2ea8c946d29d60dbd0028681a, type: 2}
   - {fileID: 11400000, guid: 2a1cb691b0ffc49b4b8ca5edf4fb2044, type: 2}
   - {fileID: 11400000, guid: e1a1d214c3b3b8b4cbd9adedab08a6ff, type: 2}

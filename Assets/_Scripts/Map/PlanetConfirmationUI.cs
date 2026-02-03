@@ -10,7 +10,7 @@ public class PlanetConfirmationUI : MonoBehaviour
 
     public void Setup(string planetName, System.Action onConfirm, System.Action onCancel)
     {
-        questionText.text = $"Do you want to go to {planetName}?";
+        questionText.text = $"Do you want to explore {planetName}?";
 
         confirmButton.onClick.RemoveAllListeners();
         confirmButton.onClick.AddListener(() => onConfirm?.Invoke());
@@ -19,7 +19,7 @@ public class PlanetConfirmationUI : MonoBehaviour
         cancelButton.onClick.AddListener(() =>
         {
             onCancel?.Invoke();
-            gameObject.SetActive(false); 
+            gameObject.SetActive(false);
         });
     }
 }

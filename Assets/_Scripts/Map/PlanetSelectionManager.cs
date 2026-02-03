@@ -14,7 +14,7 @@ public class PlanetSelectionManager : MonoBehaviour
     public List<CelestialBodySettings> otherPlanetPresets;
     public int planetCount = 5;
 
-    private List<PlanetData> generatedPlanets = new List<PlanetData>();
+    List<PlanetData> generatedPlanets = new List<PlanetData>();
 
     void Start() => GeneratePlanetMap();
 
@@ -37,7 +37,7 @@ public class PlanetSelectionManager : MonoBehaviour
             var randomPreset = availablePresets[Random.Range(0, availablePresets.Count)];
             availablePresets.Remove(randomPreset);
 
-            Vector3 orbitPosition = GetOrbitPosition(i);
+            var orbitPosition = GetOrbitPosition(i);
             AddPlanet(randomPreset, orbitPosition, false);
         }
     }
@@ -45,18 +45,25 @@ public class PlanetSelectionManager : MonoBehaviour
     void AddPlanet(CelestialBodySettings preset, Vector3 orbitPosition, bool isFirst)
     {
         var planetObj = Instantiate(planetPrefab, orbitPosition, Quaternion.identity, starParent);
-        planetObj.name = isFirst ? "MainPlanet" : $"Planet_{generatedPlanets.Count + 1}";
 
-        var planetInteractable = planetObj.AddComponent<PlanetInteractable>();
-        planetInteractable.spawnPanelPosition = planetObj.transform;
-        //planetInteractable.resourceData = preset.resourceData;
+        var chosenName = string.IsNullOrWhiteSpace(preset.planetName)
+            ? isFirst ? "MainPlanet" : $"Planet_{generatedPlanets.Count + 1:00}"
+            : preset.planetName;
+
+        planetObj.name = chosenName;
+
+        var interactable = planetObj.AddComponent<PlanetInteractable>();
+        interactable.spawnPanelPosition = planetObj.transform;
+        interactable.PlanetName = chosenName;
+        interactable.SelectedPresetName = preset.name;
+
+        generatedPlanets.Add(new PlanetData(preset, orbitPosition, planetObj.name));
     }
 
     Vector3 GetOrbitPosition(int index)
     {
-        float distance = Mathf.Lerp(orbitRange.x, orbitRange.y, (float)index / planetCount);
-        float angle = Random.Range(0f, 360f);
-        float radians = angle * Mathf.Deg2Rad;
+        var distance = Mathf.Lerp(orbitRange.x, orbitRange.y, (float)index / planetCount);
+        var radians = Random.Range(0f, 360f) * Mathf.Deg2Rad;
 
         return new Vector3(
             Mathf.Cos(radians) * distance,
@@ -79,5 +86,4 @@ public class PlanetSelectionManager : MonoBehaviour
             Name = name;
         }
     }
-
 }

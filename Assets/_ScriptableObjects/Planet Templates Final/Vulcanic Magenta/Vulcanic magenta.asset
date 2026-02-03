@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf43e303dd354502bcaddeec557e12a, type: 3}
   m_Name: Vulcanic magenta
   m_EditorClassIdentifier: 
+  planetName: Vulcanic Magenta
   shape: {fileID: 11400000, guid: 94bfca340fd619444a652044824b8f1c, type: 2}
   shading: {fileID: 11400000, guid: 9b668ed9db1b35a4eb1a32af6f0eb547, type: 2}
+  resourceConfig: {fileID: 0}

@@ -1,57 +1,55 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PlanetInteractable : Interactable
+public class PlanetInteractable : BaseInteractable
 {
     public Transform spawnPanelPosition;
-    private GameObject spawnedPanel;
+    public string PlanetName;
+    public string SelectedPresetName;
 
-    void OnMouseEnter()
+    GameObject spawnedPanel;
+    Vector3 baseScale;
+
+    void Awake() => baseScale = transform.localScale;
+
+    protected override void OnMouseEnter()
     {
-        transform.localScale *= 1.2f;
-        SetHighlighted(true);
+        transform.localScale = baseScale * 1.2f;
     }
 
-    void OnMouseExit()
+    protected override void OnMouseExit()
     {
-        transform.localScale /= 1.2f;
-        SetHighlighted(false);
+        transform.localScale = baseScale;
     }
 
-    void OnMouseDown()
+    protected override void OnMouseDown()
     {
-        Debug.Log("Planet clicked: " + name);
+        if (spawnedPanel) return;
 
-        if (spawnedPanel != null) return;
-
-        var globalPanel = GameObject.FindObjectOfType<PlanetConfirmationUI>();
-        if (globalPanel == null)
-        {
-            Debug.LogError("Global Confirmation Panel not found in the scene!");
-            return;
-        }
+        var globalPanel = GameObject.FindFirstObjectByType<PlanetConfirmationUI>(FindObjectsInactive.Include);
+        if (!globalPanel) return;
 
         spawnedPanel = globalPanel.gameObject;
-        spawnedPanel.transform.position = spawnPanelPosition.position;
         spawnedPanel.SetActive(true);
 
-        var confirmationUI = spawnedPanel.GetComponent<PlanetConfirmationUI>();
-        Debug.Log("Setting up the Confirmation Panel for: " + ResourceName);
-        confirmationUI.Setup(
-            ResourceName,
-            OnConfirmAction,
-            OnCancelAction
-        );
+        var displayName = string.IsNullOrEmpty(PlanetName) ? name : PlanetName;
+        globalPanel.Setup(displayName, OnConfirmAction, OnCancelAction);
     }
 
     void OnConfirmAction()
     {
-        PlayerPrefs.SetString("SelectedPlanet", ResourceName);
+        var displayName = string.IsNullOrEmpty(PlanetName) ? name : PlanetName;
+
+        PlayerPrefs.SetString("SelectedPlanet", displayName);
+        PlayerPrefs.SetString("SelectedPlanetPreset", string.IsNullOrEmpty(SelectedPresetName) ? displayName : SelectedPresetName);
         PlayerPrefs.Save();
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Test Planet Exploration");
+
+        SceneManager.LoadScene("Test Planet Exploration");
     }
 
     void OnCancelAction()
     {
-        if (spawnedPanel != null) spawnedPanel.SetActive(false);
+        if (spawnedPanel) spawnedPanel.SetActive(false);
+        spawnedPanel = null;
     }
 }

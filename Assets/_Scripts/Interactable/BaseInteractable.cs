@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class BaseInteractable : MonoBehaviour
 {
-    public abstract void OnInteract();
-    public abstract void OnHoverStart();
-    public abstract void OnHoverEnd();
+    protected abstract void OnMouseEnter();
+    protected abstract void OnMouseExit();
+    protected abstract void OnMouseDown();
 }
