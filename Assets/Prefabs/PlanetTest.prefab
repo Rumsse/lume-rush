@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 493979425972086012}
   - component: {fileID: 2632334845680736859}
   - component: {fileID: 4546418502934806929}
+  - component: {fileID: -354777587498343649}
   m_Layer: 0
   m_Name: PlanetTest
   m_TagString: Untagged
@@ -31,7 +32,8 @@ Transform:
   m_LocalPosition: {x: 923.255, y: 0.0000096643, z: 1867.7913}
   m_LocalScale: {x: 12, y: 12, z: 12}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5542972861280483733}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &493979425972086012
@@ -112,3 +114,52 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-354777587498343649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4898414140566128282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f996e2f987ace3469b4f1d861016073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlanetInteractable
+  resourceData: {fileID: 11400000, guid: 5d12b5c3d63090c4793ce0ebc5a03dbc, type: 2}
+  thicknessProperty: _OutlineThickness
+  colorProperty: _OutlineColor
+  highlightThickness: 1.15
+  targetMaterialIndex: -1
+  spawnPanelPosition: {fileID: 5542972861280483733}
+--- !u!1 &8552720695562640763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5542972861280483733}
+  m_Layer: 0
+  m_Name: PanelSpawnPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5542972861280483733
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8552720695562640763}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.486, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6884066969935106816}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+public class Interactable : BaseInteractable
 {
     public ResourceData resourceData;
 
@@ -37,4 +37,20 @@ public class Interactable : MonoBehaviour
             else renderers[i].SetPropertyBlock(mpb, targetMaterialIndex);
         }
     }
+
+    public override void OnInteract()
+    {
+        
+    }
+
+    public override void OnHoverStart()
+    {
+        
+    }
+
+    public override void OnHoverEnd()
+    {
+        
+    }
+
 }
