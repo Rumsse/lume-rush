@@ -1145,7 +1145,7 @@ Transform:
   m_GameObject: {fileID: 974406835}
   serializedVersion: 2
   m_LocalRotation: {x: 0.25115556, y: -0, z: -0, w: 0.96794677}
-  m_LocalPosition: {x: 71.99234, y: 65.69, z: -4876.158}
+  m_LocalPosition: {x: -1, y: 121, z: -244}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6342,11 +6342,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlanetSpawnerManager
   presets:
   - {fileID: 11400000, guid: 2e906eb5b6146594ab36af443a126cfc, type: 2}
+  - {fileID: 11400000, guid: e1a1d214c3b3b8b4cbd9adedab08a6ff, type: 2}
+  - {fileID: 11400000, guid: 2a1cb691b0ffc49b4b8ca5edf4fb2044, type: 2}
   - {fileID: 11400000, guid: 949bbffc76c3b3a48b57255ff923e43d, type: 2}
   - {fileID: 11400000, guid: 74252b8e50f38f2419d99d6882b4bf3c, type: 2}
   - {fileID: 11400000, guid: d127c8c2ea8c946d29d60dbd0028681a, type: 2}
-  - {fileID: 11400000, guid: 2a1cb691b0ffc49b4b8ca5edf4fb2044, type: 2}
-  - {fileID: 11400000, guid: e1a1d214c3b3b8b4cbd9adedab08a6ff, type: 2}
   spawnCount: 1
   spawnRadius: 1
   scaleRange: {x: 25, y: 32}
