@@ -11,11 +11,14 @@ public sealed class TimerUI : MonoBehaviour
     [SerializeField, Min(0)] int _startSeconds = 60;
     [SerializeField] bool _autoStart = true;
     [SerializeField] bool _useUnscaledTime = false;
+    [SerializeField] string _playerTag = "Player";
+    [SerializeField] GameObject _gameOverPanel;
 
     #endregion
 
     #region State
 
+    IHealth _playerHealth;
     double _time;
     bool _running;
     int _lastShown = int.MinValue;
@@ -24,10 +27,16 @@ public sealed class TimerUI : MonoBehaviour
 
     #region Lifecycle
 
-    void Awake() => _label ??= GetComponent<TMP_Text>();
+    void Awake()
+    {
+        _label ??= GetComponent<TMP_Text>();
+        if (_gameOverPanel != null) _gameOverPanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
 
     void OnEnable()
     {
+        CachePlayer();
         if (_autoStart) StartTimer();
         else Refresh(true);
     }
@@ -43,6 +52,13 @@ public sealed class TimerUI : MonoBehaviour
         {
             _time = 0;
             _running = false;
+
+            if (_playerHealth == null) CachePlayer();
+            if (_playerHealth != null) _playerHealth.TakeDamage(_playerHealth.MaxHealth);
+
+            if (_gameOverPanel != null) _gameOverPanel.SetActive(true);
+            Time.timeScale = 0f;
+
             Refresh(true);
             return;
         }
@@ -96,6 +112,12 @@ public sealed class TimerUI : MonoBehaviour
     #endregion
 
     #region Helpers
+
+    void CachePlayer()
+    {
+        var go = GameObject.FindWithTag(_playerTag);
+        if (go != null) _playerHealth = go.GetComponent<IHealth>();
+    }
 
     void Refresh(bool force = false)
     {

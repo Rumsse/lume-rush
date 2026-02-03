@@ -37,4 +37,5 @@ public class Interactable : MonoBehaviour
             else renderers[i].SetPropertyBlock(mpb, targetMaterialIndex);
         }
     }
+
 }

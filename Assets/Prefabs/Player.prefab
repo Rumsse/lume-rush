@@ -159,6 +159,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2555966904752584968}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -52047911564630762}
   m_SourcePrefab: {fileID: 100100000, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
 --- !u!1 &296901486032930419 stripped
 GameObject:
@@ -322,6 +325,21 @@ MonoBehaviour:
   canPlaceMaterial: {fileID: 2100000, guid: 2378834cff8601a4096a50d9780d9238, type: 2}
   blockedMaterial: {fileID: 2100000, guid: 2f23d094be872884dba642d00a511bda, type: 2}
   debugLogs: 1
+--- !u!114 &-52047911564630762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296901486032930419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03af07c93e3c524e885b5907ef9c856, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthSystem
+  maxHealth: 3
+  fullHeart: {fileID: 21300000, guid: 5855d943803365944b9a79a0f581b469, type: 3}
+  emptyHeart: {fileID: 21300000, guid: f411276e28690d84ebc2b0d8c048951f, type: 3}
 --- !u!4 &1104823336287280329 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}

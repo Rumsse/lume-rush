@@ -15,6 +15,9 @@ public class SpawnOnPlanet : MonoBehaviour
     private Transform planet;
     private float planetRadius;
 
+    #region Lifecycle
+
+
     void Start() => StartCoroutine(WaitForPlanetGeneration());
 
     IEnumerator WaitForPlanetGeneration()
@@ -31,6 +34,11 @@ public class SpawnOnPlanet : MonoBehaviour
         SpawnPlayerAndShip();
     }
 
+    #endregion
+
+    #region Planet
+
+
     private void FindPlanet()
     {
         var planetObject = GameObject.FindGameObjectWithTag(planetTag);
@@ -40,51 +48,64 @@ public class SpawnOnPlanet : MonoBehaviour
         planetRadius = CalculatePlanetRadius(planet);
     }
 
-    private float CalculatePlanetRadius(Transform planet)
+    private float CalculatePlanetRadius(Transform p)
     {
-        var renderer = planet.GetComponentInChildren<MeshRenderer>();
+        var renderer = p.GetComponentInChildren<MeshRenderer>();
         if (renderer == null) return 0f;
 
         var bounds = renderer.bounds;
         return Mathf.Max(bounds.extents.x, bounds.extents.y, bounds.extents.z);
     }
 
+    #endregion
+
+    #region Spawning
+
+
     private void SpawnPlayerAndShip()
     {
-        if (TryGetRandomPointOnPlanet(out Vector3 playerPosition, out Quaternion playerRotation))
-        {
-            Instantiate(playerPrefab, playerPosition, playerRotation);
-
-            FindSafePositionForShip(playerPosition, playerRotation);
-        }
-        else
+        if (!TryGetRandomPointOnPlanet(out var playerPosition, out var playerRotation))
         {
             Debug.LogError("Failed to find a valid spawn point for the player.");
+            return;
         }
+
+        Instantiate(playerPrefab, playerPosition, playerRotation);
+        FindSafePositionForShip(playerPosition, playerRotation);
     }
 
     private void FindSafePositionForShip(Vector3 playerPosition, Quaternion playerRotation)
     {
-        int attempts = 0;
+        var normal = (playerPosition - planet.position).normalized;
+        var forward = Vector3.ProjectOnPlane(playerRotation * Vector3.forward, normal).normalized;
+        if (forward.sqrMagnitude < 1e-6f) forward = Vector3.Cross(normal, playerRotation * Vector3.right).normalized;
 
-        while (attempts < maxSearchAttempts)
+        var angleStep = 360f / Mathf.Max(1, maxSearchAttempts);
+        var angle = 0f;
+
+        for (int i = 0; i < maxSearchAttempts; i++)
         {
-            Vector3 shipPosition = playerPosition + playerRotation * (Vector3.forward * shipSpawnDistance);
-
-            Vector3 shipRaycastOrigin = shipPosition + playerRotation * Vector3.up * spawnOffset;
-            if (Physics.Raycast(shipRaycastOrigin, Vector3.down, out RaycastHit hit, Mathf.Infinity, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+            var dir = Quaternion.AngleAxis(angle, normal) * forward;
+            if (!TryRaycastToPlanet(normal, dir * shipSpawnDistance, out var hit))
             {
-                shipPosition = hit.point + hit.normal * (spawnOffset + shipHeightAboveSurface);
-                if (!IsPositionOccupied(shipPosition))
-                {
-                    Quaternion shipRotation = Quaternion.LookRotation(Vector3.Cross(playerRotation * Vector3.right, hit.normal), hit.normal);
-                    Instantiate(shipPrefab, shipPosition, shipRotation);
-                    return;
-                }
+                angle += angleStep;
+                continue;
             }
 
-            playerRotation = Quaternion.Euler(0, 10f, 0) * playerRotation; // Obrót wokó³ osi Y
-            attempts++;
+            var pos = hit.point + hit.normal * (spawnOffset + shipHeightAboveSurface);
+            if (IsPositionOccupied(pos))
+            {
+                angle += angleStep;
+                continue;
+            }
+
+            var fwdOnSurface = Vector3.ProjectOnPlane(dir, hit.normal).normalized;
+            var rot = fwdOnSurface.sqrMagnitude < 1e-6f
+                ? Quaternion.LookRotation(Vector3.Cross(playerRotation * Vector3.right, hit.normal), hit.normal)
+                : Quaternion.LookRotation(fwdOnSurface, hit.normal);
+
+            Instantiate(shipPrefab, pos, rot);
+            return;
         }
 
         ForceSpawnShip(playerPosition, playerRotation);
@@ -92,13 +113,32 @@ public class SpawnOnPlanet : MonoBehaviour
 
     private void ForceSpawnShip(Vector3 playerPosition, Quaternion playerRotation)
     {
-        Vector3 forcedPosition = playerPosition + playerRotation * (Vector3.forward * shipSpawnDistance);
-        forcedPosition += Vector3.up * (spawnOffset + shipHeightAboveSurface * 5); // Wymuszone podniesienie nad powierzchni¹
+        var normal = (playerPosition - planet.position).normalized;
+        var forward = Vector3.ProjectOnPlane(playerRotation * Vector3.forward, normal).normalized;
+        if (forward.sqrMagnitude < 1e-6f) forward = Vector3.Cross(normal, playerRotation * Vector3.right).normalized;
 
-        Quaternion forcedRotation = Quaternion.identity;
+        var origin = planet.position + normal * (planetRadius + spawnOffset + shipHeightAboveSurface * 6f) + forward * shipSpawnDistance;
+        var pos = origin;
+        var rot = Quaternion.LookRotation(forward, normal);
 
-        Debug.LogWarning("Forcing ship spawn at higher altitude to avoid collision.");
-        Instantiate(shipPrefab, forcedPosition, forcedRotation);
+        Instantiate(shipPrefab, pos, rot);
+    }
+
+    #endregion
+
+    #region Helpers
+
+
+    private bool TryRaycastToPlanet(Vector3 normal, Vector3 tangentOffset, out RaycastHit hit)
+    {
+        var origin = planet.position + normal * (planetRadius + spawnOffset + shipHeightAboveSurface + 2f) + tangentOffset;
+        var maxDist = planetRadius * 3f;
+
+        if (Physics.Raycast(origin, -normal, out hit, maxDist, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+            if (hit.collider.transform == planet || hit.collider.transform.IsChildOf(planet)) return true;
+
+        hit = default;
+        return false;
     }
 
     private bool TryGetRandomPointOnPlanet(out Vector3 spawnPosition, out Quaternion spawnRotation)
@@ -124,11 +164,11 @@ public class SpawnOnPlanet : MonoBehaviour
     private bool IsPositionOccupied(Vector3 position)
     {
         var colliders = Physics.OverlapSphere(position, collisionCheckRadius);
-        foreach (var collider in colliders)
-        {
-            if (collider.CompareTag("Resource") || collider.CompareTag("Player") || collider.CompareTag("SpaceShip")) return true;
-        }
+        foreach (var c in colliders)
+            if (c.CompareTag("Resource") || c.CompareTag("Player") || c.CompareTag("SpaceShip")) return true;
 
         return false;
     }
+
+    #endregion
 }

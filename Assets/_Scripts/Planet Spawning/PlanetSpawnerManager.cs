@@ -7,7 +7,7 @@ public class PlanetSpawnerManager : MonoBehaviour
     #region Inspector
 
     public List<CelestialBodySettings> presets = new List<CelestialBodySettings>();
-    public int spawnCount = 5;
+    public int spawnCount = 1;
     public float spawnRadius = 200f;
     public Vector2 scaleRange = new Vector2(5f, 20f);
     public bool randomizeSeed = true;
@@ -15,7 +15,6 @@ public class PlanetSpawnerManager : MonoBehaviour
     public int seedMax = int.MaxValue - 1;
     public bool parentUnderThis = true;
 
-    [Header("Gravity / Tag / Layer")]
     public bool addGravityArea = true;
     [Min(0.01f)] public float gravityAreaMultiplier = 1.5f;
     public bool gravityAreaIsTrigger = true;
@@ -25,7 +24,33 @@ public class PlanetSpawnerManager : MonoBehaviour
 
     #endregion
 
-    void Start() => SpawnAll();
+    #region Unity LifeCycle
+
+    void Start()
+    {
+        string selectedPresetName = PlayerPrefs.GetString("SelectedPlanetPreset", null);
+
+        if (!string.IsNullOrEmpty(selectedPresetName))
+        {
+            var selectedPreset = presets.Find(p => p && p.name == selectedPresetName);
+            if (selectedPreset)
+            {
+                presets = new List<CelestialBodySettings> { selectedPreset };
+                spawnCount = 1;
+                SpawnAll();
+            }
+            else
+            {
+                Debug.LogWarning($"Preset '{selectedPresetName}' not found in the spawner presets list.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No planet was selected in the previous scene. Please ensure that the player clicked on a valid planet.");
+        }
+    }
+
+    #endregion
 
     #region Spawning
 
