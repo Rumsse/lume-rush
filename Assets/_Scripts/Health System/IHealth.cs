@@ -6,10 +6,7 @@ public interface IHealth
     int MaxHealth { get; }
 
     void TakeDamage(int damage);
-
     void Heal(int healAmount);
-
     void UpdateHearts();
-
     void Die();
 }
