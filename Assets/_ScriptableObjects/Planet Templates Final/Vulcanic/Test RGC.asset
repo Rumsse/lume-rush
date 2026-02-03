@@ -14,48 +14,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ResourceGeneratorConfig
   resources:
   - prefab: {fileID: 8889423917290717899, guid: d3da3faaa5fc3bf4c92e2dc941390b4f, type: 3}
-    count: 30
-    alignAxis: 2
+    count: 0
+    alignAxis: 0
     offset: 0.44
     avoidWater: 1
     initialized: 1
   - prefab: {fileID: 7226534699707336089, guid: d4064eb3f7f12cb4ab3c6ee87c6e2188, type: 3}
     count: 30
     alignAxis: 0
-    offset: 1
+    offset: 0
     avoidWater: 1
     initialized: 1
   - prefab: {fileID: 5465739070193905130, guid: c32b9b5cbbcc9134bb13330fdf251fdd, type: 3}
     count: 30
     alignAxis: 0
-    offset: 1
+    offset: 0
     avoidWater: 1
     initialized: 1
   - prefab: {fileID: 6208371833824068528, guid: 6394dbd1dc7336a4c9d0c209da8b0241, type: 3}
     count: 30
     alignAxis: 0
-    offset: 1
+    offset: 0
     avoidWater: 1
     initialized: 1
-  props:
-  - prefab: {fileID: 6560850403121340390, guid: 7635ca88c243f174d9d91095d551c7bc, type: 3}
-    count: 20
-    alignAxis: 5
-    offset: 0.28
-    avoidWater: 0
-    initialized: 1
-  - prefab: {fileID: 3665985450732430756, guid: 719e3c47227962941b16320d368c4e1d, type: 3}
-    count: 4
+  - prefab: {fileID: 3757027528730641854, guid: 2d79a6881b8acbb44b225aaf06146d34, type: 3}
+    count: 30
     alignAxis: 0
     offset: 0
-    avoidWater: 0
+    avoidWater: 1
     initialized: 1
-  - prefab: {fileID: 7081744774346349682, guid: 39840d882e7332246b330857f3687502, type: 3}
-    count: 7
-    alignAxis: 4
-    offset: 0.1
-    avoidWater: 0
-    initialized: 1
+  props: []
   collisionCheckRadius: 1.5
   rotationAdjustment: {x: 0, y: 180, z: 0}
   waterMargin: 0.05

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   resourceName: Coal
   prefab: {fileID: 7226534699707336089, guid: d4064eb3f7f12cb4ab3c6ee87c6e2188, type: 3}
-  resourceIcon: {fileID: 21300000, guid: f0a9cf7f6f77c2f40b19613730c523e9, type: 3}
+  resourceIcon: {fileID: 21300000, guid: 7ff0bf3421b917247a0331671e8958bc, type: 3}

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   resourceName: Titanium
   prefab: {fileID: 8889423917290717899, guid: d3da3faaa5fc3bf4c92e2dc941390b4f, type: 3}
-  resourceIcon: {fileID: 21300000, guid: 9e51e95ea9deb1e45a33a0c85718da1b, type: 3}
+  resourceIcon: {fileID: 21300000, guid: 0a682ecef755a4b40a5dccc47a2c9b55, type: 3}
