@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf43e303dd354502bcaddeec557e12a, type: 3}
   m_Name: MoonIGuess
   m_EditorClassIdentifier: 
+  planetName: Moon
   shape: {fileID: 11400000, guid: 677d1906afe336844ad3e1229768ef6f, type: 2}
   shading: {fileID: 11400000, guid: 776e6bfd8d602bd479bd62ff4ad225ce, type: 2}
+  resourceConfig: {fileID: 0}

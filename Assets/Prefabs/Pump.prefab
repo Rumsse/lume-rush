@@ -27,14 +27,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8005319921480430843}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 186.6267, y: 0.598, z: 116.80298}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 186.05823, y: 0.598, z: 116.92221}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7630524395157278993}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!136 &2745358899089920642
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -90,7 +90,7 @@ MonoBehaviour:
   collectDuration: 20
   fuelAmount: 200
   sliderPrefab: {fileID: 7399711031440472413, guid: f822ad32aec954844831ff968c94e0d7, type: 3}
-  sliderOffset: {x: 0, y: 1.2, z: 0}
+  sliderOffset: {x: 0, y: 2.7, z: 0}
   faceCamera: 1
 --- !u!1001 &7957764880460691194
 PrefabInstance:

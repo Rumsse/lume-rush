@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf43e303dd354502bcaddeec557e12a, type: 3}
   m_Name: Crystal
   m_EditorClassIdentifier: 
+  planetName: Crystal
   shape: {fileID: 11400000, guid: 529e5d00ebd517d4db5390d81ceada39, type: 2}
   shading: {fileID: 11400000, guid: 39d462cf97e295848849b93b20a7894d, type: 2}
+  resourceConfig: {fileID: 0}

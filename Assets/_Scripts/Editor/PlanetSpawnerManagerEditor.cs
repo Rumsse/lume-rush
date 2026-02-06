@@ -28,6 +28,7 @@ public class PlanetSpawnerManagerEditor : Editor
     SerializedProperty gravityComponentTypeName;
     SerializedProperty planetTag;
     SerializedProperty planetLayerName;
+    SerializedProperty skyboxMaterial;
 
     #endregion
 
@@ -83,6 +84,7 @@ public class PlanetSpawnerManagerEditor : Editor
         gravityComponentTypeName = serializedObject.FindProperty("gravityComponentTypeName");
         planetTag = serializedObject.FindProperty("planetTag");
         planetLayerName = serializedObject.FindProperty("planetLayerName");
+        skyboxMaterial = serializedObject.FindProperty("skyboxMaterials");
 
         BuildPresetsList();
         RebuildInvokableMethods();
@@ -112,6 +114,7 @@ public class PlanetSpawnerManagerEditor : Editor
         DrawSpawn();
         DrawGravity();
         DrawTagLayer();
+        DrawSkybox();
 
         var changed = serializedObject.ApplyModifiedProperties();
         if (Application.isPlaying && autoInvokeInPlaymode && changed) SafeInvokeSelectedMethod();
@@ -381,6 +384,18 @@ public class PlanetSpawnerManagerEditor : Editor
             EditorGUILayout.HelpBox($"Layer '{planetLayerName.stringValue}' doesn't exist.", MessageType.Warning);
 
         EditorGUILayout.Space(10);
+    }
+
+    void DrawSkybox()
+    {
+        skyboxMaterial.isExpanded = DrawFoldout(skyboxMaterial.isExpanded, "Skybox", new Color(1f, 0.996f, 0.702f));
+        if (!skyboxMaterial.isExpanded) return;
+
+        EditorGUILayout.Space(6);
+        EditorGUILayout.PropertyField(skyboxMaterial, new GUIContent("Skybox Material"));
+
+        if (skyboxMaterial.arraySize == 0)
+            EditorGUILayout.HelpBox("Add at least 1 CelestialBodySettings preset.", MessageType.Warning);
     }
 
     #endregion

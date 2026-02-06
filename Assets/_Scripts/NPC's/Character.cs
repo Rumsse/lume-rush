@@ -13,8 +13,8 @@ public abstract class Character : MonoBehaviour, IHealth
     int maxHealth;
     bool isDead;
 
-    public CharacterStats Stats => stats;
     public NPCSpecialization Class { get; private set; }
+    public CharacterStats Stats => stats;
     public StatType SpecializationStat { get; private set; }
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;

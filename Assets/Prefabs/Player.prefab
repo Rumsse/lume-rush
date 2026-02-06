@@ -338,8 +338,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthSystem
   maxHealth: 3
-  fullHeart: {fileID: 21300000, guid: 5855d943803365944b9a79a0f581b469, type: 3}
-  emptyHeart: {fileID: 21300000, guid: f411276e28690d84ebc2b0d8c048951f, type: 3}
+  fullHeart: {fileID: 21300000, guid: 2912655b3ed526b4186aaabc0cab1710, type: 3}
+  emptyHeart: {fileID: 21300000, guid: cca3b80c6e9628445b6903cbcd3f3d84, type: 3}
 --- !u!4 &1104823336287280329 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}

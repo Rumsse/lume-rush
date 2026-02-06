@@ -15,17 +15,17 @@ MonoBehaviour:
   randomize: 0
   seed: 10
   terrainMaterial: {fileID: 2100000, guid: f733a9d2a8f012d459d2c7f411d51fb3, type: 2}
-  hasOcean: 0
+  hasOcean: 1
   oceanLevel: 1
   oceanSettings: {fileID: 11400000, guid: 82f313ff615176646ac42cd8eb2c8ff0, type: 2}
   shadingDataCompute: {fileID: 7200000, guid: f3a2904f78271471481822700022a157, type: 3}
   customizedCols:
-    shoreCol: {r: 1, g: 1, b: 1, a: 0}
-    flatColA1: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 0}
-    flatColA2: {r: 0.68235296, g: 0.7686275, b: 0.77647066, a: 0}
-    flatColB1: {r: 0.5647059, g: 0.57254905, b: 0.57254905, a: 0}
-    flatColB2: {r: 0.5411765, g: 0.5411765, b: 0.54901963, a: 1}
-    steepColA: {r: 0.91372555, g: 0.8862746, b: 0.77647066, a: 0}
+    shoreCol: {r: 0.9009434, g: 1, b: 0.9835053, a: 0}
+    flatColA1: {r: 0.9607844, g: 0.7568628, b: 0.5686275, a: 0}
+    flatColA2: {r: 0.9323899, g: 0.7971698, b: 1, a: 1}
+    flatColB1: {r: 1, g: 0.9925315, b: 0.5990566, a: 0}
+    flatColB2: {r: 0.77821225, g: 0.9607843, b: 0.5686275, a: 1}
+    steepColA: {r: 0.82812226, g: 0.75, b: 1, a: 0}
     steepColB: {r: 1, g: 1, b: 1, a: 0}
   randomizedCols:
     shoreCol: {r: 0, g: 0, b: 0, a: 0}

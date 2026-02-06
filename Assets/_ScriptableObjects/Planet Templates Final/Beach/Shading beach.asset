@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomize: 0
   seed: 0
-  terrainMaterial: {fileID: 2100000, guid: 6b6d3f5beddd942d18a71a6456de5da5, type: 2}
+  terrainMaterial: {fileID: 2100000, guid: da5149fddb1a8fc47b4dc0434d50c39d, type: 2}
   hasOcean: 1
   oceanLevel: 1
   oceanSettings: {fileID: 11400000, guid: c73b39a3af6df564fb42e8893761bc23, type: 2}

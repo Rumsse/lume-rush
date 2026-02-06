@@ -133,18 +133,18 @@ Material:
     - _Color2: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
     - _Color3: {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 1}
     - _Color4: {r: 1, g: 1, b: 1, a: 1}
-    - _EjectaCol: {r: 1, g: 1, b: 1, a: 1}
+    - _EjectaCol: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelCol: {r: 1, g: 1, b: 1, a: 1}
     - _NormalMapScales: {r: 10, g: 10, b: 0, a: 0}
     - _Params: {r: 0.23, g: -1.27, b: 0.26, a: 0.52}
-    - _PrimaryColA: {r: 1, g: 1, b: 1, a: 0}
-    - _PrimaryColB: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
+    - _PrimaryColA: {r: 0.5, g: 0.5, b: 0.5, a: 0}
+    - _PrimaryColB: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
     - _RandomBiomeValues: {r: -0.5720976, g: -0.122154, b: 0.14297305, a: -0.061504412}
     - _RandomPoleValues: {r: -0.14810935, g: -0.00710578, b: 0.08569491, a: 2.2706196}
     - _RandomValues: {r: -1, g: 0.19, b: 0.4, a: -0.28}
-    - _SecondaryColA: {r: 1, g: 1, b: 1, a: 0}
-    - _SecondaryColB: {r: 0.10720008, g: 0.1572306, b: 0.31132078, a: 0}
+    - _SecondaryColA: {r: 0, g: 0, b: 0, a: 0}
+    - _SecondaryColB: {r: 0, g: 0, b: 0, a: 0}
     - _TestParams: {r: 0, g: 1.15, b: 1.5, a: 13.36}
     - _TextureMask: {r: 0, g: 0, b: 1, a: 0}
     - _TextureWeights: {r: 0, g: 0, b: 0, a: 1}

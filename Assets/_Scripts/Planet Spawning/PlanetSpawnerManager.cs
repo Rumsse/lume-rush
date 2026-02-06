@@ -22,12 +22,16 @@ public class PlanetSpawnerManager : MonoBehaviour
     public string planetTag = "Planet";
     public string planetLayerName = "Planet";
 
+    public List<Material> skyboxMaterials = new List<Material>();
+
     #endregion
 
     #region Unity LifeCycle
 
     void Start()
     {
+        SetRandomSkybox();
+
         string selectedPresetName = PlayerPrefs.GetString("SelectedPlanetPreset", null);
 
         if (!string.IsNullOrEmpty(selectedPresetName))
@@ -146,6 +150,23 @@ public class PlanetSpawnerManager : MonoBehaviour
 
         if (generator != null)
             generator.SetLOD(0);
+    }
+
+    #endregion
+
+    #region Skybox
+
+    void SetRandomSkybox()
+    {
+        if (skyboxMaterials == null || skyboxMaterials.Count == 0)
+        {
+            Debug.LogWarning("No skybox materials assigned. Skipping skybox randomization.");
+            return;
+        }
+
+        var randomSkybox = skyboxMaterials[Random.Range(0, skyboxMaterials.Count)];
+        RenderSettings.skybox = randomSkybox;
+        DynamicGI.UpdateEnvironment();
     }
 
     #endregion

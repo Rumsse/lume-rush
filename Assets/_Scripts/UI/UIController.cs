@@ -2,18 +2,22 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-    [SerializeField] GameObject pumpIcon;
+    [SerializeField] GameObject emptyPumpIcon;
+    [SerializeField] GameObject fullPumpIcon;
 
     void OnEnable()
     {
-        pumpIcon?.SetActive(PlayerInteraction.HasPumpGlobal);
+        UpdatePumpIcons(PlayerInteraction.CurrentPumpState);
         PlayerInteraction.PumpStateChanged += OnPumpStateChanged;
     }
 
-    void OnDisable()
-    {
-        PlayerInteraction.PumpStateChanged -= OnPumpStateChanged;
-    }
+    void OnDisable() => PlayerInteraction.PumpStateChanged -= OnPumpStateChanged;
 
-    void OnPumpStateChanged(bool hasPump) => pumpIcon?.SetActive(hasPump);
+    void OnPumpStateChanged(PumpState state) => UpdatePumpIcons(state);
+
+    void UpdatePumpIcons(PumpState state)
+    {
+        if (emptyPumpIcon) emptyPumpIcon.SetActive(state == PumpState.Empty);
+        if (fullPumpIcon) fullPumpIcon.SetActive(state == PumpState.Full);
+    }
 }

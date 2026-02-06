@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 1a995ed9c8693fd459f57a369da1b017, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 8baa8354f213a7c449dd6c96646dc976, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -119,81 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &40030725
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 40030726}
-  - component: {fileID: 40030728}
-  - component: {fileID: 40030727}
-  m_Layer: 5
-  m_Name: Pump
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &40030726
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40030725}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5810107, y: 0.701619, z: 0.701619}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 732625004}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &40030727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40030725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.090087116, g: 0.080366686, b: 0.13207549, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &40030728
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40030725}
-  m_CullTransparentMesh: 1
 --- !u!1 &132100075
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +165,81 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BodyEffectManager
   oceanShader: {fileID: 4800000, guid: d03ae1df4c5324c888d341830e3620ad, type: 3}
   displayOceans: 1
+--- !u!1 &143956094
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 143956097}
+  - component: {fileID: 143956096}
+  - component: {fileID: 143956095}
+  m_Layer: 5
+  m_Name: Pump Full
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &143956095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143956094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 0cf4705f42487f341b7767d8aead4094, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &143956096
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143956094}
+  m_CullTransparentMesh: 1
+--- !u!224 &143956097
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143956094}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.2252306, y: 1.4002796, z: 1.4002796}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 646939307}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 847, y: -422}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &313476935
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,7 +511,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: -7}
+  m_AnchoredPosition: {x: 125.1, y: -7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &601488108
@@ -534,7 +534,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5855d943803365944b9a79a0f581b469, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2912655b3ed526b4186aaabc0cab1710, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -649,6 +649,7 @@ RectTransform:
   m_Children:
   - {fileID: 1534221619}
   - {fileID: 732625004}
+  - {fileID: 143956097}
   - {fileID: 1358216140}
   - {fileID: 1809696979}
   m_Father: {fileID: 0}
@@ -670,7 +671,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88c7528a7381f7b40a70d946ffefd983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIController
-  pumpIcon: {fileID: 732625003}
+  emptyPumpIcon: {fileID: 732625003}
+  fullPumpIcon: {fileID: 143956094}
 --- !u!1 &732625003
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,7 +685,7 @@ GameObject:
   - component: {fileID: 732625007}
   - component: {fileID: 732625006}
   m_Layer: 5
-  m_Name: Pump
+  m_Name: Pump Empty
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -698,15 +700,14 @@ RectTransform:
   m_GameObject: {fileID: 732625003}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.87499, y: 1, z: 1}
+  m_LocalScale: {x: 1.2252306, y: 1.4002796, z: 1.4002796}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 40030726}
+  m_Children: []
   m_Father: {fileID: 646939307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -863, y: -443}
+  m_AnchoredPosition: {x: 847, y: -422}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &732625006
@@ -722,14 +723,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.24705884, g: 0.24705884, b: 0.24705884, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: c0c814aab57ab9444b6874234b39ac48, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -779,16 +780,22 @@ MonoBehaviour:
   config: {fileID: 11400000, guid: bd459be59e77b5e4e9d6d1c880dd4e64, type: 2}
   planetTag: Planet
   resources:
-  - prefab: {fileID: 3303876102699440384, guid: 216c7ac0211ebff4fa5f25213d3bd2fe, type: 3}
-    count: 20
-    alignAxis: 2
-    offset: 0.44
+  - prefab: {fileID: 5465739070193905130, guid: c32b9b5cbbcc9134bb13330fdf251fdd, type: 3}
+    count: 7
+    alignAxis: 0
+    offset: 0
     avoidWater: 1
     initialized: 1
-  - prefab: {fileID: 3303876102699440384, guid: 2067cf2a4a8dd944391eab922f5764d7, type: 3}
+  - prefab: {fileID: 6208371833824068528, guid: 6394dbd1dc7336a4c9d0c209da8b0241, type: 3}
+    count: 10
+    alignAxis: 0
+    offset: -0.2
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 1901805064816106816, guid: 4cd82e703eb8e15409b4e507805ae8d0, type: 3}
     count: 20
     alignAxis: 0
-    offset: 1
+    offset: 0
     avoidWater: 1
     initialized: 1
   props:
@@ -840,7 +847,7 @@ MonoBehaviour:
     offset: 0.5
     avoidWater: 0
     initialized: 1
-  collisionCheckRadius: 1.5
+  collisionCheckRadius: 1
   rotationAdjustment: {x: 0, y: 180, z: 0}
   waterMargin: 0.05
   oceanResolveTimeout: 1
@@ -940,7 +947,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5, y: -7}
+  m_AnchoredPosition: {x: 8.1, y: -7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &882448944
@@ -963,7 +970,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5855d943803365944b9a79a0f581b469, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2912655b3ed526b4186aaabc0cab1710, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1018,7 +1025,7 @@ MonoBehaviour:
   distance: 9.57
   heightOffset: 5.62
   pitchAngle: 40
-  smoothTime: 0.2
+  smoothTime: 0.11
   rotationSpeed: 14
   collisionMask:
     serializedVersion: 2
@@ -1032,7 +1039,7 @@ MonoBehaviour:
   jumpTransitionSpeed: 1
   jumpLookTarget: {fileID: 0}
   useJumpLookTarget: 0
-  lookSmoothTime: 0.5
+  lookSmoothTime: 0.247
 --- !u!114 &974406837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6078,7 +6085,7 @@ RectTransform:
   m_GameObject: {fileID: 1358216139}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.664515, y: 0.664515, z: 0.664515}
+  m_LocalScale: {x: 0.68943435, y: 0.664515, z: 0.664515}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1408028401}
@@ -6088,7 +6095,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -786, y: 466.88}
+  m_AnchoredPosition: {x: -786.11, y: 466.88}
   m_SizeDelta: {x: 361.037, y: 102.7739}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1358216142
@@ -6156,7 +6163,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5855d943803365944b9a79a0f581b469, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2912655b3ed526b4186aaabc0cab1710, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6343,10 +6350,10 @@ MonoBehaviour:
   presets:
   - {fileID: 11400000, guid: 2e906eb5b6146594ab36af443a126cfc, type: 2}
   - {fileID: 11400000, guid: e1a1d214c3b3b8b4cbd9adedab08a6ff, type: 2}
-  - {fileID: 11400000, guid: 2a1cb691b0ffc49b4b8ca5edf4fb2044, type: 2}
+  - {fileID: 11400000, guid: f600984c006ee654d975f742c1c4db58, type: 2}
   - {fileID: 11400000, guid: 949bbffc76c3b3a48b57255ff923e43d, type: 2}
   - {fileID: 11400000, guid: 74252b8e50f38f2419d99d6882b4bf3c, type: 2}
-  - {fileID: 11400000, guid: d127c8c2ea8c946d29d60dbd0028681a, type: 2}
+  - {fileID: 11400000, guid: a41f92c25561b5d4fbb98aa69b8fd71b, type: 2}
   spawnCount: 1
   spawnRadius: 1
   scaleRange: {x: 25, y: 32}
@@ -6360,6 +6367,14 @@ MonoBehaviour:
   gravityComponentTypeName: GravityAreaPoint
   planetTag: Planet
   planetLayerName: Planet
+  skyboxMaterials:
+  - {fileID: 2100000, guid: a4be220830e90ea4eb88b48b7fd376ce, type: 2}
+  - {fileID: 2100000, guid: 69e10e886d52d20478f9ed5424126be8, type: 2}
+  - {fileID: 2100000, guid: a4ed21be487740a418a654407aaaf103, type: 2}
+  - {fileID: 2100000, guid: 98740415e46103c4da3ab7bb864ab17d, type: 2}
+  - {fileID: 2100000, guid: f7f800d56bc6c824a9bc54e982d4ed0f, type: 2}
+  - {fileID: 2100000, guid: 1a995ed9c8693fd459f57a369da1b017, type: 2}
+  - {fileID: 2100000, guid: 8baa8354f213a7c449dd6c96646dc976, type: 2}
 --- !u!4 &1487426883
 Transform:
   m_ObjectHideFlags: 0
