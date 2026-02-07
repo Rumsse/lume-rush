@@ -235,15 +235,64 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 704
   _groundCheck: {fileID: 5405421735785248261}
-  _speed: 9
-  _turnSpeed: 165
+  _baseSpeed: 9
+  _baseTurnSpeed: 165
   _groundCheckBoxSize: {x: 1.04, y: 0.2, z: 1.14}
-  _jumpForce: 150
-  _dashForce: 10
+  _baseJumpForce: 150
+  _baseDashForce: 10
   _dashDuration: 0.6
   _dashCooldown: 4
   _airMoveMultiplier: 0.6
   _airTurnMultiplier: 0.6
+  _referenceGravity: 800
+  _speedGravityScale:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.7
+      inSlope: 0
+      outSlope: 0.39999998
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 2
+      value: 1.3
+      inSlope: 0.39999998
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _jumpGravityScale:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.85
+      inSlope: 0
+      outSlope: 0.19999997
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 2
+      value: 1.15
+      inSlope: 0.19999997
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &8424655656360232613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,8 +387,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthSystem
   maxHealth: 3
-  fullHeart: {fileID: 21300000, guid: 5855d943803365944b9a79a0f581b469, type: 3}
-  emptyHeart: {fileID: 21300000, guid: f411276e28690d84ebc2b0d8c048951f, type: 3}
+  fullHeart: {fileID: 21300000, guid: 2912655b3ed526b4186aaabc0cab1710, type: 3}
+  emptyHeart: {fileID: 21300000, guid: cca3b80c6e9628445b6903cbcd3f3d84, type: 3}
 --- !u!4 &1104823336287280329 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}

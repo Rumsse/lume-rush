@@ -6,8 +6,8 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 {
     #region Properties 
 
-    public static Action<bool> PumpStateChanged;
-    public static bool HasPumpGlobal;
+    public static Action<PumpState> PumpStateChanged;
+    public static PumpState CurrentPumpState { get; private set; }
     public bool HasPump => hasPump;
 
     [SerializeField] PlacementController placement;
@@ -204,6 +204,8 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         carriedPumpFuel = 0;
         instance.tag = pumpTag;
 
+        instance.transform.Rotate(0f, 180f, 0f);
+
         var collector = instance.GetComponent<PumpFuelCollector>();
         if (collector) collector.BeginCollect();
 
@@ -213,10 +215,22 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
     void NotifyPumpState()
     {
-        HasPumpGlobal = hasPump;
-        PumpStateChanged?.Invoke(hasPump);
+        if (!hasPump)
+            CurrentPumpState = PumpState.None;
+        else if (carriedPumpFuel > 0)
+            CurrentPumpState = PumpState.Full;
+        else
+            CurrentPumpState = PumpState.Empty;
+
+        PumpStateChanged?.Invoke(CurrentPumpState);
     }
 
     #endregion
+}
 
+public enum PumpState
+{
+    None,
+    Empty,
+    Full
 }

@@ -1,31 +1,32 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class GravityArea : MonoBehaviour
 {
     [SerializeField] private int priority;
-    public int Priority => priority;
+    [SerializeField] private float gravityForce = 800f;
 
-    void Start()
+    public int Priority => priority;
+    public float GravityForce => gravityForce;
+
+    public void SetGravityForce(float force) => gravityForce = force;
+
+    void Awake()
     {
-        transform.GetComponent<Collider>().isTrigger = true;
+        if (TryGetComponent<Collider>(out var collider))
+            collider.isTrigger = true;
     }
 
-    public abstract Vector3 GetGravityDirection(GravityBody _gravityBody);
+    public abstract Vector3 GetGravityDirection(GravityBody gravityBody);
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out GravityBody gravityBody))
-        {
             gravityBody.AddGravityArea(this);
-        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.TryGetComponent(out GravityBody gravityBody))
-        {
             gravityBody.RemoveGravityArea(this);
-        }
     }
 }

@@ -22,12 +22,16 @@ public class PlanetSpawnerManager : MonoBehaviour
     public string planetTag = "Planet";
     public string planetLayerName = "Planet";
 
+    public List<Material> skyboxMaterials = new List<Material>();
+
     #endregion
 
     #region Unity LifeCycle
 
     void Start()
     {
+        SetRandomSkybox();
+
         string selectedPresetName = PlayerPrefs.GetString("SelectedPlanetPreset", null);
 
         if (!string.IsNullOrEmpty(selectedPresetName))
@@ -40,14 +44,10 @@ public class PlanetSpawnerManager : MonoBehaviour
                 SpawnAll();
             }
             else
-            {
                 Debug.LogWarning($"Preset '{selectedPresetName}' not found in the spawner presets list.");
-            }
         }
         else
-        {
             Debug.LogWarning("No planet was selected in the previous scene. Please ensure that the player clicked on a valid planet.");
-        }
     }
 
     #endregion
@@ -91,26 +91,7 @@ public class PlanetSpawnerManager : MonoBehaviour
         else Debug.LogWarning($"Layer '{planetLayerName}' not found. Set layer manually.");
 
         if (addGravityArea)
-        {
-            var gravityGO = new GameObject("Gravity Area");
-            gravityGO.transform.parent = go.transform;
-            gravityGO.transform.localPosition = Vector3.zero;
-            gravityGO.transform.localRotation = Quaternion.identity;
-            gravityGO.transform.localScale = Vector3.one * 1.75f;
-
-            var sc = gravityGO.AddComponent<SphereCollider>();
-            sc.isTrigger = gravityAreaIsTrigger;
-            sc.radius = gravityAreaMultiplier;
-
-            gravityGO.layer = go.layer;
-            gravityGO.layer = 0;
-
-            var type = System.Type.GetType(gravityComponentTypeName) ?? System.Type.GetType($"{gravityComponentTypeName},Assembly-CSharp");
-            if (type != null && typeof(Component).IsAssignableFrom(type))
-                gravityGO.AddComponent(type);
-            else
-                Debug.LogWarning($"Gravity component '{gravityComponentTypeName}' not found. Add it to the project or change the name in the spawner.");
-        }
+            CreateGravityArea(go, runtimeSettings.gravityForce);
 
         var resGen = go.AddComponent<ResourceGenerator>();
         resGen.ConfigureForPlanet(go.transform, runtimeSettings.resourceConfig);
@@ -125,11 +106,37 @@ public class PlanetSpawnerManager : MonoBehaviour
         }
     }
 
+    void CreateGravityArea(GameObject planetGO, float gravityForce)
+    {
+        var gravityGO = new GameObject("Gravity Area");
+        gravityGO.transform.parent = planetGO.transform;
+        gravityGO.transform.localPosition = Vector3.zero;
+        gravityGO.transform.localRotation = Quaternion.identity;
+        gravityGO.transform.localScale = Vector3.one * 1.75f;
+
+        var sc = gravityGO.AddComponent<SphereCollider>();
+        sc.isTrigger = gravityAreaIsTrigger;
+        sc.radius = gravityAreaMultiplier;
+
+        gravityGO.layer = 0;
+
+        var type = System.Type.GetType(gravityComponentTypeName) ?? System.Type.GetType($"{gravityComponentTypeName},Assembly-CSharp");
+        if (type != null && typeof(Component).IsAssignableFrom(type))
+        {
+            var gravityComponent = gravityGO.AddComponent(type) as GravityArea;
+            if (gravityComponent != null)
+                gravityComponent.SetGravityForce(gravityForce);
+        }
+        else
+            Debug.LogWarning($"Gravity component '{gravityComponentTypeName}' not found. Add it to the project or change the name in the spawner.");
+    }
+
     IEnumerator EnsureGeneratorVisible(CelestialBodyGenerator generator)
     {
         const int maxFrames = 30;
         int frame = 0;
         Transform terrainChild = null;
+
         while (frame++ < maxFrames)
         {
             if (generator == null) yield break;
@@ -146,6 +153,23 @@ public class PlanetSpawnerManager : MonoBehaviour
 
         if (generator != null)
             generator.SetLOD(0);
+    }
+
+    #endregion
+
+    #region Skybox
+
+    void SetRandomSkybox()
+    {
+        if (skyboxMaterials == null || skyboxMaterials.Count == 0)
+        {
+            Debug.LogWarning("No skybox materials assigned. Skipping skybox randomization.");
+            return;
+        }
+
+        var randomSkybox = skyboxMaterials[Random.Range(0, skyboxMaterials.Count)];
+        RenderSettings.skybox = randomSkybox;
+        DynamicGI.UpdateEnvironment();
     }
 
     #endregion
