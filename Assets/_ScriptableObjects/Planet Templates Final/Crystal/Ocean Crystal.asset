@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0467bf655a1214b878d6510a0b2bb09f, type: 3}
   m_Name: Ocean Crystal
   m_EditorClassIdentifier: 
-  depthMultiplier: 15
-  alphaMultiplier: 40.6
+  depthMultiplier: 0
+  alphaMultiplier: 4
   colA: {r: 0.95678014, g: 0.9716981, b: 0.42626378, a: 1}
   colB: {r: 1, g: 0.7877358, b: 0.99424416, a: 1}
   specularCol: {r: 1, g: 1, b: 1, a: 1}
   waveNormalA: {fileID: 2800000, guid: 22ce6bfd05a7041529cf1bc4de37ed57, type: 3}
   waveNormalB: {fileID: 2800000, guid: 2735e2726ca46411398278a9fa8a26d4, type: 3}
   waveStrength: 0.282
-  waveScale: 2
-  waveSpeed: 0.03
-  smoothness: 0.911
+  waveScale: 0
+  waveSpeed: 0
+  smoothness: 0.357
   testParams: {x: 0, y: 7.19, z: 0.7, w: 9.4}

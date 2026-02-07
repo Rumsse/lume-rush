@@ -780,18 +780,6 @@ MonoBehaviour:
   config: {fileID: 11400000, guid: bd459be59e77b5e4e9d6d1c880dd4e64, type: 2}
   planetTag: Planet
   resources:
-  - prefab: {fileID: 5465739070193905130, guid: c32b9b5cbbcc9134bb13330fdf251fdd, type: 3}
-    count: 7
-    alignAxis: 0
-    offset: 0
-    avoidWater: 1
-    initialized: 1
-  - prefab: {fileID: 6208371833824068528, guid: 6394dbd1dc7336a4c9d0c209da8b0241, type: 3}
-    count: 10
-    alignAxis: 0
-    offset: -0.2
-    avoidWater: 1
-    initialized: 1
   - prefab: {fileID: 1901805064816106816, guid: 4cd82e703eb8e15409b4e507805ae8d0, type: 3}
     count: 20
     alignAxis: 0
@@ -6362,18 +6350,18 @@ MonoBehaviour:
   seedMax: 1000
   parentUnderThis: 1
   addGravityArea: 1
-  gravityAreaMultiplier: 1.2
+  gravityAreaMultiplier: 5
   gravityAreaIsTrigger: 1
   gravityComponentTypeName: GravityAreaPoint
   planetTag: Planet
   planetLayerName: Planet
   skyboxMaterials:
+  - {fileID: 2100000, guid: 1a995ed9c8693fd459f57a369da1b017, type: 2}
   - {fileID: 2100000, guid: a4be220830e90ea4eb88b48b7fd376ce, type: 2}
   - {fileID: 2100000, guid: 69e10e886d52d20478f9ed5424126be8, type: 2}
   - {fileID: 2100000, guid: a4ed21be487740a418a654407aaaf103, type: 2}
   - {fileID: 2100000, guid: 98740415e46103c4da3ab7bb864ab17d, type: 2}
   - {fileID: 2100000, guid: f7f800d56bc6c824a9bc54e982d4ed0f, type: 2}
-  - {fileID: 2100000, guid: 1a995ed9c8693fd459f57a369da1b017, type: 2}
   - {fileID: 2100000, guid: 8baa8354f213a7c449dd6c96646dc976, type: 2}
 --- !u!4 &1487426883
 Transform:

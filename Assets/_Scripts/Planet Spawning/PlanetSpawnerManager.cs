@@ -44,14 +44,10 @@ public class PlanetSpawnerManager : MonoBehaviour
                 SpawnAll();
             }
             else
-            {
                 Debug.LogWarning($"Preset '{selectedPresetName}' not found in the spawner presets list.");
-            }
         }
         else
-        {
             Debug.LogWarning("No planet was selected in the previous scene. Please ensure that the player clicked on a valid planet.");
-        }
     }
 
     #endregion
@@ -95,26 +91,7 @@ public class PlanetSpawnerManager : MonoBehaviour
         else Debug.LogWarning($"Layer '{planetLayerName}' not found. Set layer manually.");
 
         if (addGravityArea)
-        {
-            var gravityGO = new GameObject("Gravity Area");
-            gravityGO.transform.parent = go.transform;
-            gravityGO.transform.localPosition = Vector3.zero;
-            gravityGO.transform.localRotation = Quaternion.identity;
-            gravityGO.transform.localScale = Vector3.one * 1.75f;
-
-            var sc = gravityGO.AddComponent<SphereCollider>();
-            sc.isTrigger = gravityAreaIsTrigger;
-            sc.radius = gravityAreaMultiplier;
-
-            gravityGO.layer = go.layer;
-            gravityGO.layer = 0;
-
-            var type = System.Type.GetType(gravityComponentTypeName) ?? System.Type.GetType($"{gravityComponentTypeName},Assembly-CSharp");
-            if (type != null && typeof(Component).IsAssignableFrom(type))
-                gravityGO.AddComponent(type);
-            else
-                Debug.LogWarning($"Gravity component '{gravityComponentTypeName}' not found. Add it to the project or change the name in the spawner.");
-        }
+            CreateGravityArea(go, runtimeSettings.gravityForce);
 
         var resGen = go.AddComponent<ResourceGenerator>();
         resGen.ConfigureForPlanet(go.transform, runtimeSettings.resourceConfig);
@@ -129,11 +106,37 @@ public class PlanetSpawnerManager : MonoBehaviour
         }
     }
 
+    void CreateGravityArea(GameObject planetGO, float gravityForce)
+    {
+        var gravityGO = new GameObject("Gravity Area");
+        gravityGO.transform.parent = planetGO.transform;
+        gravityGO.transform.localPosition = Vector3.zero;
+        gravityGO.transform.localRotation = Quaternion.identity;
+        gravityGO.transform.localScale = Vector3.one * 1.75f;
+
+        var sc = gravityGO.AddComponent<SphereCollider>();
+        sc.isTrigger = gravityAreaIsTrigger;
+        sc.radius = gravityAreaMultiplier;
+
+        gravityGO.layer = 0;
+
+        var type = System.Type.GetType(gravityComponentTypeName) ?? System.Type.GetType($"{gravityComponentTypeName},Assembly-CSharp");
+        if (type != null && typeof(Component).IsAssignableFrom(type))
+        {
+            var gravityComponent = gravityGO.AddComponent(type) as GravityArea;
+            if (gravityComponent != null)
+                gravityComponent.SetGravityForce(gravityForce);
+        }
+        else
+            Debug.LogWarning($"Gravity component '{gravityComponentTypeName}' not found. Add it to the project or change the name in the spawner.");
+    }
+
     IEnumerator EnsureGeneratorVisible(CelestialBodyGenerator generator)
     {
         const int maxFrames = 30;
         int frame = 0;
         Transform terrainChild = null;
+
         while (frame++ < maxFrames)
         {
             if (generator == null) yield break;

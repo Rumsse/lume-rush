@@ -174,7 +174,7 @@ Material:
     - _SandCol: {r: 1, g: 1, b: 1, a: 1}
     - _ShoreCol: {r: 0.9009434, g: 1, b: 0.9835053, a: 0}
     - _SnowCol: {r: 1, g: 1, b: 1, a: 1}
-    - _SteepColA: {r: 0.82812226, g: 0.75, b: 1, a: 0}
+    - _SteepColA: {r: 1, g: 0.8349056, b: 0.8682314, a: 0}
     - _SteepColB: {r: 1, g: 1, b: 1, a: 0}
     - _TestParams: {r: 5, g: -0.15, b: 2, a: 1}
   m_BuildTextureStacks: []

@@ -25,7 +25,7 @@ MonoBehaviour:
     flatColA2: {r: 0.9323899, g: 0.7971698, b: 1, a: 1}
     flatColB1: {r: 1, g: 0.9925315, b: 0.5990566, a: 0}
     flatColB2: {r: 0.77821225, g: 0.9607843, b: 0.5686275, a: 1}
-    steepColA: {r: 0.82812226, g: 0.75, b: 1, a: 0}
+    steepColA: {r: 1, g: 0.8349056, b: 0.8682314, a: 0}
     steepColB: {r: 1, g: 1, b: 1, a: 0}
   randomizedCols:
     shoreCol: {r: 0, g: 0, b: 0, a: 0}

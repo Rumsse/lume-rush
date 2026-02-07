@@ -5,52 +5,70 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class GravityBody : MonoBehaviour
 {
-    private static float gravityForce = 800;
+    public GravityArea CurrentGravityArea { get; private set; }
 
     public Vector3 GravityDirection
     {
         get
         {
-            if (gravityAreas.Count == 0) return Vector3.zero;
-            gravityAreas.Sort((area1, area2) => area1.Priority.CompareTo(area2.Priority));
-            return gravityAreas.Last().GetGravityDirection(this).normalized;
+            UpdateCurrentGravityArea();
+            if (CurrentGravityArea == null) return Vector3.zero;
+            return CurrentGravityArea.GetGravityDirection(this).normalized;
+        }
+    }
+
+    public float CurrentGravityForce
+    {
+        get
+        {
+            UpdateCurrentGravityArea();
+            return CurrentGravityArea != null ? CurrentGravityArea.GravityForce : 0f;
         }
     }
 
     private Rigidbody rb;
     private List<GravityArea> gravityAreas;
 
-    void Start()
-    {
-        rb = transform.GetComponent<Rigidbody>();
-        gravityAreas = new List<GravityArea>();
-    }
+    void Awake() => rb = GetComponent<Rigidbody>();
+
+    void Start() => gravityAreas = new List<GravityArea>();
 
     void FixedUpdate()
     {
-        rb.AddForce(GravityDirection * (gravityForce * Time.fixedDeltaTime), ForceMode.Acceleration);
-
-        if (GravityDirection != Vector3.zero)
+        if (CurrentGravityArea != null)
+        {
+            rb.AddForce(GravityDirection * (CurrentGravityForce * Time.fixedDeltaTime), ForceMode.Acceleration);
             AlignToGravity();
+        }
     }
 
-    private void AlignToGravity()
+    void AlignToGravity()
     {
         Vector3 gravityUp = -GravityDirection.normalized;
-        Vector3 currentUp = transform.up;
-
-        // P³ynna korekta rotacji do powierzchni planety
-        Quaternion targetRotation = Quaternion.FromToRotation(currentUp, gravityUp) * rb.rotation;
+        Quaternion targetRotation = Quaternion.FromToRotation(transform.up, gravityUp) * rb.rotation;
         rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, Time.fixedDeltaTime * 5f));
+    }
+
+    void UpdateCurrentGravityArea()
+    {
+        if (gravityAreas.Count == 0)
+        {
+            CurrentGravityArea = null;
+            return;
+        }
+
+        CurrentGravityArea = gravityAreas.OrderBy(area => area.Priority).Last();
     }
 
     public void AddGravityArea(GravityArea gravityArea)
     {
         gravityAreas.Add(gravityArea);
+        UpdateCurrentGravityArea();
     }
 
     public void RemoveGravityArea(GravityArea gravityArea)
     {
         gravityAreas.Remove(gravityArea);
+        UpdateCurrentGravityArea();
     }
 }

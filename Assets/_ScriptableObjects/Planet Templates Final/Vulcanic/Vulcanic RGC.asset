@@ -10,28 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17571952f04b5a9498755277ab141dd9, type: 3}
-  m_Name: Test RGC
+  m_Name: Vulcanic RGC
   m_EditorClassIdentifier: Assembly-CSharp::ResourceGeneratorConfig
   resources:
   - prefab: {fileID: 8889423917290717899, guid: d3da3faaa5fc3bf4c92e2dc941390b4f, type: 3}
-    count: 0
+    count: 30
     alignAxis: 0
     offset: 0.44
     avoidWater: 1
     initialized: 1
   - prefab: {fileID: 7226534699707336089, guid: d4064eb3f7f12cb4ab3c6ee87c6e2188, type: 3}
-    count: 30
-    alignAxis: 0
-    offset: 0
-    avoidWater: 1
-    initialized: 1
-  - prefab: {fileID: 5465739070193905130, guid: c32b9b5cbbcc9134bb13330fdf251fdd, type: 3}
-    count: 30
-    alignAxis: 0
-    offset: 0
-    avoidWater: 1
-    initialized: 1
-  - prefab: {fileID: 6208371833824068528, guid: 6394dbd1dc7336a4c9d0c209da8b0241, type: 3}
     count: 30
     alignAxis: 0
     offset: 0
@@ -43,7 +31,31 @@ MonoBehaviour:
     offset: 0
     avoidWater: 1
     initialized: 1
-  props: []
+  - prefab: {fileID: 6208371833824068528, guid: 6394dbd1dc7336a4c9d0c209da8b0241, type: 3}
+    count: 10
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  props:
+  - prefab: {fileID: 9069682410562192633, guid: ad40b1e371e151a4aa666086c2664428, type: 3}
+    count: 1
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 4925801191122394998, guid: b7f291cffd3ef2549874a86cbfd8419c, type: 3}
+    count: 3
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 464873336223635328, guid: 1c6b1b5ea1740f9459da018a8ceaa5d8, type: 3}
+    count: 3
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
   collisionCheckRadius: 1.5
   rotationAdjustment: {x: 0, y: 180, z: 0}
   waterMargin: 0.05
