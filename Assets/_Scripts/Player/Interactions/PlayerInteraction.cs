@@ -71,7 +71,10 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && nearbyShipStorage != null) nearbyShipStorage.DebugShipInventory();
+        if (Input.GetKeyDown(KeyCode.Tab) && nearbyShipStorage != null) nearbyShipStorage.DebugShipInventory();
+
+        if (Input.GetKeyDown(KeyCode.Q))
+            ReturnToShip();
     }
 
     void OnTriggerEnter(Collider other)
@@ -223,6 +226,18 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
             CurrentPumpState = PumpState.Empty;
 
         PumpStateChanged?.Invoke(CurrentPumpState);
+    }
+
+    #endregion
+
+    #region Scene Management
+
+    void ReturnToShip()
+    {
+        if (SpaceShipStorage.Instance != null)
+            DepositItemsToShip();
+
+        SceneLoader.Instance?.LoadShip();
     }
 
     #endregion
