@@ -10,37 +10,36 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform target;
 
     [Header("Camera Position")]
-    [SerializeField] private float distance = 4f;
-    [SerializeField] private float height = 1.8f;
-    [SerializeField] private Vector3 shoulderOffset = new Vector3(0.6f, 0, 0);
+    [SerializeField] private float distance = 8f;
+    [SerializeField] private float heightFar = 2f;
+    [SerializeField] private float heightClose = 1.2f;
 
-    [Header("Input")]
-    [SerializeField] private string mouseXAxis = "Mouse X";
-    [SerializeField] private string mouseYAxis = "Mouse Y";
-    [SerializeField] private float mouseSensitivity = 3f;
-    [SerializeField] private bool invertY = false;
+    [Header("Camera Angle")]
+    [SerializeField] private float angleDownClose = 20f;
+    [SerializeField] private float angleDownFar = 0f;
 
-    [Header("Rotation")]
-    [SerializeField] private float minVerticalAngle = -30f;
-    [SerializeField] private float maxVerticalAngle = 70f;
+    [Header("Camera Side")]
+    [SerializeField] private bool rightSide = true;
+
+    [Header("Zoom")]
+    [SerializeField] private float minDistance = 4f;
+    [SerializeField] private float maxDistance = 12f;
+    [SerializeField] private float zoomSpeed = 3f;
+    [SerializeField] private float zoomSmoothing = 5f;
 
     [Header("Smoothing")]
-    [SerializeField] private float positionDamping = 5f;
-    [SerializeField] private float rotationDamping = 8f;
-
-    [Header("Collision")]
-    [SerializeField] private float minDistance = 1f;
-    [SerializeField] private float collisionPadding = 0.2f;
-    [SerializeField] private LayerMask collisionMask = -1;
+    [SerializeField] private float positionSmoothing = 8f;
+    [SerializeField] private float angleSmoothing = 5f;
+    [SerializeField] private float heightSmoothing = 5f;
 
     #endregion
 
     #region Private Fields
 
-    private float rotationX;
-    private float rotationY;
     private float currentDistance;
-    private Vector3 currentPosition;
+    private float targetDistance;
+    private float currentAngle;
+    private float currentHeight;
 
     #endregion
 
@@ -59,22 +58,14 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         currentDistance = distance;
-        currentPosition = transform.position;
-
-        Vector3 angles = transform.eulerAngles;
-        rotationX = angles.y;
-        rotationY = angles.x;
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        targetDistance = distance;
+        currentAngle = CalculateAngleForDistance(distance);
+        currentHeight = CalculateHeightForDistance(distance);
     }
 
     private void Update()
     {
-        HandleInput();
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-            ToggleCursor();
+        HandleZoomInput();
     }
 
     private void LateUpdate()
@@ -82,72 +73,60 @@ public class CameraController : MonoBehaviour
         if (target == null)
             return;
 
-        UpdatePosition();
+        UpdateCameraPosition();
     }
 
     #endregion
 
     #region Input
 
-    private void HandleInput()
+    private void HandleZoomInput()
     {
-        if (Cursor.lockState != CursorLockMode.Locked)
-            return;
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
 
-        float mouseX = Input.GetAxis(mouseXAxis);
-        float mouseY = Input.GetAxis(mouseYAxis);
+        if (Mathf.Abs(scroll) > 0.01f)
+            targetDistance -= scroll * zoomSpeed;
 
-        rotationX += mouseX * mouseSensitivity;
-
-        float yInput = invertY ? mouseY : -mouseY;
-        rotationY += yInput * mouseSensitivity;
-        rotationY = Mathf.Clamp(rotationY, minVerticalAngle, maxVerticalAngle);
-    }
-
-    private void ToggleCursor()
-    {
-        if (Cursor.lockState == CursorLockMode.Locked)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+        targetDistance = Mathf.Clamp(targetDistance, minDistance, maxDistance);
+        currentDistance = Mathf.Lerp(currentDistance, targetDistance, Time.deltaTime * zoomSmoothing);
     }
 
     #endregion
 
     #region Camera Logic
 
-    private void UpdatePosition()
+    private void UpdateCameraPosition()
     {
-        Quaternion rotation = Quaternion.Euler(rotationY, rotationX, 0f);
+        float sideMultiplier = rightSide ? -1f : 1f;
 
-        Vector3 targetPosition = target.position + Vector3.up * height;
-        Vector3 rotatedOffset = rotation * shoulderOffset;
-        targetPosition += rotatedOffset;
+        float targetHeight = CalculateHeightForDistance(currentDistance);
+        currentHeight = Mathf.Lerp(currentHeight, targetHeight, Time.deltaTime * heightSmoothing);
 
-        Vector3 direction = rotation * -Vector3.forward;
-        float desiredDistance = CheckCollision(targetPosition, direction);
+        Vector3 targetPosition = new Vector3(
+            target.position.x + (currentDistance * sideMultiplier),
+            target.position.y + currentHeight,
+            target.position.z
+        );
 
-        currentDistance = Mathf.Lerp(currentDistance, desiredDistance, Time.deltaTime * positionDamping);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * positionSmoothing);
 
-        Vector3 finalPosition = targetPosition + direction * currentDistance;
-        currentPosition = Vector3.Lerp(currentPosition, finalPosition, Time.deltaTime * positionDamping);
+        float targetAngle = CalculateAngleForDistance(currentDistance);
+        currentAngle = Mathf.Lerp(currentAngle, targetAngle, Time.deltaTime * angleSmoothing);
 
-        transform.position = currentPosition;
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * rotationDamping);
+        float rotationY = rightSide ? 90f : -90f;
+        transform.rotation = Quaternion.Euler(currentAngle, rotationY, 0);
     }
 
-    private float CheckCollision(Vector3 targetPos, Vector3 direction)
+    private float CalculateAngleForDistance(float dist)
     {
-        if (Physics.Raycast(targetPos, direction, out RaycastHit hit, distance, collisionMask))
-            return Mathf.Max(hit.distance - collisionPadding, minDistance);
+        float t = Mathf.InverseLerp(minDistance, maxDistance, dist);
+        return Mathf.Lerp(angleDownClose, angleDownFar, t);
+    }
 
-        return distance;
+    private float CalculateHeightForDistance(float dist)
+    {
+        float t = Mathf.InverseLerp(minDistance, maxDistance, dist);
+        return Mathf.Lerp(heightClose, heightFar, t);
     }
 
     #endregion
