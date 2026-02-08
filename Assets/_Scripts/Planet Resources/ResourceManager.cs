@@ -31,7 +31,17 @@ public class ResourceManager : MonoBehaviour
         else
             globalResources[resourceName] = amount;
 
+        Debug.Log($"[ResourceManager] Added {amount}x {resourceName}. Total: {globalResources[resourceName]}");
         ResourceUI.Instance?.UpdateUI();
+    }
+
+    public void AddResourceWithCategory(ResourceData resourceData, int amount)
+    {
+        if (resourceData == null || amount <= 0)
+            return;
+
+        string storageName = resourceData.GetStorageName();
+        AddResource(storageName, amount);
     }
 
     public void AddResources(Dictionary<string, int> resources)

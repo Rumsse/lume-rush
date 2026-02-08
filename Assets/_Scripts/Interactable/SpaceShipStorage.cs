@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class SpaceShipStorage : MonoBehaviour
@@ -19,15 +19,15 @@ public class SpaceShipStorage : MonoBehaviour
             if (slot == null || slot.IsEmpty())
                 continue;
 
-            var resourceName = slot.currentResourceName;
-            if (string.IsNullOrEmpty(resourceName))
+            var resourceData = slot.currentResourceData;
+            if (resourceData == null)
             {
                 slot.Clear();
                 continue;
             }
 
-            ResourceManager.Instance?.AddResource(resourceName, 1);
-            Debug.Log($"Added {resourceName} to ship storage.");
+            ResourceManager.Instance?.AddResourceWithCategory(resourceData, 1);
+            Debug.Log($"Added {resourceData.resourceName} → {resourceData.GetStorageName()} to storage.");
             slot.Clear();
         }
 

@@ -108,9 +108,10 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         }
 
         var resourceData = interactable.resourceData;
-        if (resourceData == null) return;
+        if (resourceData == null)
+            return;
 
-        if (ToolbarManager.Instance.AddResource(resourceData.resourceName, resourceData.resourceIcon))
+        if (ToolbarManager.Instance.AddResource(resourceData))
         {
             go.SetActive(false);
             if (debugLogs) Debug.Log($"[PI] Picked up: {resourceData.resourceName}");
@@ -146,7 +147,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         else
         {
             var resourceData = collectingTarget.resourceData;
-            if (resourceData != null && ToolbarManager.Instance.AddResource(resourceData.resourceName, resourceData.resourceIcon))
+            if (resourceData != null && ToolbarManager.Instance.AddResource(resourceData))
             {
                 go.SetActive(false);
                 if (debugLogs) Debug.Log($"[PI] Timed collect: {resourceData.resourceName}");
@@ -156,6 +157,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
         collectingTarget = null;
     }
+
 
     void CancelCollect()
     {

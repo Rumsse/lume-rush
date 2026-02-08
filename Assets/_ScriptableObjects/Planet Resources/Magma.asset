@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Magma
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   resourceName: magma fruit
-  prefab: {fileID: 8889423917290717899, guid: d3da3faaa5fc3bf4c92e2dc941390b4f, type: 3}
   resourceIcon: {fileID: 21300000, guid: 1c2457adecfbe714ea4be280ace45872, type: 3}
+  category: {fileID: 11400000, guid: 286435f3085bccd4f9503236fbedaf6f, type: 2}
