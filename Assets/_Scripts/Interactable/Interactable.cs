@@ -33,9 +33,10 @@ public class Interactable : MonoBehaviour
 
         for (int i = 0; i < renderers.Length; i++)
         {
-            if (targetMaterialIndex < 0) renderers[i].SetPropertyBlock(mpb);
-            else renderers[i].SetPropertyBlock(mpb, targetMaterialIndex);
+            if (targetMaterialIndex < 0)
+                renderers[i].SetPropertyBlock(mpb);
+            else
+                renderers[i].SetPropertyBlock(mpb, targetMaterialIndex);
         }
     }
-
 }

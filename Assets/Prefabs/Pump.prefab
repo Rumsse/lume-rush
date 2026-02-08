@@ -92,6 +92,10 @@ MonoBehaviour:
   sliderPrefab: {fileID: 7399711031440472413, guid: f822ad32aec954844831ff968c94e0d7, type: 3}
   sliderOffset: {x: 0, y: 2.7, z: 0}
   faceCamera: 1
+  pumpModel: {fileID: 1516832802145929077}
+  pulseDuration: 0.5
+  pulseScale: 1.1
+  pulseEase: 4
 --- !u!1001 &7957764880460691194
 PrefabInstance:
   m_ObjectHideFlags: 0

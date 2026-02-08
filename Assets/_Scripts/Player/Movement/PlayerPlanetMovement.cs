@@ -20,6 +20,7 @@ public class PlayerPlanetMovement : MonoBehaviour
     [SerializeField] private float _baseDashForce = 40f;
     [SerializeField] private float _dashDuration = 0.2f;
     [SerializeField] private float _dashCooldown = 1.5f;
+    [SerializeField] private GameObject _dashParticleDust;
 
     [Header("Air control")]
     [SerializeField][Range(0f, 1f)] private float _airMoveMultiplier = 0.6f;
@@ -154,10 +155,16 @@ public class PlayerPlanetMovement : MonoBehaviour
     {
         _isDashing = true;
 
+        if (_dashParticleDust != null)
+            _dashParticleDust.SetActive(true);
+
         Vector3 dashDirection = transform.forward.normalized;
         _rigidbody.AddForce(dashDirection * _currentDashForce, ForceMode.VelocityChange);
 
         yield return new WaitForSeconds(_dashDuration);
+
+        if (_dashParticleDust != null)
+            _dashParticleDust.SetActive(false);
 
         _isDashing = false;
         _dashTimer = _dashCooldown;

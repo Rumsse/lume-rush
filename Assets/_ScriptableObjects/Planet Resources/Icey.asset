@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Icey
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   resourceName: Icey fruit
-  prefab: {fileID: 8889423917290717899, guid: d3da3faaa5fc3bf4c92e2dc941390b4f, type: 3}
   resourceIcon: {fileID: 21300000, guid: c963cb18839832c4a9d5b821cfe9c918, type: 3}
+  category: {fileID: 11400000, guid: 286435f3085bccd4f9503236fbedaf6f, type: 2}

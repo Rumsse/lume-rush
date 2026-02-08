@@ -1,45 +1,50 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class SpaceShipStorage : MonoBehaviour
 {
-    Dictionary<string, int> storedResources = new Dictionary<string, int>();
+    Dictionary<string, int> temporaryStorage = new Dictionary<string, int>();
 
-    public int Fuel => storedResources.TryGetValue("Fuel", out var v) ? v : 0;
+    void Start()
+    {
+        if (ResourceManager.Instance != null)
+            temporaryStorage = ResourceManager.Instance.GetAllResources();
+    }
 
-    public void AddToStorage(List<ToolbarSlot> toolbarSlots)
+    public void ReceiveResources(List<ToolbarSlot> toolbarSlots)
     {
         for (int i = 0; i < toolbarSlots.Count; i++)
         {
             var slot = toolbarSlots[i];
-            if (slot == null || slot.IsEmpty()) continue;
+            if (slot == null || slot.IsEmpty())
+                continue;
 
-            var resourceName = slot.currentResourceName;
-            if (string.IsNullOrEmpty(resourceName)) { slot.Clear(); continue; }
+            var resourceData = slot.currentResourceData;
+            if (resourceData == null)
+            {
+                slot.Clear();
+                continue;
+            }
 
-            if (storedResources.ContainsKey(resourceName)) storedResources[resourceName]++;
-            else storedResources[resourceName] = 1;
-
-            Debug.Log($"Added {resourceName} to the ship.");
+            ResourceManager.Instance?.AddResourceWithCategory(resourceData, 1);
+            Debug.Log($"Added {resourceData.resourceName} → {resourceData.GetStorageName()} to storage.");
             slot.Clear();
         }
 
-        Debug.Log("Toolbar cleared and resources added to the ship.");
+        Debug.Log("Resources transferred to global storage.");
     }
 
-    public void AddFuel(int amount)
+    public void ReceiveFuel(int amount)
     {
-        if (amount <= 0) return;
-        if (storedResources.ContainsKey("Fuel")) storedResources["Fuel"] += amount;
-        else storedResources["Fuel"] = amount;
-        Debug.Log($"Added Fuel: {amount}. Total Fuel: {storedResources["Fuel"]}");
-    }
+        if (amount <= 0)
+            return;
 
-    public int GetResourcesCount(string resourceName) => storedResources.TryGetValue(resourceName, out var count) ? count : 0;
+        ResourceManager.Instance?.AddResource("Fuel", amount);
+        Debug.Log($"Added Fuel: {amount}");
+    }
 
     public void DebugShipInventory()
     {
-        Debug.Log("Current ship inventory:");
-        foreach (var resource in storedResources) Debug.Log($"{resource.Key}: {resource.Value}");
+        ResourceManager.Instance?.DebugInventory();
     }
 }
