@@ -6,8 +6,8 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 {
     #region Properties 
 
-    public static Action<bool> PumpStateChanged;
-    public static bool HasPumpGlobal;
+    public static Action<PumpState> PumpStateChanged;
+    public static PumpState CurrentPumpState { get; private set; }
     public bool HasPump => hasPump;
 
     [SerializeField] PlacementController placement;
@@ -71,7 +71,10 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && nearbyShipStorage != null) nearbyShipStorage.DebugShipInventory();
+        if (Input.GetKeyDown(KeyCode.Q))
+            ReturnToShip();
+
+        if (Input.GetKeyDown(KeyCode.Tab) && nearbyShipStorage != null) nearbyShipStorage.DebugShipInventory();
     }
 
     void OnTriggerEnter(Collider other)
@@ -105,9 +108,10 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         }
 
         var resourceData = interactable.resourceData;
-        if (resourceData == null) return;
+        if (resourceData == null)
+            return;
 
-        if (ToolbarManager.Instance.AddResource(resourceData.resourceName, resourceData.resourceIcon))
+        if (ToolbarManager.Instance.AddResource(resourceData))
         {
             go.SetActive(false);
             if (debugLogs) Debug.Log($"[PI] Picked up: {resourceData.resourceName}");
@@ -121,11 +125,13 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         collectingTarget = target;
         collectTimer = 0f;
         collecting = true;
+        collectingTarget.StartCollecting();
         if (debugLogs) Debug.Log("[PI] Begin timed collect");
     }
 
     void CompleteCollect()
     {
+        collectingTarget.StopCollecting();
         collecting = false;
         var go = collectingTarget.gameObject;
 
@@ -143,7 +149,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         else
         {
             var resourceData = collectingTarget.resourceData;
-            if (resourceData != null && ToolbarManager.Instance.AddResource(resourceData.resourceName, resourceData.resourceIcon))
+            if (resourceData != null && ToolbarManager.Instance.AddResource(resourceData))
             {
                 go.SetActive(false);
                 if (debugLogs) Debug.Log($"[PI] Timed collect: {resourceData.resourceName}");
@@ -156,6 +162,9 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
     void CancelCollect()
     {
+        if (collectingTarget != null)
+            collectingTarget.StopCollecting();
+
         collecting = false;
         collectingTarget = null;
         collectTimer = 0f;
@@ -169,11 +178,11 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
     void DepositItemsToShip()
     {
         var toolbarSlots = ToolbarManager.Instance.GetSlots();
-        nearbyShipStorage.AddToStorage(toolbarSlots);
+        nearbyShipStorage.ReceiveResources(toolbarSlots);
 
         if (carriedPumpFuel > 0)
         {
-            nearbyShipStorage.AddFuel(carriedPumpFuel);
+            nearbyShipStorage.ReceiveFuel(carriedPumpFuel);
             carriedPumpFuel = 0;
             pumpUsedUp = true;
             hasPump = false;
@@ -204,6 +213,8 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         carriedPumpFuel = 0;
         instance.tag = pumpTag;
 
+        instance.transform.Rotate(0f, 180f, 0f);
+
         var collector = instance.GetComponent<PumpFuelCollector>();
         if (collector) collector.BeginCollect();
 
@@ -213,10 +224,56 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
     void NotifyPumpState()
     {
-        HasPumpGlobal = hasPump;
-        PumpStateChanged?.Invoke(hasPump);
+        if (!hasPump)
+            CurrentPumpState = PumpState.None;
+        else if (carriedPumpFuel > 0)
+            CurrentPumpState = PumpState.Full;
+        else
+            CurrentPumpState = PumpState.Empty;
+
+        PumpStateChanged?.Invoke(CurrentPumpState);
     }
 
     #endregion
 
+    #region Scene Management
+
+    void ReturnToShip()
+    {
+        if (nearbyShipStorage != null)
+            DepositItemsToShip();
+        else if (ResourceManager.Instance != null)
+        {
+            var slots = ToolbarManager.Instance.GetSlots();
+            foreach (var slot in slots)
+            {
+                if (slot.IsEmpty())
+                    continue;
+
+                ResourceManager.Instance.AddResource(slot.currentResourceName, 1);
+                slot.Clear();
+            }
+
+            if (carriedPumpFuel > 0)
+            {
+                ResourceManager.Instance.AddResource("Fuel", carriedPumpFuel);
+                carriedPumpFuel = 0;
+                pumpUsedUp = true;
+                hasPump = false;
+                placedPump = null;
+                NotifyPumpState();
+            }
+        }
+
+        SceneLoader.Instance?.LoadShip();
+    }
+
+    #endregion
+}
+
+public enum PumpState
+{
+    None,
+    Empty,
+    Full
 }

@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf43e303dd354502bcaddeec557e12a, type: 3}
   m_Name: Humble Abode
   m_EditorClassIdentifier: 
+  planetName: Humble Adobe
   shape: {fileID: 11400000, guid: a286a17239e1e4ac2a580c2e9dc9c041, type: 2}
   shading: {fileID: 11400000, guid: 14d46b34a29044212ba2b6855e8e2fdd, type: 2}
+  resourceConfig: {fileID: 0}

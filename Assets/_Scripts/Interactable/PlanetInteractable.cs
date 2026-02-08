@@ -1,0 +1,55 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class PlanetInteractable : BaseInteractable
+{
+    public Transform spawnPanelPosition;
+    public string PlanetName;
+    public string SelectedPresetName;
+
+    GameObject spawnedPanel;
+    Vector3 baseScale;
+
+    void Awake() => baseScale = transform.localScale;
+
+    protected override void OnMouseEnter()
+    {
+        transform.localScale = baseScale * 1.2f;
+    }
+
+    protected override void OnMouseExit()
+    {
+        transform.localScale = baseScale;
+    }
+
+    protected override void OnMouseDown()
+    {
+        if (spawnedPanel) return;
+
+        var globalPanel = GameObject.FindFirstObjectByType<PlanetConfirmationUI>(FindObjectsInactive.Include);
+        if (!globalPanel) return;
+
+        spawnedPanel = globalPanel.gameObject;
+        spawnedPanel.SetActive(true);
+
+        var displayName = string.IsNullOrEmpty(PlanetName) ? name : PlanetName;
+        globalPanel.Setup(displayName, OnConfirmAction, OnCancelAction);
+    }
+
+    void OnConfirmAction()
+    {
+        var displayName = string.IsNullOrEmpty(PlanetName) ? name : PlanetName;
+
+        PlayerPrefs.SetString("SelectedPlanet", displayName);
+        PlayerPrefs.SetString("SelectedPlanetPreset", string.IsNullOrEmpty(SelectedPresetName) ? displayName : SelectedPresetName);
+        PlayerPrefs.Save();
+
+        SceneManager.LoadScene("Test Planet Exploration");
+    }
+
+    void OnCancelAction()
+    {
+        if (spawnedPanel) spawnedPanel.SetActive(false);
+        spawnedPanel = null;
+    }
+}

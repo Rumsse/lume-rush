@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class PumpFuelCollector : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class PumpFuelCollector : MonoBehaviour
     [SerializeField] GameObject sliderPrefab;
     [SerializeField] Vector3 sliderOffset = new Vector3(0f, 1.2f, 0f);
     [SerializeField] bool faceCamera = true;
+    [SerializeField] Transform pumpModel;
+    [SerializeField] float pulseDuration = 0.6f;
+    [SerializeField] Vector3 pulseScale = new Vector3(1.15f, 0.95f, 1.15f);
+    [SerializeField] Ease pulseEaseOut = Ease.OutQuad;
+    [SerializeField] Ease pulseEaseIn = Ease.InQuad;
 
     #endregion
 
@@ -29,6 +35,8 @@ public class PumpFuelCollector : MonoBehaviour
     bool collecting;
     bool charged;
     bool producedOnce;
+    Sequence pulseSequence;
+    Vector3 originalScale;
 
     #endregion
 
@@ -42,7 +50,11 @@ public class PumpFuelCollector : MonoBehaviour
 
     #region Unity Callbacks
 
-    void Awake() => cam = Camera.main;
+    void Awake()
+    {
+        cam = Camera.main;
+        if (pumpModel) originalScale = pumpModel.localScale;
+    }
 
     void Update()
     {
@@ -51,11 +63,19 @@ public class PumpFuelCollector : MonoBehaviour
             timer += Time.deltaTime;
             var f = Mathf.Clamp01(timer / collectDuration);
             UpdateUI(f);
-            if (timer >= collectDuration) { collecting = false; charged = true; }
+
+            if (timer >= collectDuration)
+            {
+                collecting = false;
+                charged = true;
+                StopPulse();
+            }
         }
 
         if (faceCamera) Billboard();
     }
+
+    void OnDestroy() => pulseSequence?.Kill();
 
     #endregion
 
@@ -64,22 +84,55 @@ public class PumpFuelCollector : MonoBehaviour
     public void BeginCollect()
     {
         if (producedOnce) return;
+
         charged = false;
         timer = 0f;
         collecting = true;
         EnsureUI();
         SetUIActive(true);
         UpdateUI(0f);
+        StartPulse();
     }
 
     public int ConsumeFuel()
     {
         if (!charged) return 0;
+
         producedOnce = true;
         charged = false;
         collecting = false;
         SetUIActive(false);
         return fuelAmount;
+    }
+
+    #endregion
+
+    #region Pulse Animation
+
+    void StartPulse()
+    {
+        if (!pumpModel) return;
+
+        StopPulse();
+
+        var targetScale = new Vector3(
+            originalScale.x * pulseScale.x,
+            originalScale.y * pulseScale.y,
+            originalScale.z * pulseScale.z
+        );
+
+        pulseSequence = DOTween.Sequence()
+            .Append(pumpModel.DOScale(targetScale, pulseDuration * 0.4f).SetEase(pulseEaseOut))
+            .Append(pumpModel.DOScale(originalScale, pulseDuration * 0.6f).SetEase(pulseEaseIn))
+            .SetLoops(-1);
+    }
+
+    void StopPulse()
+    {
+        if (!pumpModel) return;
+
+        pulseSequence?.Kill();
+        pumpModel.DOScale(originalScale, 0.2f).SetEase(Ease.OutQuad);
     }
 
     #endregion
