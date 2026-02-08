@@ -125,11 +125,13 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         collectingTarget = target;
         collectTimer = 0f;
         collecting = true;
+        collectingTarget.StartCollecting();
         if (debugLogs) Debug.Log("[PI] Begin timed collect");
     }
 
     void CompleteCollect()
     {
+        collectingTarget.StopCollecting();
         collecting = false;
         var go = collectingTarget.gameObject;
 
@@ -158,9 +160,11 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         collectingTarget = null;
     }
 
-
     void CancelCollect()
     {
+        if (collectingTarget != null)
+            collectingTarget.StopCollecting();
+
         collecting = false;
         collectingTarget = null;
         collectTimer = 0f;
@@ -265,7 +269,6 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
     }
 
     #endregion
-
 }
 
 public enum PumpState
