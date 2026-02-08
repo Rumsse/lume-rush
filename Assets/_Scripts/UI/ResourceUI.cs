@@ -26,7 +26,7 @@ public class ResourceUI : MonoBehaviour
 
     public void UpdateUI()
     {
-        if (SpaceShipStorage.Instance == null)
+        if (ResourceManager.Instance == null)
             return;
 
         foreach (var display in resourceDisplays)
@@ -34,7 +34,7 @@ public class ResourceUI : MonoBehaviour
             if (display == null || string.IsNullOrEmpty(display.resourceName))
                 continue;
 
-            int count = SpaceShipStorage.Instance.GetResourcesCount(display.resourceName);
+            int count = ResourceManager.Instance.GetResourceCount(display.resourceName);
 
             if (display.countText != null)
                 display.countText.text = count.ToString();

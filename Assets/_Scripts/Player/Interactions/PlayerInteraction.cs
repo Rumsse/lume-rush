@@ -71,10 +71,10 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab) && nearbyShipStorage != null) nearbyShipStorage.DebugShipInventory();
-
         if (Input.GetKeyDown(KeyCode.Q))
             ReturnToShip();
+
+        if (Input.GetKeyDown(KeyCode.Tab) && nearbyShipStorage != null) nearbyShipStorage.DebugShipInventory();
     }
 
     void OnTriggerEnter(Collider other)
@@ -172,11 +172,11 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
     void DepositItemsToShip()
     {
         var toolbarSlots = ToolbarManager.Instance.GetSlots();
-        nearbyShipStorage.AddToStorage(toolbarSlots);
+        nearbyShipStorage.ReceiveResources(toolbarSlots);
 
         if (carriedPumpFuel > 0)
         {
-            nearbyShipStorage.AddFuel(carriedPumpFuel);
+            nearbyShipStorage.ReceiveFuel(carriedPumpFuel);
             carriedPumpFuel = 0;
             pumpUsedUp = true;
             hasPump = false;
@@ -234,13 +234,36 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
     void ReturnToShip()
     {
-        if (SpaceShipStorage.Instance != null)
+        if (nearbyShipStorage != null)
             DepositItemsToShip();
+        else if (ResourceManager.Instance != null)
+        {
+            var slots = ToolbarManager.Instance.GetSlots();
+            foreach (var slot in slots)
+            {
+                if (slot.IsEmpty())
+                    continue;
+
+                ResourceManager.Instance.AddResource(slot.currentResourceName, 1);
+                slot.Clear();
+            }
+
+            if (carriedPumpFuel > 0)
+            {
+                ResourceManager.Instance.AddResource("Fuel", carriedPumpFuel);
+                carriedPumpFuel = 0;
+                pumpUsedUp = true;
+                hasPump = false;
+                placedPump = null;
+                NotifyPumpState();
+            }
+        }
 
         SceneLoader.Instance?.LoadShip();
     }
 
     #endregion
+
 }
 
 public enum PumpState

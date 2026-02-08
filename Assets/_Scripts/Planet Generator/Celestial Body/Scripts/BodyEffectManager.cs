@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteAlways]
@@ -14,11 +13,16 @@ public class BodyEffectManager : MonoBehaviour
     OceanEffect[] oceanEffects;
     List<Material> postProcessingMaterials = new List<Material>();
 
-
     void OnEnable()
     {
         Instance = this;
         Init();
+    }
+
+    void OnDisable()
+    {
+        OceanEffect.CurrentOceanMaterial = null;
+        postProcessingMaterials.Clear();
     }
 
     void Init()
@@ -37,20 +41,27 @@ public class BodyEffectManager : MonoBehaviour
 
     void PrepareMaterials()
     {
-        if (oceanShader == null) return;
+        if (oceanShader == null)
+        {
+            OceanEffect.CurrentOceanMaterial = null;
+            return;
+        }
 
         Init();
 
         postProcessingMaterials.Clear();
+        bool hasActiveOcean = false;
 
         for (int i = 0; i < generators.Count; i++)
         {
             var generator = generators[i];
-            if (generator == null) continue;
+            if (generator == null)
+                continue;
 
             if (displayOceans && generator.body.shading.hasOcean)
             {
-                if (oceanEffects[i] == null) oceanEffects[i] = new OceanEffect();
+                if (oceanEffects[i] == null)
+                    oceanEffects[i] = new OceanEffect();
 
                 oceanEffects[i].Update(generator, oceanShader);
 
@@ -58,13 +69,14 @@ public class BodyEffectManager : MonoBehaviour
                 if (mat != null)
                 {
                     postProcessingMaterials.Add(mat);
+                    hasActiveOcean = true;
                 }
             }
         }
+
+        if (!hasActiveOcean)
+            OceanEffect.CurrentOceanMaterial = null;
     }
 
-    public List<Material> GetMaterials()
-    {
-        return postProcessingMaterials;
-    }
+    public List<Material> GetMaterials() => postProcessingMaterials;
 }
