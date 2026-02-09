@@ -289,16 +289,16 @@ MonoBehaviour:
     HasValue: 0
   displaySortOrder: 0
   childIdentifiers:
-  - 2fea114e74ecf3c4f920e1d5cc1c4c40
   - c88d16e5272a4e241b0ef0ac2e53b73d
+  - de700ef3f37a49b58a57ae3addf01ad9
+  - 0f8eb3f400726694eb47beb1a9f94ce8
+  - fd7c55dab0fce234b8c25f6ffca523c1
+  - b7716510a1f36934c87976f3a81dbf3d
   - 2c5177b11d81d824dbb064f9ac8527da
   - e7a046c753c3c3d4aacc91f6597f310d
-  - fd7c55dab0fce234b8c25f6ffca523c1
   - 52eb9df5db46521439908db3a29a1bbb
-  - 0f8eb3f400726694eb47beb1a9f94ce8
+  - 2fea114e74ecf3c4f920e1d5cc1c4c40
   - 46fbfdf3fc43db0458918377fd40293e
-  - de700ef3f37a49b58a57ae3addf01ad9
-  - b7716510a1f36934c87976f3a81dbf3d
   codecChannels:
     Value: []
     HasValue: 0
@@ -705,8 +705,14 @@ MonoBehaviour:
   VirtualChannelSettings: []
   RealChannelSettings: []
   Plugins: []
-  MasterBanks: []
-  Banks: []
+  MasterBanks:
+  - Master
+  Banks:
+  - Ambient
+  - Music
+  - SFX
+  - TESTING
+  - UI
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
@@ -722,18 +728,18 @@ MonoBehaviour:
   HideSetupWizard: 1
   LastEventReferenceScanVersion: 131858
   Platforms:
-  - {fileID: -1348098828769344983}
-  - {fileID: -6360052983364828332}
-  - {fileID: 1608730333536376233}
   - {fileID: -9048235435154940695}
+  - {fileID: -7517625938693009805}
+  - {fileID: -7429560359400517096}
+  - {fileID: -6360052983364828332}
+  - {fileID: -6359948827079488868}
+  - {fileID: -4976052772042267827}
   - {fileID: -2980555709668744075}
   - {fileID: -1651448924914547933}
-  - {fileID: -6359948827079488868}
+  - {fileID: -1348098828769344983}
   - {fileID: 726042466957618687}
-  - {fileID: -7429560359400517096}
+  - {fileID: 1608730333536376233}
   - {fileID: 8455221694477549498}
-  - {fileID: -7517625938693009805}
-  - {fileID: -4976052772042267827}
   MigratedPlatforms: 0a00000000000000150000000b00000009000000050000001200000008000000060000000c0000000200000001000000
 --- !u!114 &726042466957618687
 MonoBehaviour:

@@ -94,8 +94,9 @@ MonoBehaviour:
   faceCamera: 1
   pumpModel: {fileID: 1516832802145929077}
   pulseDuration: 0.5
-  pulseScale: 1.1
-  pulseEase: 4
+  pulseScale: {x: 1.15, y: 0.95, z: 1.15}
+  pulseEaseOut: 6
+  pulseEaseIn: 5
 --- !u!1001 &7957764880460691194
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -150,6 +150,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6293239704275780778}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6920099028648664734}
   m_SourcePrefab: {fileID: 100100000, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
 --- !u!4 &7166987462544234826 stripped
 Transform:
@@ -245,3 +248,46 @@ MonoBehaviour:
     m_Bits: 128
   DetectionRadius: 2.5
   MaxColliders: 16
+--- !u!114 &6920099028648664734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7511319953322066928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac6ced23b0cc154ca3391d4e2cb9c79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFX_Footsteps
+  ppm: {fileID: 0}
+  footstepsEvent_dirtSurface:
+    Guid:
+      Data1: 1281783592
+      Data2: 1097285967
+      Data3: 2098149548
+      Data4: 902577280
+    Path: event:/SFX/SFX_Footsteps_DirtSurface
+  footstepsEvent_hardSurface:
+    Guid:
+      Data1: -801774572
+      Data2: 1341803168
+      Data3: -57650007
+      Data4: -273397553
+    Path: event:/SFX/SFX_Footsteps_HardSurface
+  jumpEvent:
+    Guid:
+      Data1: -1259795941
+      Data2: 1277617684
+      Data3: 1890476178
+      Data4: 793475450
+    Path: event:/SFX/SFX_JumpAndFall_HardSurface
+  landEvent:
+    Guid:
+      Data1: -1259795941
+      Data2: 1277617684
+      Data3: 1890476178
+      Data4: 793475450
+    Path: event:/SFX/SFX_JumpAndFall_HardSurface
+  isGrounded: 1
+  isJumping: 0

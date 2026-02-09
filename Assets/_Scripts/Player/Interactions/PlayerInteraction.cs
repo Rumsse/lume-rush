@@ -10,6 +10,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
     public static PumpState CurrentPumpState { get; private set; }
     public bool HasPump => hasPump;
 
+    [SerializeField] SFX_SimpleSoundInteract sfx;
     [SerializeField] PlacementController placement;
     [SerializeField] GameObject pumpPrefab;
     [SerializeField] bool startWithPump = true;
@@ -96,6 +97,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         var go = interactable.gameObject;
         if (go.CompareTag(pumpTag))
         {
+            sfx.PlaySound_PumpWorkng(false, go);
             if (pumpUsedUp) { if (debugLogs) Debug.Log("[PI] Pump already used up"); return; }
             var collector = go.GetComponent<PumpFuelCollector>();
             if (collector) carriedPumpFuel += collector.ConsumeFuel();
@@ -114,6 +116,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         if (ToolbarManager.Instance.AddResource(resourceData))
         {
             go.SetActive(false);
+            sfx.PlaySound_ItemPickUp();
             if (debugLogs) Debug.Log($"[PI] Picked up: {resourceData.resourceName}");
         }
         else if (debugLogs) Debug.Log($"[PI] Toolbar full for: {resourceData.resourceName}");
@@ -131,6 +134,7 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
     void CompleteCollect()
     {
+        sfx.PlaySound_ItemPickUp();
         collectingTarget.StopCollecting();
         collecting = false;
         var go = collectingTarget.gameObject;
@@ -203,12 +207,16 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         if (pumpUsedUp) { if (debugLogs) Debug.Log("[PI] Pump placement disabled"); return; }
         if (!hasPump) { if (debugLogs) Debug.Log("[PI] No pump to place"); return; }
         if (placedPump) { if (debugLogs) Debug.Log("[PI] Pump already placed"); return; }
-        placement.BeginPlacement(pumpPrefab, this);
+        placement.BeginPlacement(pumpPrefab, this);  
     }
 
     public void OnPlaced(GameObject instance)
     {
         placedPump = instance;
+
+        sfx.PlaySound_PumpPlace();
+        sfx.PlaySound_PumpWorkng(true, placedPump);
+
         hasPump = false;
         carriedPumpFuel = 0;
         instance.tag = pumpTag;
