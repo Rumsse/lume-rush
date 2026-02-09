@@ -38,7 +38,7 @@ public class GravityBody : MonoBehaviour
         if (CurrentGravityArea != null)
         {
 
-            rb.AddForce(GravityDirection * (CurrentGravityForce * Time.fixedDeltaTime), ForceMode.Acceleration);
+            rb.AddForce(GravityDirection * CurrentGravityForce, ForceMode.Acceleration);
             AlignToGravity();
         }
     }

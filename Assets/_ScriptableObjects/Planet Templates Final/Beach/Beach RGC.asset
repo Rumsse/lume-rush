@@ -16,7 +16,7 @@ MonoBehaviour:
   - prefab: {fileID: 1901805064816106816, guid: 4cd82e703eb8e15409b4e507805ae8d0, type: 3}
     count: 20
     alignAxis: 0
-    offset: 0
+    offset: -0.01
     avoidWater: 1
     initialized: 1
   props:
@@ -33,13 +33,13 @@ MonoBehaviour:
     avoidWater: 1
     initialized: 1
   - prefab: {fileID: 6560850403121340390, guid: 7635ca88c243f174d9d91095d551c7bc, type: 3}
-    count: 4
+    count: 7
     alignAxis: 5
     offset: 0.28
     avoidWater: 0
     initialized: 1
   - prefab: {fileID: 3665985450732430756, guid: 719e3c47227962941b16320d368c4e1d, type: 3}
-    count: 4
+    count: 6
     alignAxis: 0
     offset: 0
     avoidWater: 0
@@ -63,13 +63,13 @@ MonoBehaviour:
     avoidWater: 1
     initialized: 1
   - prefab: {fileID: 836178924529284968, guid: b5fc3f73041c0854ea1c171a4c2fd9f5, type: 3}
-    count: 5
+    count: 6
     alignAxis: 0
     offset: 0.5
     avoidWater: 0
     initialized: 1
   collisionCheckRadius: 1
   rotationAdjustment: {x: 0, y: 180, z: 0}
-  waterMargin: 0.05
+  waterMargin: 0.07
   oceanResolveTimeout: 1
   maxAttemptsPerInstance: 64

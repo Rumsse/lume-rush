@@ -16,4 +16,4 @@ MonoBehaviour:
   shape: {fileID: 11400000, guid: 930b8c5613c078c4b931f270b3da2612, type: 2}
   shading: {fileID: 11400000, guid: e29bd61d1aea69740b04c4bbe4eed608, type: 2}
   resourceConfig: {fileID: 11400000, guid: bd459be59e77b5e4e9d6d1c880dd4e64, type: 2}
-  gravityForce: 800
+  gravityForce: 18

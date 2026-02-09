@@ -13,7 +13,7 @@ public class PlayerPlanetMovement : MonoBehaviour
     [SerializeField] private float _baseTurnSpeed = 1500f;
     [SerializeField] private Vector3 _groundCheckBoxSize = new Vector3(1.2f, 0.2f, 1.8f);
 
-    [Range(50f, 350f)]
+    [Range(1f, 350f)]
     [SerializeField] private float _baseJumpForce = 100f;
 
     [Header("Dash (Sprint)")]
