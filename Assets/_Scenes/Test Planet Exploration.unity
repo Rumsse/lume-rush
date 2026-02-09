@@ -672,8 +672,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88c7528a7381f7b40a70d946ffefd983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIController
-  emptyPumpIcon: {fileID: 732625003}
-  fullPumpIcon: {fileID: 143956094}
+  emptyPumpIcon: {fileID: 0}
+  fullPumpIcon: {fileID: 0}
 --- !u!1 &698836841
 GameObject:
   m_ObjectHideFlags: 0
@@ -2291,6 +2291,12 @@ MonoBehaviour:
   planetLayerName: Planet
   skyboxMaterials:
   - {fileID: 2100000, guid: 1a995ed9c8693fd459f57a369da1b017, type: 2}
+  - {fileID: 2100000, guid: 8baa8354f213a7c449dd6c96646dc976, type: 2}
+  - {fileID: 2100000, guid: f7f800d56bc6c824a9bc54e982d4ed0f, type: 2}
+  - {fileID: 2100000, guid: a4ed21be487740a418a654407aaaf103, type: 2}
+  - {fileID: 2100000, guid: 98740415e46103c4da3ab7bb864ab17d, type: 2}
+  - {fileID: 2100000, guid: a4be220830e90ea4eb88b48b7fd376ce, type: 2}
+  - {fileID: 2100000, guid: 69e10e886d52d20478f9ed5424126be8, type: 2}
 --- !u!4 &1487426883
 Transform:
   m_ObjectHideFlags: 0

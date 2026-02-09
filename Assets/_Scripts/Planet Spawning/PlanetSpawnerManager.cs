@@ -169,7 +169,7 @@ public class PlanetSpawnerManager : MonoBehaviour
 
         var randomSkybox = skyboxMaterials[Random.Range(0, skyboxMaterials.Count)];
         RenderSettings.skybox = randomSkybox;
-        DynamicGI.UpdateEnvironment();
+        //DynamicGI.UpdateEnvironment();
     }
 
     #endregion
