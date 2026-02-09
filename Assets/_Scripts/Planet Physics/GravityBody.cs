@@ -11,7 +11,6 @@ public class GravityBody : MonoBehaviour
     {
         get
         {
-            UpdateCurrentGravityArea();
             if (CurrentGravityArea == null) return Vector3.zero;
             return CurrentGravityArea.GetGravityDirection(this).normalized;
         }
@@ -21,7 +20,6 @@ public class GravityBody : MonoBehaviour
     {
         get
         {
-            UpdateCurrentGravityArea();
             return CurrentGravityArea != null ? CurrentGravityArea.GravityForce : 0f;
         }
     }
@@ -29,14 +27,17 @@ public class GravityBody : MonoBehaviour
     private Rigidbody rb;
     private List<GravityArea> gravityAreas;
 
-    void Awake() => rb = GetComponent<Rigidbody>();
-
-    void Start() => gravityAreas = new List<GravityArea>();
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        gravityAreas = new List<GravityArea>();
+    }
 
     void FixedUpdate()
     {
         if (CurrentGravityArea != null)
         {
+
             rb.AddForce(GravityDirection * (CurrentGravityForce * Time.fixedDeltaTime), ForceMode.Acceleration);
             AlignToGravity();
         }
@@ -44,31 +45,41 @@ public class GravityBody : MonoBehaviour
 
     void AlignToGravity()
     {
-        Vector3 gravityUp = -GravityDirection.normalized;
+        Vector3 gravityUp = -GravityDirection;
+        if (gravityUp == Vector3.zero) gravityUp = transform.up;
+
         Quaternion targetRotation = Quaternion.FromToRotation(transform.up, gravityUp) * rb.rotation;
         rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, Time.fixedDeltaTime * 5f));
     }
+
 
     void UpdateCurrentGravityArea()
     {
         if (gravityAreas.Count == 0)
         {
             CurrentGravityArea = null;
-            return;
         }
-
-        CurrentGravityArea = gravityAreas.OrderBy(area => area.Priority).Last();
+        else
+        {
+            CurrentGravityArea = gravityAreas.OrderBy(x => x.Priority).Last();
+        }
     }
 
     public void AddGravityArea(GravityArea gravityArea)
     {
-        gravityAreas.Add(gravityArea);
-        UpdateCurrentGravityArea();
+        if (!gravityAreas.Contains(gravityArea))
+        {
+            gravityAreas.Add(gravityArea);
+            UpdateCurrentGravityArea();
+        }
     }
 
     public void RemoveGravityArea(GravityArea gravityArea)
     {
-        gravityAreas.Remove(gravityArea);
-        UpdateCurrentGravityArea();
+        if (gravityAreas.Contains(gravityArea))
+        {
+            gravityAreas.Remove(gravityArea);
+            UpdateCurrentGravityArea();
+        }
     }
 }

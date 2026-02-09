@@ -51,7 +51,7 @@ public class ThrirdPersonPlanetCamera : MonoBehaviour
 
     IEnumerator WaitForPlayerSpawn()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.25f);
 
         if (target == null)
         {

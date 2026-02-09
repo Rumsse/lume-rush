@@ -84,7 +84,7 @@ public class ResourceGenerator : MonoBehaviour
 
     IEnumerator WaitForPlanetGeneration()
     {
-        yield return new WaitForSeconds(0.07f);
+        yield return new WaitForSeconds(0.1f);
 
         FindPlanet();
         if (planet == null) yield break;
