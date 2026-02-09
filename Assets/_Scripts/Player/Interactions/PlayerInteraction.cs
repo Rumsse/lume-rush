@@ -97,7 +97,10 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         var go = interactable.gameObject;
         if (go.CompareTag(pumpTag))
         {
-            sfx.PlaySound_PumpWorkng(false, go);
+            sfx.PlaySound_PumpWorkng(false, placedPump);
+            sfx.pumpInstanceCache.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            sfx.pumpInstanceCache.release();
+
             if (pumpUsedUp) { if (debugLogs) Debug.Log("[PI] Pump already used up"); return; }
             var collector = go.GetComponent<PumpFuelCollector>();
             if (collector) carriedPumpFuel += collector.ConsumeFuel();

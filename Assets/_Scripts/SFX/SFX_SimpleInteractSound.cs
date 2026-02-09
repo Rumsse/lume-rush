@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class SFX_SimpleSoundInteract : MonoBehaviour
     [SerializeField] private EventReference pumpWorkingSound;
     [SerializeField] private EventReference uiHoverSound;
     [SerializeField] private EventReference uiClickSound;
+
+    public EventInstance pumpInstanceCache;
     
 
 
@@ -32,9 +35,12 @@ public class SFX_SimpleSoundInteract : MonoBehaviour
             soundInstance.start();
             RuntimeManager.AttachInstanceToGameObject(soundInstance, pump);
             soundInstance.set3DAttributes(pump.transform.position.To3DAttributes());
+            pumpInstanceCache = soundInstance;
+            
         }
         else if (!turnOn)
         {
+            soundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             soundInstance.release();
         }
     }

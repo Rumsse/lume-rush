@@ -5,9 +5,14 @@ using UnityEngine.EventSystems;
 
 public class SFX_UIButtonSoundManager : MonoBehaviour, IPointerEnterHandler
 {
-    [SerializeField] private EventReference uiHoverSound = EventReference.Find("event:/SFX/UI/UI_Button_Hover");
-    [SerializeField] private EventReference uiClickSound = EventReference.Find("event:/SFX/UI/UI_Button_Click");
+    [SerializeField] private EventReference uiHoverSound;
+    [SerializeField] private EventReference uiClickSound;
 
+    void Awake()
+    {
+        uiHoverSound = EventReference.Find("event:/SFX/UI/UI_Button_Hover");
+        uiClickSound = EventReference.Find("event:/SFX/UI/UI_Button_Click");
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         RuntimeManager.PlayOneShot(uiHoverSound);
