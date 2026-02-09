@@ -131,7 +131,6 @@ GameObject:
   - component: {fileID: 32213348}
   - component: {fileID: 32213347}
   - component: {fileID: 32213346}
-  - component: {fileID: 32213350}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -214,10 +213,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1126424952}
-  - {fileID: 658944962}
-  - {fileID: 2103632714}
   - {fileID: 888182858}
+  - {fileID: 2086625847}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -225,32 +222,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &32213350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 32213345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f07aa4460da46741981b669fd22dbd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MainMenuUI
-  hoverOverSound:
-    Guid:
-      Data1: -1862168001
-      Data2: 1194930412
-      Data3: -235790702
-      Data4: -875003259
-    Path: event:/SFX/UI/UI_Button_Hover
-  clickSound:
-    Guid:
-      Data1: 833423685
-      Data2: 1104528693
-      Data3: 153197212
-      Data4: -330884681
-    Path: event:/SFX/UI/UI_Button_Click
 --- !u!1 &390349744
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,6 +417,7 @@ GameObject:
   - component: {fileID: 658944965}
   - component: {fileID: 658944964}
   - component: {fileID: 658944963}
+  - component: {fileID: 658944966}
   m_Layer: 5
   m_Name: Options
   m_TagString: Untagged
@@ -460,13 +432,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658944961}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 390349745}
-  m_Father: {fileID: 32213349}
+  m_Father: {fileID: 2086625847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -517,9 +489,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 32213350}
+      - m_Target: {fileID: 2086625848}
         m_TargetAssemblyTypeName: MainMenuUI, Assembly-CSharp
         m_MethodName: OnSettingsButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 658944966}
+        m_TargetAssemblyTypeName: SFX_UIButtonSoundManager, Assembly-CSharp
+        m_MethodName: OnClickSFX
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -567,6 +551,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658944961}
   m_CullTransparentMesh: 1
+--- !u!114 &658944966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658944961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734e4eeb6dc5f234bbc32cbda3e852d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFX_UIButtonSoundManager
+  uiHoverSound:
+    Guid:
+      Data1: -1862168001
+      Data2: 1194930412
+      Data3: -235790702
+      Data4: -875003259
+    Path: event:/SFX/UI/UI_Button_Hover
+  uiClickSound:
+    Guid:
+      Data1: 833423685
+      Data2: 1104528693
+      Data3: 153197212
+      Data4: -330884681
+    Path: event:/SFX/UI/UI_Button_Click
 --- !u!1 &699475875
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,6 +1000,7 @@ GameObject:
   - component: {fileID: 1126424955}
   - component: {fileID: 1126424954}
   - component: {fileID: 1126424953}
+  - component: {fileID: 1126424956}
   m_Layer: 5
   m_Name: Start
   m_TagString: Untagged
@@ -1004,13 +1015,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1126424951}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 699475876}
-  m_Father: {fileID: 32213349}
+  m_Father: {fileID: 2086625847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1061,9 +1072,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 32213350}
+      - m_Target: {fileID: 2086625848}
         m_TargetAssemblyTypeName: MainMenuUI, Assembly-CSharp
         m_MethodName: OnPlayButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1126424956}
+        m_TargetAssemblyTypeName: SFX_UIButtonSoundManager, Assembly-CSharp
+        m_MethodName: OnClickSFX
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1111,6 +1134,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1126424951}
   m_CullTransparentMesh: 1
+--- !u!114 &1126424956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126424951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734e4eeb6dc5f234bbc32cbda3e852d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFX_UIButtonSoundManager
+  uiHoverSound:
+    Guid:
+      Data1: -1862168001
+      Data2: 1194930412
+      Data3: -235790702
+      Data4: -875003259
+    Path: event:/SFX/UI/UI_Button_Hover
+  uiClickSound:
+    Guid:
+      Data1: 833423685
+      Data2: 1104528693
+      Data3: 153197212
+      Data4: -330884681
+    Path: event:/SFX/UI/UI_Button_Click
 --- !u!1 &1152249554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1630,6 +1679,57 @@ MonoBehaviour:
   m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
   nonRigidbodyVelocity: 0
   attenuationObject: {fileID: 0}
+--- !u!1 &2086625846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2086625847}
+  - component: {fileID: 2086625848}
+  m_Layer: 5
+  m_Name: Buttons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2086625847
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086625846}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1126424952}
+  - {fileID: 658944962}
+  - {fileID: 2103632714}
+  m_Father: {fileID: 32213349}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2086625848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086625846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f07aa4460da46741981b669fd22dbd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MainMenuUI
 --- !u!1 &2103632713
 GameObject:
   m_ObjectHideFlags: 0
@@ -1642,6 +1742,7 @@ GameObject:
   - component: {fileID: 2103632717}
   - component: {fileID: 2103632716}
   - component: {fileID: 2103632715}
+  - component: {fileID: 2103632718}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -1656,13 +1757,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2103632713}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 972481012}
-  m_Father: {fileID: 32213349}
+  m_Father: {fileID: 2086625847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1713,9 +1814,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 32213350}
+      - m_Target: {fileID: 2086625848}
         m_TargetAssemblyTypeName: MainMenuUI, Assembly-CSharp
         m_MethodName: OnQuitButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2103632718}
+        m_TargetAssemblyTypeName: SFX_UIButtonSoundManager, Assembly-CSharp
+        m_MethodName: OnClickSFX
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1763,6 +1876,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2103632713}
   m_CullTransparentMesh: 1
+--- !u!114 &2103632718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103632713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734e4eeb6dc5f234bbc32cbda3e852d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFX_UIButtonSoundManager
+  uiHoverSound:
+    Guid:
+      Data1: -1862168001
+      Data2: 1194930412
+      Data3: -235790702
+      Data4: -875003259
+    Path: event:/SFX/UI/UI_Button_Hover
+  uiClickSound:
+    Guid:
+      Data1: 833423685
+      Data2: 1104528693
+      Data3: 153197212
+      Data4: -330884681
+    Path: event:/SFX/UI/UI_Button_Click
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

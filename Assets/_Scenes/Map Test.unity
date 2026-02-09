@@ -226,6 +226,85 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1077178725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1077178727}
+  - component: {fileID: 1077178726}
+  m_Layer: 0
+  m_Name: AudioStorage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1077178726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077178725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b6f82eb002cdf243ad60089fe19abe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFX_SimpleSoundInteract
+  itemPickUpSound:
+    Guid:
+      Data1: 1435828854
+      Data2: 1202259808
+      Data3: 1021579651
+      Data4: -396022370
+    Path: event:/SFX/SFX_Item_Pickup
+  pumpPlaceSound:
+    Guid:
+      Data1: 1070142423
+      Data2: 1264216881
+      Data3: -1666252105
+      Data4: 1011510564
+    Path: event:/SFX/SFX_Placing_Pump
+  pumpWorkingSound:
+    Guid:
+      Data1: -1114777482
+      Data2: 1078063603
+      Data3: 1945999747
+      Data4: 1646789882
+    Path: event:/SFX/SFX_Pump_Working
+  uiHoverSound:
+    Guid:
+      Data1: -1862168001
+      Data2: 1194930412
+      Data3: -235790702
+      Data4: -875003259
+    Path: event:/SFX/UI/UI_Button_Hover
+  uiClickSound:
+    Guid:
+      Data1: 833423685
+      Data2: 1104528693
+      Data3: 153197212
+      Data4: -330884681
+    Path: event:/SFX/UI/UI_Button_Click
+--- !u!4 &1077178727
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077178725}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 299.25427, y: -0, z: 678.9063}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1152249554
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,9 +879,65 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5499822891809179004, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5499822891809179004, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5499822891809179004, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1707357369087515817}
+    - target: {fileID: 5499822891809179004, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5499822891809179004, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickSFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 5499822891809179004, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SFX_UIButtonSoundManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5499822891809179004, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5616282396012628245, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198860473242655888, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198860473242655888, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198860473242655888, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1707357369087515818}
+    - target: {fileID: 6198860473242655888, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198860473242655888, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickSFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198860473242655888, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SFX_UIButtonSoundManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198860473242655888, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6963686971698073143, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
       propertyPath: m_IsActive
@@ -811,8 +946,76 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4558621207492551011, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1707357369087515818}
+    - targetCorrespondingSourceObject: {fileID: 6963686971698073143, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1707357369087515817}
   m_SourcePrefab: {fileID: 100100000, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+--- !u!1 &1707357369087515815 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6963686971698073143, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+  m_PrefabInstance: {fileID: 1707357369087515814}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1707357369087515816 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4558621207492551011, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+  m_PrefabInstance: {fileID: 1707357369087515814}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1707357369087515817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707357369087515815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734e4eeb6dc5f234bbc32cbda3e852d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFX_UIButtonSoundManager
+  uiHoverSound:
+    Guid:
+      Data1: -1862168001
+      Data2: 1194930412
+      Data3: -235790702
+      Data4: -875003259
+    Path: event:/SFX/UI/UI_Button_Hover
+  uiClickSound:
+    Guid:
+      Data1: 833423685
+      Data2: 1104528693
+      Data3: 153197212
+      Data4: -330884681
+    Path: event:/SFX/UI/UI_Button_Click
+--- !u!114 &1707357369087515818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707357369087515816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734e4eeb6dc5f234bbc32cbda3e852d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFX_UIButtonSoundManager
+  uiHoverSound:
+    Guid:
+      Data1: -1862168001
+      Data2: 1194930412
+      Data3: -235790702
+      Data4: -875003259
+    Path: event:/SFX/UI/UI_Button_Hover
+  uiClickSound:
+    Guid:
+      Data1: 833423685
+      Data2: 1104528693
+      Data3: 153197212
+      Data4: -330884681
+    Path: event:/SFX/UI/UI_Button_Click
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -823,3 +1026,4 @@ SceneRoots:
   - {fileID: 1946460694}
   - {fileID: 32213349}
   - {fileID: 1152249557}
+  - {fileID: 1077178727}

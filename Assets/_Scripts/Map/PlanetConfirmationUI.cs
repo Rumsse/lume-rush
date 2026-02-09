@@ -8,6 +8,8 @@ public class PlanetConfirmationUI : MonoBehaviour
     public Button confirmButton;
     public Button cancelButton;
 
+    public SFX_SimpleSoundInteract sfx;
+
     public void Setup(string planetName, System.Action onConfirm, System.Action onCancel)
     {
         questionText.text = $"Do you want to explore {planetName}?";
