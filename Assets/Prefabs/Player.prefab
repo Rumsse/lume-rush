@@ -165,6 +165,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
       insertIndex: -1
       addedObject: {fileID: -52047911564630762}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8856472242246609140}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6351949712807476373}
   m_SourcePrefab: {fileID: 100100000, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
 --- !u!1 &296901486032930419 stripped
 GameObject:
@@ -297,6 +303,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _isGrounded: 0
 --- !u!114 &8424655656360232613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,6 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad52706c52d6e5f4da662407f541dfe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
+  sfx: {fileID: 6351949712807476373}
   placement: {fileID: 2555966904752584968}
   pumpPrefab: {fileID: 8005319921480430843, guid: 2975f2279f777cd45a5d4188c2299996, type: 3}
   startWithPump: 1
@@ -393,6 +401,96 @@ MonoBehaviour:
   maxHealth: 3
   fullHeart: {fileID: 21300000, guid: 2912655b3ed526b4186aaabc0cab1710, type: 3}
   emptyHeart: {fileID: 21300000, guid: cca3b80c6e9628445b6903cbcd3f3d84, type: 3}
+--- !u!114 &8856472242246609140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296901486032930419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac6ced23b0cc154ca3391d4e2cb9c79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFX_Footsteps
+  ppm: {fileID: 3399875839887823955}
+  footstepsEvent_dirtSurface:
+    Guid:
+      Data1: 1281783592
+      Data2: 1097285967
+      Data3: 2098149548
+      Data4: 902577280
+    Path: event:/SFX/SFX_Footsteps_DirtSurface
+  footstepsEvent_hardSurface:
+    Guid:
+      Data1: -801774572
+      Data2: 1341803168
+      Data3: -57650007
+      Data4: -273397553
+    Path: event:/SFX/SFX_Footsteps_HardSurface
+  jumpEvent:
+    Guid:
+      Data1: -1259795941
+      Data2: 1277617684
+      Data3: 1890476178
+      Data4: 793475450
+    Path: event:/SFX/SFX_JumpAndFall_HardSurface
+  landEvent:
+    Guid:
+      Data1: -1259795941
+      Data2: 1277617684
+      Data3: 1890476178
+      Data4: 793475450
+    Path: event:/SFX/SFX_JumpAndFall_HardSurface
+  isGrounded: 1
+  isJumping: 0
+--- !u!114 &6351949712807476373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296901486032930419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b6f82eb002cdf243ad60089fe19abe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleSoundInteract
+  itemPickUpSound:
+    Guid:
+      Data1: 1435828854
+      Data2: 1202259808
+      Data3: 1021579651
+      Data4: -396022370
+    Path: event:/SFX/SFX_Item_Pickup
+  pumpPlaceSound:
+    Guid:
+      Data1: 1070142423
+      Data2: 1264216881
+      Data3: -1666252105
+      Data4: 1011510564
+    Path: event:/SFX/SFX_Placing_Pump
+  pumpWorkingSound:
+    Guid:
+      Data1: -1114777482
+      Data2: 1078063603
+      Data3: 1945999747
+      Data4: 1646789882
+    Path: event:/SFX/SFX_Pump_Working
+  uiHoverSound:
+    Guid:
+      Data1: -1862168001
+      Data2: 1194930412
+      Data3: -235790702
+      Data4: -875003259
+    Path: event:/SFX/UI/UI_Button_Hover
+  uiClickSound:
+    Guid:
+      Data1: 833423685
+      Data2: 1104528693
+      Data3: 153197212
+      Data4: -330884681
+    Path: event:/SFX/UI/UI_Button_Click
 --- !u!4 &1104823336287280329 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}

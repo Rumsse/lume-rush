@@ -39,7 +39,7 @@ public class PlayerPlanetMovement : MonoBehaviour
     private Rigidbody _rigidbody;
     private float _horizontal;
     private float _vertical;
-    private bool _isGrounded;
+    public bool _isGrounded;
     private bool _isDashing;
     private float _dashTimer;
     private float _currentSpeed;
