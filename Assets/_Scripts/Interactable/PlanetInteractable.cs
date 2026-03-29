@@ -16,18 +16,18 @@ public class PlanetInteractable : BaseInteractable
 
     protected override void OnMouseEnter()
     {
-        sfx.PlaySound_UIHover();
+        //sfx.PlaySound_UIHover();
         transform.localScale = baseScale * 1.2f;
     }
 
     protected override void OnMouseExit()
     {
-        transform.localScale = baseScale;
+        //transform.localScale = baseScale;
     }
 
     protected override void OnMouseDown()
     {
-        sfx.PlaySound_UIClick();
+        //sfx.PlaySound_UIClick();
         if (spawnedPanel) return;
 
         var globalPanel = GameObject.FindFirstObjectByType<PlanetConfirmationUI>(FindObjectsInactive.Include);
@@ -42,7 +42,7 @@ public class PlanetInteractable : BaseInteractable
 
     void OnConfirmAction()
     {
-        sfx.PlaySound_UIClick();
+        //sfx.PlaySound_UIClick();
         var displayName = string.IsNullOrEmpty(PlanetName) ? name : PlanetName;
 
         PlayerPrefs.SetString("SelectedPlanet", displayName);
@@ -54,7 +54,7 @@ public class PlanetInteractable : BaseInteractable
 
     void OnCancelAction()
     {
-        sfx.PlaySound_UIClick();
+        //sfx.PlaySound_UIClick();
         if (spawnedPanel) spawnedPanel.SetActive(false);
         spawnedPanel = null;
     }

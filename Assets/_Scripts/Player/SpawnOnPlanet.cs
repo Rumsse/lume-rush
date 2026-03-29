@@ -22,7 +22,7 @@ public class SpawnOnPlanet : MonoBehaviour
 
     IEnumerator WaitForPlanetGeneration()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
 
         FindPlanet();
         if (planet == null)
