@@ -30,20 +30,39 @@ public sealed class TimerUI : MonoBehaviour
     void Awake()
     {
         _label ??= GetComponent<TMP_Text>();
-        if (_gameOverPanel != null) _gameOverPanel.SetActive(false);
+
+        if (_gameOverPanel != null)
+            _gameOverPanel.SetActive(false);
+
         Time.timeScale = 1f;
     }
 
     void OnEnable()
     {
         CachePlayer();
-        if (_autoStart) StartTimer();
-        else Refresh(true);
+        TutorialManager.OnTutorialCompleted += HandleTutorialCompleted;
+
+        if (PlayerPrefs.GetInt("TutorialDone", 0) == 0)
+        {
+            _label.gameObject.SetActive(false);
+            return;
+        }
+
+        if (_autoStart)
+            StartTimer();
+        else
+            Refresh(true);
+    }
+
+    void OnDisable()
+    {
+        TutorialManager.OnTutorialCompleted -= HandleTutorialCompleted;
     }
 
     void Update()
     {
-        if (!_running) return;
+        if (!_running)
+            return;
 
         var dt = _useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
         _time += _countDown ? -dt : dt;
@@ -53,10 +72,15 @@ public sealed class TimerUI : MonoBehaviour
             _time = 0;
             _running = false;
 
-            if (_playerHealth == null) CachePlayer();
-            if (_playerHealth != null) _playerHealth.TakeDamage(_playerHealth.MaxHealth);
+            if (_playerHealth == null)
+                CachePlayer();
 
-            if (_gameOverPanel != null) _gameOverPanel.SetActive(true);
+            if (_playerHealth != null)
+                _playerHealth.TakeDamage(_playerHealth.MaxHealth);
+
+            if (_gameOverPanel != null)
+                _gameOverPanel.SetActive(true);
+
             Time.timeScale = 0f;
 
             Refresh(true);
@@ -77,6 +101,7 @@ public sealed class TimerUI : MonoBehaviour
         _time = _countDown ? _startSeconds : 0;
         _running = true;
         _lastShown = int.MinValue;
+        _label.gameObject.SetActive(true);
         Refresh(true);
     }
 
@@ -84,7 +109,9 @@ public sealed class TimerUI : MonoBehaviour
 
     public void Resume()
     {
-        if (_time <= 0 && _countDown) return;
+        if (_time <= 0 && _countDown)
+            return;
+
         _running = true;
     }
 
@@ -116,20 +143,37 @@ public sealed class TimerUI : MonoBehaviour
     void CachePlayer()
     {
         var go = GameObject.FindWithTag(_playerTag);
-        if (go != null) _playerHealth = go.GetComponent<IHealth>();
+
+        if (go != null)
+            _playerHealth = go.GetComponent<IHealth>();
     }
 
     void Refresh(bool force = false)
     {
-        if (_label == null) return;
+        if (_label == null)
+            return;
 
         var s = (int)Math.Max(0, Math.Floor(_time));
-        if (!force && s == _lastShown) return;
+
+        if (!force && s == _lastShown)
+            return;
+
         _lastShown = s;
 
         var m = s / 60;
         var sec = s % 60;
         _label.SetText("{0:00}:{1:00}", m, sec);
+    }
+
+    void HandleTutorialCompleted()
+    {
+        if (_autoStart)
+            StartTimer();
+        else
+        {
+            _label.gameObject.SetActive(true);
+            Refresh(true);
+        }
     }
 
     #endregion

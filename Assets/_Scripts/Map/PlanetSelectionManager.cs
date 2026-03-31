@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlanetSelectionManager : MonoBehaviour
 {
+    #region Settings
+
     public GameObject starPrefab;
     public GameObject planetPrefab;
     public Transform starParent;
@@ -14,11 +14,33 @@ public class PlanetSelectionManager : MonoBehaviour
     public List<CelestialBodySettings> otherPlanetPresets;
     public int planetCount = 5;
 
+    #endregion
+
+    #region State
+
+    static List<PlanetData> savedPlanets;
+
     List<PlanetData> generatedPlanets = new List<PlanetData>();
 
-    void Start() => GeneratePlanetMap();
+    #endregion
 
-    void GeneratePlanetMap()
+    #region Unity Callbacks
+
+    void Start()
+    {
+        if (savedPlanets == null)
+            GenerateNewMap();
+        else
+            LoadSavedMap();
+    }
+
+    #endregion
+
+    #region Logic
+
+    public static void ResetMapData() => savedPlanets = null;
+
+    void GenerateNewMap()
     {
         if (starPrefab)
         {
@@ -40,24 +62,45 @@ public class PlanetSelectionManager : MonoBehaviour
             var orbitPosition = GetOrbitPosition(i);
             AddPlanet(randomPreset, orbitPosition, false);
         }
+
+        savedPlanets = new List<PlanetData>(generatedPlanets);
+    }
+
+    void LoadSavedMap()
+    {
+        generatedPlanets = savedPlanets;
+
+        if (starPrefab)
+        {
+            var star = Instantiate(starPrefab, Vector3.zero, Quaternion.identity, starParent);
+            star.name = "Star_Center";
+        }
+
+        foreach (var data in generatedPlanets)
+            RebuildPlanet(data);
     }
 
     void AddPlanet(CelestialBodySettings preset, Vector3 orbitPosition, bool isFirst)
     {
-        var planetObj = Instantiate(planetPrefab, orbitPosition, Quaternion.identity, starParent);
-
         var chosenName = string.IsNullOrWhiteSpace(preset.planetName)
             ? isFirst ? "MainPlanet" : $"Planet_{generatedPlanets.Count + 1:00}"
             : preset.planetName;
 
-        planetObj.name = chosenName;
+        var data = new PlanetData(preset, orbitPosition, chosenName);
+        generatedPlanets.Add(data);
+
+        RebuildPlanet(data);
+    }
+
+    void RebuildPlanet(PlanetData data)
+    {
+        var planetObj = Instantiate(planetPrefab, data.Position, Quaternion.identity, starParent);
+        planetObj.name = data.Name;
 
         var interactable = planetObj.AddComponent<PlanetInteractable>();
         interactable.spawnPanelPosition = planetObj.transform;
-        interactable.PlanetName = chosenName;
-        interactable.SelectedPresetName = preset.name;
-
-        generatedPlanets.Add(new PlanetData(preset, orbitPosition, planetObj.name));
+        interactable.PlanetName = data.Name;
+        interactable.SelectedPresetName = data.Preset.name;
     }
 
     Vector3 GetOrbitPosition(int index)
@@ -71,6 +114,8 @@ public class PlanetSelectionManager : MonoBehaviour
             Mathf.Sin(radians) * distance
         );
     }
+
+    #endregion
 
     [System.Serializable]
     public class PlanetData

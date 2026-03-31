@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using TMPro;
 
 public class TutorialManager : MonoBehaviour
@@ -13,6 +14,8 @@ public class TutorialManager : MonoBehaviour
     TutorialStep currentStep;
     bool isCompleted;
     float wsadMoveTimer;
+
+    public static Action OnTutorialCompleted;
 
     #region Unity Callbacks
 
@@ -90,6 +93,7 @@ public class TutorialManager : MonoBehaviour
             isCompleted = true;
             PlayerPrefs.SetInt("TutorialDone", 1);
             PlayerPrefs.Save();
+            OnTutorialCompleted?.Invoke();
         }
 
         UpdateUI();
