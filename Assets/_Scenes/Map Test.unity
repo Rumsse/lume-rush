@@ -464,7 +464,7 @@ MonoBehaviour:
   starPrefab: {fileID: 4898414140566128282, guid: 7360992a0309afa4dbf2ea256d0e4149, type: 3}
   planetPrefab: {fileID: 4898414140566128282, guid: 6c44578bec3d89a45a10c224c109b793, type: 3}
   starParent: {fileID: 1946460694}
-  orbitRange: {x: 50, y: 250}
+  orbitRange: {x: 60, y: 250}
   mainPlanetPreset: {fileID: 11400000, guid: 2e906eb5b6146594ab36af443a126cfc, type: 2}
   otherPlanetPresets:
   - {fileID: 11400000, guid: 74252b8e50f38f2419d99d6882b4bf3c, type: 2}
@@ -631,7 +631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbitCamera
   target: {fileID: 1946460694}
-  distance: 250
+  distance: 260
   sensitivity: 2
   invertY: 0
   minVerticalAngle: -80
