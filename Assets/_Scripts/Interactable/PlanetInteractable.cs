@@ -4,13 +4,11 @@ using UnityEngine.SceneManagement;
 public class PlanetInteractable : BaseInteractable
 {
     public Transform spawnPanelPosition;
-    public string PlanetName;
-    public string SelectedPresetName;
+    public CelestialBodySettings planetSettings;
+    public SFX_SimpleSoundInteract sfx;
 
     GameObject spawnedPanel;
     Vector3 baseScale;
-
-    public SFX_SimpleSoundInteract sfx;
 
     void Awake() => baseScale = transform.localScale;
 
@@ -25,28 +23,34 @@ public class PlanetInteractable : BaseInteractable
         //transform.localScale = baseScale;
     }
 
+
     protected override void OnMouseDown()
     {
-        //sfx.PlaySound_UIClick();
-        if (spawnedPanel) return;
+        if (spawnedPanel)
+            return;
 
         var globalPanel = GameObject.FindFirstObjectByType<PlanetConfirmationUI>(FindObjectsInactive.Include);
-        if (!globalPanel) return;
+
+        if (!globalPanel)
+        {
+            Debug.LogError("PlanetConfirmationUI not found in scene");
+            return;
+        }
 
         spawnedPanel = globalPanel.gameObject;
         spawnedPanel.SetActive(true);
 
-        var displayName = string.IsNullOrEmpty(PlanetName) ? name : PlanetName;
-        globalPanel.Setup(displayName, OnConfirmAction, OnCancelAction);
+        globalPanel.Setup(planetSettings, OnConfirmAction, OnCancelAction);
     }
 
     void OnConfirmAction()
     {
         //sfx.PlaySound_UIClick();
-        var displayName = string.IsNullOrEmpty(PlanetName) ? name : PlanetName;
+
+        var displayName = string.IsNullOrEmpty(planetSettings.planetName) ? name : planetSettings.planetName;
 
         PlayerPrefs.SetString("SelectedPlanet", displayName);
-        PlayerPrefs.SetString("SelectedPlanetPreset", string.IsNullOrEmpty(SelectedPresetName) ? displayName : SelectedPresetName);
+        PlayerPrefs.SetString("SelectedPlanetPreset", planetSettings.name);
         PlayerPrefs.Save();
 
         SceneManager.LoadScene("Test Planet Exploration");
@@ -55,7 +59,10 @@ public class PlanetInteractable : BaseInteractable
     void OnCancelAction()
     {
         //sfx.PlaySound_UIClick();
-        if (spawnedPanel) spawnedPanel.SetActive(false);
+
+        if (spawnedPanel)
+            spawnedPanel.SetActive(false);
+
         spawnedPanel = null;
     }
 }

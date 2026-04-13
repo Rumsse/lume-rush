@@ -99,8 +99,8 @@ public class PlanetSelectionManager : MonoBehaviour
 
         var interactable = planetObj.AddComponent<PlanetInteractable>();
         interactable.spawnPanelPosition = planetObj.transform;
-        interactable.PlanetName = data.Name;
-        interactable.SelectedPresetName = data.Preset.name;
+
+        interactable.planetSettings = data.Preset;
     }
 
     Vector3 GetOrbitPosition(int index)
