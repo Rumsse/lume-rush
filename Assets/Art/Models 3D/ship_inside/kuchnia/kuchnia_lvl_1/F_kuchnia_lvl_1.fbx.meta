@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: dd58444efc253a6478ae244257dd8b24
+guid: e40cd1517258c0f40a504f5901ac9cf0
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_kuchnia.001
+    second: {fileID: 2100000, guid: e5241fb6ca4996142ad5e3aa849afa36, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
