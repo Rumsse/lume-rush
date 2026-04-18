@@ -16,4 +16,7 @@ MonoBehaviour:
   shape: {fileID: 11400000, guid: 529e5d00ebd517d4db5390d81ceada39, type: 2}
   shading: {fileID: 11400000, guid: 39d462cf97e295848849b93b20a7894d, type: 2}
   resourceConfig: {fileID: 11400000, guid: 49909f781fd0be64aafcfc6c4f9a8f09, type: 2}
+  planetDescription: One glance is enough to see the beauty of this planet. Wonderful
+    crystals and abundant resources, but one must be wary of the traps created by
+    nature.
   gravityForce: 70
