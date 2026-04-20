@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class PlanetConfirmationUI : MonoBehaviour
 {
     public TextMeshProUGUI questionText;
+    public TextMeshProUGUI descriptionText;
     public TextMeshProUGUI resourcesText;
     public Button confirmButton;
     public Button cancelButton;
@@ -19,6 +20,8 @@ public class PlanetConfirmationUI : MonoBehaviour
             return;
 
         questionText.text = $"Do you want to explore {settings.planetName}?";
+        descriptionText.text = string.IsNullOrEmpty(settings.planetDescription) ? "No description available." : settings.planetDescription;
+
         DisplayResources(settings.resourceConfig);
 
         confirmButton.onClick.RemoveAllListeners();
