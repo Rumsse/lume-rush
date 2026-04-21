@@ -18,4 +18,5 @@ MonoBehaviour:
   resourceConfig: {fileID: 11400000, guid: bd459be59e77b5e4e9d6d1c880dd4e64, type: 2}
   planetDescription: The most peaceful planet in this solar system. Full of beautiful
     views and lukewarm waters, it's perfect for a break from work.
+  planetMaterial: {fileID: 2100000, guid: 7086a6546d5f8ac4b8eba5c5aed0efeb, type: 2}
   gravityForce: 18

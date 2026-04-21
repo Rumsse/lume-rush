@@ -419,6 +419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185c146352ea70e4c9c0288e4ab027ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceManager
+  startingFuel: 500
 --- !u!4 &529515188
 Transform:
   m_ObjectHideFlags: 0
@@ -761,7 +762,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Solar evacuation
+  m_text: Lume Rush
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b22b1b2835684c04aa6acb8695a7ca20, type: 2}
   m_sharedMaterial: {fileID: -4241794315963772387, guid: b22b1b2835684c04aa6acb8695a7ca20, type: 2}

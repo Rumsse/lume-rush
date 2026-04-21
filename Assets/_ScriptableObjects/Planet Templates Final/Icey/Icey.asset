@@ -18,4 +18,5 @@ MonoBehaviour:
   resourceConfig: {fileID: 11400000, guid: 8775a80a8856a9549a9e67ea65d86c38, type: 2}
   planetDescription: Ice, snow, and freezing temperatures. On the surface, that's
     all this planet has to offer. However, beneath the snow, treasures may lie hidden.
+  planetMaterial: {fileID: 2100000, guid: a7275a072135b5b4fb9abfa9dc47b133, type: 2}
   gravityForce: 15

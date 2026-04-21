@@ -18,4 +18,5 @@ MonoBehaviour:
   resourceConfig: {fileID: 11400000, guid: 41b409116aa1df6418fdb2979bd7bc90, type: 2}
   planetDescription: A rarer and somewhat safer variant of the volcanic planet. No
     one has yet discovered how it forms or whether its creator is solely nature.
+  planetMaterial: {fileID: 2100000, guid: eda160589e9e2654ba1da3684b48047f, type: 2}
   gravityForce: 22

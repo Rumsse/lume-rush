@@ -19,12 +19,15 @@ public class PlanetSelectionManager : MonoBehaviour
     #region State
 
     static List<PlanetData> savedPlanets;
-
     List<PlanetData> generatedPlanets = new List<PlanetData>();
+
+    public static Vector3 CurrentPlayerPosition { get; private set; }
 
     #endregion
 
     #region Unity Callbacks
+
+    void Awake() => LoadPlayerPosition();
 
     void Start()
     {
@@ -38,7 +41,36 @@ public class PlanetSelectionManager : MonoBehaviour
 
     #region Logic
 
-    public static void ResetMapData() => savedPlanets = null;
+    public static void ResetMapData()
+    {
+        savedPlanets = null;
+        PlayerPrefs.DeleteKey("PlayerPosX");
+        PlayerPrefs.DeleteKey("PlayerPosY");
+        PlayerPrefs.DeleteKey("PlayerPosZ");
+    }
+
+    void LoadPlayerPosition()
+    {
+        if (!PlayerPrefs.HasKey("PlayerPosX"))
+        {
+            CurrentPlayerPosition = Vector3.zero;
+            return;
+        }
+
+        float x = PlayerPrefs.GetFloat("PlayerPosX");
+        float y = PlayerPrefs.GetFloat("PlayerPosY");
+        float z = PlayerPrefs.GetFloat("PlayerPosZ");
+        CurrentPlayerPosition = new Vector3(x, y, z);
+    }
+
+    public static void UpdatePlayerPosition(Vector3 newPos)
+    {
+        CurrentPlayerPosition = newPos;
+        PlayerPrefs.SetFloat("PlayerPosX", newPos.x);
+        PlayerPrefs.SetFloat("PlayerPosY", newPos.y);
+        PlayerPrefs.SetFloat("PlayerPosZ", newPos.z);
+        PlayerPrefs.Save();
+    }
 
     void GenerateNewMap()
     {
@@ -97,10 +129,22 @@ public class PlanetSelectionManager : MonoBehaviour
         var planetObj = Instantiate(planetPrefab, data.Position, Quaternion.identity, starParent);
         planetObj.name = data.Name;
 
+        ApplyMaterial(planetObj, data.Preset.planetMaterial);
+
         var interactable = planetObj.AddComponent<PlanetInteractable>();
         interactable.spawnPanelPosition = planetObj.transform;
-
         interactable.planetSettings = data.Preset;
+    }
+
+    void ApplyMaterial(GameObject target, Material mat)
+    {
+        if (mat == null)
+            return;
+
+        if (!target.TryGetComponent<MeshRenderer>(out var renderer))
+            return;
+
+        renderer.material = mat;
     }
 
     Vector3 GetOrbitPosition(int index)

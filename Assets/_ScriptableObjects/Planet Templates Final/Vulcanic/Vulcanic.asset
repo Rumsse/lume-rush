@@ -18,4 +18,5 @@ MonoBehaviour:
   resourceConfig: {fileID: 11400000, guid: a2fa9b3e0ec26784a960f9c96de253e5, type: 2}
   planetDescription: A wild planet with active volcanoes, rivers of lava, and vast
     resources. Only the bravest take on the challenge of survival.
+  planetMaterial: {fileID: 2100000, guid: bd9f0f9022c5b1f4bbb994f5ee3be7c3, type: 2}
   gravityForce: 22

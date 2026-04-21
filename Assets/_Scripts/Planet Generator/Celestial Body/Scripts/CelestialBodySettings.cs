@@ -10,6 +10,7 @@ public class CelestialBodySettings : ScriptableObject
     public ResourceGeneratorConfig resourceConfig;
 
     public string planetDescription;
+    public Material planetMaterial;
 
     [Header("Gravity Settings")]
     [Min(0f)] public float gravityForce = 800f;

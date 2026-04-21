@@ -6,7 +6,10 @@ public class PlanetInteractable : BaseInteractable
     public Transform spawnPanelPosition;
     public CelestialBodySettings planetSettings;
     public SFX_SimpleSoundInteract sfx;
-    [SerializeField] int currentFuelCost = 50;
+
+    [Header("Fuel Settings")]
+    [SerializeField] int baseFuelCost = 10;
+    [SerializeField] float costPerUnitDistance = 0.5f;
 
     GameObject spawnedPanel;
     Vector3 baseScale;
@@ -21,9 +24,8 @@ public class PlanetInteractable : BaseInteractable
 
     protected override void OnMouseExit()
     {
-        //transform.localScale = baseScale;
+        transform.localScale = baseScale;
     }
-
 
     protected override void OnMouseDown()
     {
@@ -31,24 +33,35 @@ public class PlanetInteractable : BaseInteractable
             return;
 
         var globalPanel = GameObject.FindFirstObjectByType<PlanetConfirmationUI>(FindObjectsInactive.Include);
-
         if (!globalPanel)
         {
             Debug.LogError("PlanetConfirmationUI not found in scene");
             return;
         }
 
+        int calculatedCost = CalculateTravelCost();
+
         spawnedPanel = globalPanel.gameObject;
         spawnedPanel.SetActive(true);
 
-        globalPanel.Setup(planetSettings, currentFuelCost, OnConfirmAction, OnCancelAction);
+        globalPanel.Setup(planetSettings, calculatedCost, OnConfirmAction, OnCancelAction);
+    }
+
+    int CalculateTravelCost()
+    {
+        float distance = Vector3.Distance(transform.position, PlanetSelectionManager.CurrentPlayerPosition);
+
+        if (distance < 0.1f)
+            return 0;
+
+        return baseFuelCost + Mathf.RoundToInt(distance * costPerUnitDistance);
     }
 
     void OnConfirmAction()
     {
-        //sfx.PlaySound_UIClick();
-
         var displayName = string.IsNullOrEmpty(planetSettings.planetName) ? name : planetSettings.planetName;
+
+        PlanetSelectionManager.UpdatePlayerPosition(transform.position);
 
         PlayerPrefs.SetString("SelectedPlanet", displayName);
         PlayerPrefs.SetString("SelectedPlanetPreset", planetSettings.name);
@@ -59,8 +72,6 @@ public class PlanetInteractable : BaseInteractable
 
     void OnCancelAction()
     {
-        //sfx.PlaySound_UIClick();
-
         if (spawnedPanel)
             spawnedPanel.SetActive(false);
 
