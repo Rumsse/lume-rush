@@ -6,6 +6,7 @@ public class PlanetInteractable : BaseInteractable
     public Transform spawnPanelPosition;
     public CelestialBodySettings planetSettings;
     public SFX_SimpleSoundInteract sfx;
+    [SerializeField] int currentFuelCost = 50;
 
     GameObject spawnedPanel;
     Vector3 baseScale;
@@ -40,7 +41,7 @@ public class PlanetInteractable : BaseInteractable
         spawnedPanel = globalPanel.gameObject;
         spawnedPanel.SetActive(true);
 
-        globalPanel.Setup(planetSettings, OnConfirmAction, OnCancelAction);
+        globalPanel.Setup(planetSettings, currentFuelCost, OnConfirmAction, OnCancelAction);
     }
 
     void OnConfirmAction()
@@ -53,7 +54,7 @@ public class PlanetInteractable : BaseInteractable
         PlayerPrefs.SetString("SelectedPlanetPreset", planetSettings.name);
         PlayerPrefs.Save();
 
-        SceneManager.LoadScene("Test Planet Exploration");
+        SceneManager.LoadScene("_Planet_Exploration");
     }
 
     void OnCancelAction()

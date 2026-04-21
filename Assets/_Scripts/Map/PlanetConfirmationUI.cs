@@ -1,31 +1,37 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System.Collections.Generic;
+using System;
 
 public class PlanetConfirmationUI : MonoBehaviour
 {
     public TextMeshProUGUI questionText;
     public TextMeshProUGUI descriptionText;
     public TextMeshProUGUI resourcesText;
+    public TextMeshProUGUI fuelCostText;
     public Button confirmButton;
     public Button cancelButton;
 
     public int lowThreshold = 1;
     public int midThreshold = 15;
 
-    public void Setup(CelestialBodySettings settings, System.Action onConfirm, System.Action onCancel)
+    int currentFuelCost;
+
+    public void Setup(CelestialBodySettings settings, int fuelCost, Action onConfirm, Action onCancel)
     {
         if (!settings)
             return;
 
+        currentFuelCost = fuelCost;
+
         questionText.text = $"Do you want to explore {settings.planetName}?";
         descriptionText.text = string.IsNullOrEmpty(settings.planetDescription) ? "No description available." : settings.planetDescription;
+        fuelCostText.text = $"Fuel Cost: {currentFuelCost}";
 
         DisplayResources(settings.resourceConfig);
 
         confirmButton.onClick.RemoveAllListeners();
-        confirmButton.onClick.AddListener(() => onConfirm?.Invoke());
+        confirmButton.onClick.AddListener(() => OnConfirmClicked(onConfirm));
 
         cancelButton.onClick.RemoveAllListeners();
         cancelButton.onClick.AddListener(() =>
@@ -33,6 +39,20 @@ public class PlanetConfirmationUI : MonoBehaviour
             onCancel?.Invoke();
             gameObject.SetActive(false);
         });
+    }
+
+    void OnConfirmClicked(System.Action onConfirm)
+    {
+        if (ResourceManager.Instance == null)
+            return;
+
+        if (!ResourceManager.Instance.ConsumeResource("Fuel", currentFuelCost))
+        {
+            Debug.Log("[PlanetConfirmationUI] Not enough fuel to travel!");
+            return;
+        }
+
+        onConfirm?.Invoke();
     }
 
     void DisplayResources(ResourceGeneratorConfig config)

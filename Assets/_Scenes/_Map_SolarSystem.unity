@@ -835,6 +835,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6788593316708130377, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
+      propertyPath: midThreshold
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6963686971698073143, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
       propertyPath: m_IsActive
       value: 1
