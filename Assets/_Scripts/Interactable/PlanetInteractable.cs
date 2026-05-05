@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class PlanetInteractable : BaseInteractable
 {
+    #region Settings
+
     public Transform spawnPanelPosition;
     public CelestialBodySettings planetSettings;
     public SFX_SimpleSoundInteract sfx;
@@ -11,24 +13,60 @@ public class PlanetInteractable : BaseInteractable
     [SerializeField] int baseFuelCost = 10;
     [SerializeField] float costPerUnitDistance = 0.5f;
 
+    #endregion
+
+    #region State
+
     GameObject spawnedPanel;
     Vector3 baseScale;
+    MeshRenderer meshRenderer;
+    bool hasBurned;
 
-    void Awake() => baseScale = transform.localScale;
+    bool IsBurned => Vector3.Distance(Vector3.zero, transform.position) <= SupernovaManager.Instance.CurrentRadius;
+
+    #endregion
+
+    #region Unity Callbacks
+
+    void Awake()
+    {
+        baseScale = transform.localScale;
+        meshRenderer = GetComponent<MeshRenderer>();
+    }
+
+    void Start()
+    {
+        if (IsBurned)
+            ApplyBurnedState();
+    }
+
+    void Update()
+    {
+        if (hasBurned)
+            return;
+
+        if (IsBurned)
+            ApplyBurnedState();
+    }
 
     protected override void OnMouseEnter()
     {
-        //sfx.PlaySound_UIHover();
+        if (hasBurned)
+            return;
+
         transform.localScale = baseScale * 1.2f;
     }
 
-    protected override void OnMouseExit()
-    {
-        transform.localScale = baseScale;
-    }
+    protected override void OnMouseExit() => transform.localScale = baseScale;
 
     protected override void OnMouseDown()
     {
+        if (hasBurned)
+        {
+            Debug.Log("Planet is already consumed by the supernova.");
+            return;
+        }
+
         if (spawnedPanel)
             return;
 
@@ -45,6 +83,18 @@ public class PlanetInteractable : BaseInteractable
         spawnedPanel.SetActive(true);
 
         globalPanel.Setup(planetSettings, calculatedCost, OnConfirmAction, OnCancelAction);
+    }
+
+    #endregion
+
+    #region Logic
+
+    void ApplyBurnedState()
+    {
+        hasBurned = true;
+
+        if (meshRenderer && planetSettings.burnedMaterial)
+            meshRenderer.material = planetSettings.burnedMaterial;
     }
 
     int CalculateTravelCost()
@@ -65,6 +115,8 @@ public class PlanetInteractable : BaseInteractable
 
         PlayerPrefs.SetString("SelectedPlanet", displayName);
         PlayerPrefs.SetString("SelectedPlanetPreset", planetSettings.name);
+
+        SupernovaManager.Instance.SaveRadius();
         PlayerPrefs.Save();
 
         SceneManager.LoadScene("_Planet_Exploration");
@@ -72,9 +124,12 @@ public class PlanetInteractable : BaseInteractable
 
     void OnCancelAction()
     {
-        if (spawnedPanel)
-            spawnedPanel.SetActive(false);
+        if (!spawnedPanel)
+            return;
 
+        spawnedPanel.SetActive(false);
         spawnedPanel = null;
     }
+
+    #endregion
 }
