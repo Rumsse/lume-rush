@@ -20,4 +20,5 @@ MonoBehaviour:
     crystals and abundant resources, but one must be wary of the traps created by
     nature.
   planetMaterial: {fileID: 2100000, guid: a6f6cff38e262734ea7bcc9ca078bc01, type: 2}
+  burnedMaterial: {fileID: 2100000, guid: 30e853dd34b2b2f4396092e53d23174d, type: 2}
   gravityForce: 70

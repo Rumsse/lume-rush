@@ -19,4 +19,5 @@ MonoBehaviour:
   planetDescription: The most peaceful planet in this solar system. Full of beautiful
     views and lukewarm waters, it's perfect for a break from work.
   planetMaterial: {fileID: 2100000, guid: 7086a6546d5f8ac4b8eba5c5aed0efeb, type: 2}
+  burnedMaterial: {fileID: 2100000, guid: 30e853dd34b2b2f4396092e53d23174d, type: 2}
   gravityForce: 18

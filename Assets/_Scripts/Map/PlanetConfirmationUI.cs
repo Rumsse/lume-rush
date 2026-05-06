@@ -5,6 +5,8 @@ using System;
 
 public class PlanetConfirmationUI : MonoBehaviour
 {
+    #region Settings
+
     public TextMeshProUGUI questionText;
     public TextMeshProUGUI descriptionText;
     public TextMeshProUGUI resourcesText;
@@ -15,7 +17,15 @@ public class PlanetConfirmationUI : MonoBehaviour
     public int lowThreshold = 1;
     public int midThreshold = 15;
 
+    #endregion
+
+    #region State
+
     int currentFuelCost;
+
+    #endregion
+
+    #region Logic
 
     public void Setup(CelestialBodySettings settings, int fuelCost, Action onConfirm, Action onCancel)
     {
@@ -41,14 +51,14 @@ public class PlanetConfirmationUI : MonoBehaviour
         });
     }
 
-    void OnConfirmClicked(System.Action onConfirm)
+    void OnConfirmClicked(Action onConfirm)
     {
         if (ResourceManager.Instance == null)
             return;
 
         if (!ResourceManager.Instance.ConsumeResource("Fuel", currentFuelCost))
         {
-            Debug.Log("[PlanetConfirmationUI] Not enough fuel to travel!");
+            Debug.Log("Not enough fuel to travel!");
             return;
         }
 
@@ -86,4 +96,6 @@ public class PlanetConfirmationUI : MonoBehaviour
 
         return "<color=#55FF55>High</color>";
     }
+
+    #endregion
 }

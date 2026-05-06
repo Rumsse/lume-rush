@@ -95,6 +95,9 @@ public class PlanetInteractable : BaseInteractable
 
         if (meshRenderer && planetSettings.burnedMaterial)
             meshRenderer.material = planetSettings.burnedMaterial;
+
+        if (spawnedPanel)
+            OnCancelAction();
     }
 
     int CalculateTravelCost()

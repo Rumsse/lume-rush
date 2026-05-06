@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 1a995ed9c8693fd459f57a369da1b017, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: f7f800d56bc6c824a9bc54e982d4ed0f, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86c497b1e2749f4e8b3eecb38e3e7ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SupernovaManager
-  expansionSpeed: 2
+  expansionSpeed: 1.3
 --- !u!4 &583718033
 Transform:
   m_ObjectHideFlags: 0
@@ -441,13 +441,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289064438}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.21130908, y: -0.7848856, z: 0.36599815, w: 0.45315382}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: -120, z: 0}
 --- !u!114 &1289064441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,7 +509,7 @@ MonoBehaviour:
   starPrefab: {fileID: 4898414140566128282, guid: 7360992a0309afa4dbf2ea256d0e4149, type: 3}
   planetPrefab: {fileID: 4898414140566128282, guid: 6c44578bec3d89a45a10c224c109b793, type: 3}
   starParent: {fileID: 1946460694}
-  orbitRange: {x: 60, y: 320}
+  orbitRange: {x: 75, y: 600}
   mainPlanetPreset: {fileID: 11400000, guid: 2e906eb5b6146594ab36af443a126cfc, type: 2}
   otherPlanetPresets:
   - {fileID: 11400000, guid: 74252b8e50f38f2419d99d6882b4bf3c, type: 2}
@@ -585,7 +585,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 1500
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -676,13 +676,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbitCamera
   target: {fileID: 1946460694}
-  distance: 310
-  sensitivity: 3
+  distance: 450
+  sensitivity: 3.5
   invertY: 0
   minVerticalAngle: -80
   maxVerticalAngle: 80
   minDistance: 100
-  maxDistance: 460
+  maxDistance: 700
   scrollSpeed: 200
 --- !u!114 &1919270933
 MonoBehaviour:

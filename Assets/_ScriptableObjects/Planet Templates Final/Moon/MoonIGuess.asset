@@ -20,4 +20,5 @@ MonoBehaviour:
     that are its greatest asset. Rumors have it that its core is yellow and riddled
     with holes.
   planetMaterial: {fileID: 2100000, guid: a245585e6ed826747a2224a2a1f2b8fc, type: 2}
+  burnedMaterial: {fileID: 2100000, guid: 30e853dd34b2b2f4396092e53d23174d, type: 2}
   gravityForce: 7.5

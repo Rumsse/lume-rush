@@ -19,4 +19,5 @@ MonoBehaviour:
   planetDescription: Ice, snow, and freezing temperatures. On the surface, that's
     all this planet has to offer. However, beneath the snow, treasures may lie hidden.
   planetMaterial: {fileID: 2100000, guid: a7275a072135b5b4fb9abfa9dc47b133, type: 2}
+  burnedMaterial: {fileID: 2100000, guid: 30e853dd34b2b2f4396092e53d23174d, type: 2}
   gravityForce: 15
