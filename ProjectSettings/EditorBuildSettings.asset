@@ -6,16 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Scenes/Main Menu.unity
+    path: Assets/_Scenes/_MainMenu.unity
     guid: 3c7f768a1e9ee4343bc910bff09e42bf
   - enabled: 1
-    path: Assets/_Scenes/Map Test.unity
+    path: Assets/_Scenes/_Map_SolarSystem.unity
     guid: 413ec525749969247a54016a87cc6e6f
   - enabled: 1
-    path: Assets/_Scenes/Test Planet Exploration.unity
+    path: Assets/_Scenes/_Planet_Exploration.unity
     guid: 881f47aecd4129a488f8d5e61b0f5e79
   - enabled: 1
-    path: Assets/_Scenes/SpaceShipInside.unity
+    path: Assets/_Scenes/_Inside_SpaceShip.unity
     guid: a49bc3b727ac3d24493d16fccadb89eb
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}

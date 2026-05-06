@@ -7,6 +7,8 @@ public class ResourceManager : MonoBehaviour
 
     Dictionary<string, int> globalResources = new Dictionary<string, int>();
 
+    [SerializeField] int startingFuel = 500;
+
     public int Fuel => globalResources.TryGetValue("Fuel", out var v) ? v : 0;
 
     void Awake()
@@ -20,6 +22,8 @@ public class ResourceManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
+
+    void Start() => AddResource("Fuel", startingFuel);
 
     public void AddResource(string resourceName, int amount)
     {

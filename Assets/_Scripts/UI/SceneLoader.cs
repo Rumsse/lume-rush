@@ -17,11 +17,11 @@ public class SceneLoader : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void LoadMainMenu() => SceneManager.LoadScene("Main Menu");
+    public void LoadMainMenu() => SceneManager.LoadScene("_MainMenu");
 
-    public void LoadShip() => SceneManager.LoadScene("SpaceShipInside");
+    public void LoadShip() => SceneManager.LoadScene("_Inside_SpaceShip");
 
-    public void LoadMap() => SceneManager.LoadScene("Map Test");
+    public void LoadMap() => SceneManager.LoadScene("_Map_SolarSystem");
 
     public void QuitGame()
     {

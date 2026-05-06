@@ -19,6 +19,12 @@ MonoBehaviour:
     offset: -0.01
     avoidWater: 1
     initialized: 1
+  - prefab: {fileID: 6208371833824068528, guid: 6394dbd1dc7336a4c9d0c209da8b0241, type: 3}
+    count: 20
+    alignAxis: 0
+    offset: -0.01
+    avoidWater: 1
+    initialized: 1
   props:
   - prefab: {fileID: 6694583546888036852, guid: 44a69160b85c4084387fb49bf97e63b6, type: 3}
     count: 20

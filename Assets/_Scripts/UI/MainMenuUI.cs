@@ -22,7 +22,7 @@ public class MainMenuUI : MonoBehaviour, IPointerEnterHandler
     {
         OnClickSFX();
         if (SceneLoader.Instance != null)
-            SceneLoader.Instance.LoadShip();
+            SceneLoader.Instance.LoadMap();
     }
 
     public void OnContinueButton()

@@ -3,59 +3,136 @@ using UnityEngine.SceneManagement;
 
 public class PlanetInteractable : BaseInteractable
 {
+    #region Settings
+
     public Transform spawnPanelPosition;
-    public string PlanetName;
-    public string SelectedPresetName;
+    public CelestialBodySettings planetSettings;
+    public SFX_SimpleSoundInteract sfx;
+
+    [Header("Fuel Settings")]
+    [SerializeField] int baseFuelCost = 10;
+    [SerializeField] float costPerUnitDistance = 0.5f;
+
+    #endregion
+
+    #region State
 
     GameObject spawnedPanel;
     Vector3 baseScale;
+    MeshRenderer meshRenderer;
+    bool hasBurned;
 
-    public SFX_SimpleSoundInteract sfx;
+    bool IsBurned => Vector3.Distance(Vector3.zero, transform.position) <= SupernovaManager.Instance.CurrentRadius;
 
-    void Awake() => baseScale = transform.localScale;
+    #endregion
+
+    #region Unity Callbacks
+
+    void Awake()
+    {
+        baseScale = transform.localScale;
+        meshRenderer = GetComponent<MeshRenderer>();
+    }
+
+    void Start()
+    {
+        if (IsBurned)
+            ApplyBurnedState();
+    }
+
+    void Update()
+    {
+        if (hasBurned)
+            return;
+
+        if (IsBurned)
+            ApplyBurnedState();
+    }
 
     protected override void OnMouseEnter()
     {
-        sfx.PlaySound_UIHover();
+        if (hasBurned)
+            return;
+
         transform.localScale = baseScale * 1.2f;
     }
 
-    protected override void OnMouseExit()
-    {
-        transform.localScale = baseScale;
-    }
+    protected override void OnMouseExit() => transform.localScale = baseScale;
 
     protected override void OnMouseDown()
     {
-        sfx.PlaySound_UIClick();
-        if (spawnedPanel) return;
+        if (hasBurned)
+        {
+            Debug.Log("Planet is already consumed by the supernova.");
+            return;
+        }
+
+        if (spawnedPanel)
+            return;
 
         var globalPanel = GameObject.FindFirstObjectByType<PlanetConfirmationUI>(FindObjectsInactive.Include);
-        if (!globalPanel) return;
+        if (!globalPanel)
+        {
+            Debug.LogError("PlanetConfirmationUI not found in scene");
+            return;
+        }
+
+        int calculatedCost = CalculateTravelCost();
 
         spawnedPanel = globalPanel.gameObject;
         spawnedPanel.SetActive(true);
 
-        var displayName = string.IsNullOrEmpty(PlanetName) ? name : PlanetName;
-        globalPanel.Setup(displayName, OnConfirmAction, OnCancelAction);
+        globalPanel.Setup(planetSettings, calculatedCost, OnConfirmAction, OnCancelAction);
+    }
+
+    #endregion
+
+    #region Logic
+
+    void ApplyBurnedState()
+    {
+        hasBurned = true;
+
+        if (meshRenderer && planetSettings.burnedMaterial)
+            meshRenderer.material = planetSettings.burnedMaterial;
+
+        if (spawnedPanel)
+            OnCancelAction();
+    }
+
+    int CalculateTravelCost()
+    {
+        float distance = Vector3.Distance(transform.position, PlanetSelectionManager.CurrentPlayerPosition);
+
+        if (distance < 0.1f)
+            return 0;
+
+        return baseFuelCost + Mathf.RoundToInt(distance * costPerUnitDistance);
     }
 
     void OnConfirmAction()
     {
-        sfx.PlaySound_UIClick();
-        var displayName = string.IsNullOrEmpty(PlanetName) ? name : PlanetName;
+        var displayName = string.IsNullOrEmpty(planetSettings.planetName) ? name : planetSettings.planetName;
+
+        PlanetSelectionManager.UpdatePlayerPosition(transform.position);
 
         PlayerPrefs.SetString("SelectedPlanet", displayName);
-        PlayerPrefs.SetString("SelectedPlanetPreset", string.IsNullOrEmpty(SelectedPresetName) ? displayName : SelectedPresetName);
+        PlayerPrefs.SetString("SelectedPlanetPreset", planetSettings.name);
+
+        SupernovaManager.Instance.SaveRadius();
         PlayerPrefs.Save();
 
-        SceneManager.LoadScene("Test Planet Exploration");
+        SceneManager.LoadScene("_Planet_Exploration");
     }
 
     void OnCancelAction()
     {
-        sfx.PlaySound_UIClick();
-        if (spawnedPanel) spawnedPanel.SetActive(false);
+        if (!spawnedPanel)
+            return;
+
+        spawnedPanel.SetActive(false);
         spawnedPanel = null;
     }
+
+    #endregion
 }

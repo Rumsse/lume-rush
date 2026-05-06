@@ -95,17 +95,27 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
     void ImmediatePickUp(Interactable interactable)
     {
         var go = interactable.gameObject;
+
         if (go.CompareTag(pumpTag))
         {
             sfx.PlaySound_PumpWorkng(false, go);
+
             if (pumpUsedUp) { if (debugLogs) Debug.Log("[PI] Pump already used up"); return; }
+
             var collector = go.GetComponent<PumpFuelCollector>();
+
             if (collector) carriedPumpFuel += collector.ConsumeFuel();
             hasPump = true;
+
             if (placedPump == go) placedPump = null;
             go.SetActive(false);
+
             NotifyPumpState();
+
             if (debugLogs) Debug.Log($"[PI] Picked up pump fuel={carriedPumpFuel}");
+
+            TutorialManager.Instance?.ReportAction(TutorialStep.PickUpPump);
+
             return;
         }
 
@@ -117,6 +127,9 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         {
             go.SetActive(false);
             sfx.PlaySound_ItemPickUp();
+
+            TutorialManager.Instance?.ReportAction(TutorialStep.PickUpFood);
+
             if (debugLogs) Debug.Log($"[PI] Picked up: {resourceData.resourceName}");
         }
         else if (debugLogs) Debug.Log($"[PI] Toolbar full for: {resourceData.resourceName}");
@@ -125,10 +138,12 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
     void BeginCollect(LongerInteractable target)
     {
         if (collecting) return;
+
         collectingTarget = target;
         collectTimer = 0f;
         collecting = true;
         collectingTarget.StartCollecting();
+
         if (debugLogs) Debug.Log("[PI] Begin timed collect");
     }
 
@@ -142,13 +157,18 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         if (go.CompareTag(pumpTag))
         {
             if (pumpUsedUp) { collectingTarget = null; return; }
+
             var collector = go.GetComponent<PumpFuelCollector>();
+
             if (collector) carriedPumpFuel += collector.ConsumeFuel();
             hasPump = true;
+
             if (placedPump == go) placedPump = null;
             go.SetActive(false);
+
             NotifyPumpState();
             if (debugLogs) Debug.Log($"[PI] Timed collect pump fuel={carriedPumpFuel}");
+            TutorialManager.Instance?.ReportAction(TutorialStep.PickUpPump);
         }
         else
         {
@@ -156,6 +176,8 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
             if (resourceData != null && ToolbarManager.Instance.AddResource(resourceData))
             {
                 go.SetActive(false);
+                TutorialManager.Instance?.ReportAction(TutorialStep.MineStone);
+
                 if (debugLogs) Debug.Log($"[PI] Timed collect: {resourceData.resourceName}");
             }
             else if (debugLogs) Debug.Log("[PI] Timed collect failed");
@@ -187,11 +209,15 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         if (carriedPumpFuel > 0)
         {
             nearbyShipStorage.ReceiveFuel(carriedPumpFuel);
+            TutorialManager.Instance?.ReportAction(TutorialStep.DepositShip);
+
             carriedPumpFuel = 0;
             pumpUsedUp = true;
             hasPump = false;
             placedPump = null;
+
             NotifyPumpState();
+
             if (debugLogs) Debug.Log("[PI] Deposited pump fuel; pump disabled for future placement");
         }
     }
@@ -228,6 +254,8 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
         NotifyPumpState();
         if (debugLogs) Debug.Log("[PI] Pump placed");
+
+        TutorialManager.Instance?.ReportAction(TutorialStep.PlacePump);
     }
 
     void NotifyPumpState()
@@ -248,8 +276,11 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
     void ReturnToShip()
     {
+        TutorialManager.Instance?.ReportAction(TutorialStep.LeavePlanet);
+
         if (nearbyShipStorage != null)
             DepositItemsToShip();
+
         else if (ResourceManager.Instance != null)
         {
             var slots = ToolbarManager.Instance.GetSlots();

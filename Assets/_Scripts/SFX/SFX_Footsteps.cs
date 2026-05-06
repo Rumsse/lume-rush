@@ -65,7 +65,7 @@ public class SFX_Footsteps : MonoBehaviour
         bool isMoving = (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0);
         // Sprawdza, czy gracz biegnie.
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
-        if (SceneManager.GetActiveScene().name == "Test Planet Exploration")
+        if (SceneManager.GetActiveScene().name == "_Planet_Exploration")
         {
             footstepInterval = isRunning ? 0.15f : 0.45f;
         }
@@ -112,7 +112,7 @@ public class SFX_Footsteps : MonoBehaviour
     /// </summary>
     private void PlayFootsteps()
     {
-        if(SceneManager.GetActiveScene().name == "Test Planet Exploration")
+        if(SceneManager.GetActiveScene().name == "_Planet_Exploration")
         {
             PlaySurfaceSound(footstepsSoundInstance_dirtSurface, footstepsEvent_dirtSurface);
         }

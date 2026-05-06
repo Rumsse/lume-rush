@@ -4,6 +4,8 @@ using TMPro;
 
 public class PlanetUI : MonoBehaviour
 {
+    // chyba stary kod 
+
     public TextMeshProUGUI planetNameText;
     public Button selectPlanetButton;
     public GameObject confirmationPanel;
