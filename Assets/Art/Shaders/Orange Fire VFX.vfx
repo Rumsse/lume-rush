@@ -6,7 +6,7 @@ VisualEffectResource:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Blue Fire VFX 1
+  m_Name: Orange Fire VFX
   m_Graph: {fileID: 114350483966674976}
   m_Infos:
     m_RendererSettings:
@@ -29,7 +29,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d4c867f6b72b714dbb5fd1780afe208, type: 3}
-  m_Name: Blue Fire VFX 1
+  m_Name: Orange Fire VFX
   m_EditorClassIdentifier: 
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
@@ -127,9 +127,9 @@ MonoBehaviour:
   uiBounds:
     serializedVersion: 2
     x: -495
-    y: -0
-    width: 1525
-    height: 2336
+    y: 0
+    width: 1500
+    height: 2311
 --- !u!114 &114350483966674978
 MonoBehaviour:
   m_ObjectHideFlags: 0

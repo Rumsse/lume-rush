@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf7a9d763c4bdc44b87ea75865fcd497, type: 3}
+  m_Name: Bedroom Definition
+  m_EditorClassIdentifier: Assembly-CSharp::RoomDefinition
+  roomType: 2
+  levels:
+  - {fileID: 11400000, guid: afe4628484aa1de469425c2aaae1c0d9, type: 2}
+  - {fileID: 11400000, guid: ac45c83fb816ad94e9386fd620f0640f, type: 2}
+  - {fileID: 11400000, guid: 53f35efe5a23166488293432e566daa8, type: 2}
