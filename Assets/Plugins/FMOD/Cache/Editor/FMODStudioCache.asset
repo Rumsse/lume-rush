@@ -15,10 +15,10 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/UI.bank
   Name: UI
   StudioPath: bank:/UI
-  lastModified: 639062343075840037
+  lastModified: 639148899769178459
   FileSizes:
   - Name: Desktop
-    Value: 4416
+    Value: 43200
   Exists: 1
 --- !u!114 &-7741648745694288906
 MonoBehaviour:
@@ -40,6 +40,33 @@ MonoBehaviour:
   - Name: Desktop
     Value: 1481024
   Exists: 1
+--- !u!114 &-6834248257628844217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_Planet_Hover
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/UI/UI_Planet_Hover
+  Guid:
+    Data1: -158972272
+    Data2: 1247405975
+    Data3: 1603811722
+    Data4: 1687832387
+  Banks:
+  - {fileID: -8117495612245068906}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1986
 --- !u!114 &-6045794897519114523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,12 +129,12 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639062333535262683
+  lastModified: 639148887536547487
   FileSizes:
   - Name: Desktop
-    Value: 1536
+    Value: 1734
   Exists: 1
---- !u!114 &-4634392020238842380
+--- !u!114 &-4352551194773136983
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,9 +144,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/UI/UI_Button_Hover
+  m_Name: event:/UI/UI_Button_Hover
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/UI/UI_Button_Hover
+  Path: event:/UI/UI_Button_Hover
   Guid:
     Data1: -1862168001
     Data2: 1194930412
@@ -133,34 +160,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 111
---- !u!114 &-4102564132803485658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/UI/UI_Button_Click
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/UI/UI_Button_Click
-  Guid:
-    Data1: 833423685
-    Data2: 1104528693
-    Data3: 153197212
-    Data4: -330884681
-  Banks:
-  - {fileID: -8117495612245068906}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 169
+  Length: 2141
 --- !u!114 &-3801063795457714611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,11 +203,38 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639062333535242755
+  lastModified: 639148887536527372
   FileSizes:
   - Name: Desktop
     Value: 1074
   Exists: 1
+--- !u!114 &-138197223864855203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_PauseMenu_Close
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/UI/UI_PauseMenu_Close
+  Guid:
+    Data1: -1897988489
+    Data2: 1186417427
+    Data3: -1486328402
+    Data4: -1858070062
+  Banks:
+  - {fileID: -8117495612245068906}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2088
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,16 +264,20 @@ MonoBehaviour:
   - {fileID: 9221362612812048415}
   - {fileID: 3829152169995079718}
   - {fileID: 6435073999082513663}
-  - {fileID: -4634392020238842380}
-  - {fileID: -4102564132803485658}
   - {fileID: 900448881132962175}
+  - {fileID: -4352551194773136983}
+  - {fileID: 1511650772971539064}
+  - {fileID: 8596798704651414068}
+  - {fileID: -138197223864855203}
+  - {fileID: -6834248257628844217}
+  - {fileID: 7516776604616372417}
   EditorParameters: []
   MasterBanks:
   - {fileID: -2160354079488981446}
   StringsBanks:
   - {fileID: -4705166642097723612}
   cacheVersion: 131858
-  cacheTime: 639144277307055064
+  cacheTime: 639148899769178459
   SerializableEventsDict:
   - key: event:/SFX/SFX_Footsteps_HardSurface
     index: 0
@@ -264,12 +295,20 @@ MonoBehaviour:
     index: 6
   - key: event:/SFX/SFX_Pump_Working
     index: 7
-  - key: event:/SFX/UI/UI_Button_Hover
-    index: 8
-  - key: event:/SFX/UI/UI_Button_Click
-    index: 9
   - key: event:/Music/Music_Spaceship_Inside
+    index: 8
+  - key: event:/UI/UI_Button_Hover
+    index: 9
+  - key: event:/UI/UI_Button_Click
     index: 10
+  - key: event:/UI/UI_PauseMenu_Open
+    index: 11
+  - key: event:/UI/UI_PauseMenu_Close
+    index: 12
+  - key: event:/UI/UI_Planet_Hover
+    index: 13
+  - key: event:/UI/UI_Planet_MenuOpen
+    index: 14
 --- !u!114 &693208583563648571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,6 +363,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 127807
+--- !u!114 &1511650772971539064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_Button_Click
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/UI/UI_Button_Click
+  Guid:
+    Data1: 833423685
+    Data2: 1104528693
+    Data3: 153197212
+    Data4: -330884681
+  Banks:
+  - {fileID: -8117495612245068906}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 636
 --- !u!114 &2348524358225206891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,7 +432,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Ambient.bank
   Name: Ambient
   StudioPath: bank:/Ambient
-  lastModified: 639144277307055064
+  lastModified: 639148887536442575
   FileSizes:
   - Name: Desktop
     Value: 4589536
@@ -452,6 +518,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 57000
+--- !u!114 &7516776604616372417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_Planet_MenuOpen
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/UI/UI_Planet_MenuOpen
+  Guid:
+    Data1: -847961966
+    Data2: 1279901876
+    Data3: 1845839760
+    Data4: -723607217
+  Banks:
+  - {fileID: -8117495612245068906}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2426
 --- !u!114 &7847837667737264636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,11 +560,38 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 639144277307055064
+  lastModified: 639148887537602070
   FileSizes:
   - Name: Desktop
     Value: 853600
   Exists: 1
+--- !u!114 &8596798704651414068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_PauseMenu_Open
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/UI/UI_PauseMenu_Open
+  Guid:
+    Data1: 333535347
+    Data2: 1165861082
+    Data3: 281348028
+    Data4: 593687168
+  Banks:
+  - {fileID: -8117495612245068906}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2137
 --- !u!114 &9221362612812048415
 MonoBehaviour:
   m_ObjectHideFlags: 0

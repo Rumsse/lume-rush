@@ -243,14 +243,14 @@ MonoBehaviour:
       Data2: 1194930412
       Data3: -235790702
       Data4: -875003259
-    Path: event:/SFX/UI/UI_Button_Hover
+    Path: event:/UI/UI_Button_Hover
   clickSound:
     Guid:
       Data1: 833423685
       Data2: 1104528693
       Data3: 153197212
       Data4: -330884681
-    Path: event:/SFX/UI/UI_Button_Click
+    Path: event:/UI/UI_Button_Click
 --- !u!1 &390349744
 GameObject:
   m_ObjectHideFlags: 0
