@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bedroom 3
   m_EditorClassIdentifier: Assembly-CSharp::RoomLevelData
   level: 3
-  cost: 0
+  costs: []
   roomPrefab: {fileID: 0}
-  previewImage: {fileID: 0}
+  previewImage: {fileID: 21300000, guid: 7b947c404aec98c4a901601f1af359b0, type: 3}

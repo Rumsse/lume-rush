@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -9,18 +10,23 @@ public class RoomDetailsPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI costText;
     [SerializeField] private Button actionButton;
+    [SerializeField] private Button chooseRoomButton;
+    [SerializeField] private GameObject roomSelectionPanel;
 
     #endregion
 
     #region Variables
 
-    [SerializeField] private RoomDefinition roomToBuildPrototype;
-
     private RoomSlot activeSlot;
+    private RoomDefinition selectedPrototype;
 
     #endregion
 
-    private void Awake() => actionButton.onClick.AddListener(OnActionButtonClicked);
+    private void Awake()
+    {
+        actionButton.onClick.AddListener(OnActionButtonClicked);
+        chooseRoomButton.onClick.AddListener(() => roomSelectionPanel.SetActive(true));
+    }
 
     public void ShowPanel(RoomSlot slot)
     {
@@ -31,7 +37,16 @@ public class RoomDetailsPanel : MonoBehaviour
         }
 
         activeSlot = slot;
+        selectedPrototype = null;
+        roomSelectionPanel.SetActive(false);
         gameObject.SetActive(true);
+        RefreshUI();
+    }
+
+    public void SelectRoomPrototype(RoomDefinition def)
+    {
+        selectedPrototype = def;
+        roomSelectionPanel.SetActive(false);
         RefreshUI();
     }
 
@@ -45,28 +60,31 @@ public class RoomDetailsPanel : MonoBehaviour
 
     private void SetupBuildView()
     {
-        titleText.text = "Empty Room";
-        actionButton.interactable = true;
+        chooseRoomButton.gameObject.SetActive(true);
 
-        if (roomToBuildPrototype == null)
+        if (selectedPrototype == null)
         {
-            Debug.LogError("Room prototype missing");
+            titleText.text = "Empty Room - Select Type";
+            costText.text = "Select a room type to see costs.";
+            actionButton.interactable = false;
             return;
         }
 
-        int buildCost = roomToBuildPrototype.levels[0].cost;
-        costText.text = $"Build Cost: {buildCost}";
+        titleText.text = $"Building: {selectedPrototype.roomType}";
+        var costs = selectedPrototype.levels[0].costs;
+        UpdateCostUIAndButton(costs, true);
     }
 
     private void SetupUpgradeView()
     {
+        chooseRoomButton.gameObject.SetActive(false);
         titleText.text = $"{activeSlot.CurrentRoomType} (Lvl {activeSlot.CurrentLevel})";
 
         RoomDefinition def = activeSlot.CurrentDefinition;
 
         if (def == null)
         {
-            Debug.LogError("Room definition missing on active slot");
+            Debug.LogError("Room definition missing");
             return;
         }
 
@@ -77,18 +95,45 @@ public class RoomDetailsPanel : MonoBehaviour
             return;
         }
 
-        actionButton.interactable = true;
-        int upgradeCost = def.levels[activeSlot.CurrentLevel].cost;
-        costText.text = $"Upgrade Cost: {upgradeCost}";
+        var costs = def.levels[activeSlot.CurrentLevel].costs;
+        UpdateCostUIAndButton(costs, false);
+    }
+
+    private void UpdateCostUIAndButton(List<ResourceCost> costs, bool isBuilding)
+    {
+        string costString = isBuilding ? "Cost for building:\n" : "Cost for next level:\n";
+        bool canAfford = true;
+
+        foreach (var cost in costs)
+        {
+            int currentAmount = ResourceManager.Instance.GetResourceCount(cost.resourceName);
+            costString += $"{cost.resourceName}: {cost.amount} (You have: {currentAmount})\n";
+
+            if (currentAmount < cost.amount)
+                canAfford = false;
+        }
+
+        costText.text = costString;
+        actionButton.interactable = canAfford;
     }
 
     private void OnActionButtonClicked()
     {
-        if (activeSlot.CurrentRoomType == RoomType.None)
-            activeSlot.BuildOrUpgradeRoom(roomToBuildPrototype);
-        else
-            activeSlot.BuildOrUpgradeRoom(activeSlot.CurrentDefinition);
+        RoomDefinition def = activeSlot.CurrentRoomType == RoomType.None ? selectedPrototype : activeSlot.CurrentDefinition;
+        int levelIndex = activeSlot.CurrentRoomType == RoomType.None ? 0 : activeSlot.CurrentLevel;
 
+        if (def == null)
+        {
+            Debug.LogError("Cannot build or upgrade, definition is null");
+            return;
+        }
+
+        var costs = def.levels[levelIndex].costs;
+
+        foreach (var cost in costs)
+            ResourceManager.Instance.ConsumeResource(cost.resourceName, cost.amount);
+
+        activeSlot.BuildOrUpgradeRoom(def);
         RefreshUI();
     }
 }

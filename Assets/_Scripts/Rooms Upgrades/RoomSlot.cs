@@ -8,9 +8,9 @@ public class RoomSlot : MonoBehaviour
 
     [SerializeField] private RoomType currentRoomType = RoomType.None;
     [SerializeField] private int currentLevel = 0;
+    [SerializeField] private RoomDefinition currentDefinition;
 
     private GameObject currentRoomInstance;
-    private RoomDefinition currentDefinition;
 
     public void BuildOrUpgradeRoom(RoomDefinition definition)
     {
@@ -35,8 +35,7 @@ public class RoomSlot : MonoBehaviour
 
     private void SpawnRoomModel()
     {
-        if (currentRoomInstance != null)
-            Destroy(currentRoomInstance);
+        ClearOldModels();
 
         var levelData = currentDefinition.levels[currentLevel - 1];
 
@@ -46,6 +45,17 @@ public class RoomSlot : MonoBehaviour
             return;
         }
 
-        currentRoomInstance = Instantiate(levelData.roomPrefab, transform.position, transform.rotation, transform);
+        currentRoomInstance = Instantiate(levelData.roomPrefab, transform);
+        currentRoomInstance.transform.localPosition = levelData.spawnOffset;
+        currentRoomInstance.transform.localEulerAngles = levelData.spawnRotation;
+    }
+
+    private void ClearOldModels()
+    {
+        if (currentRoomInstance != null)
+            Destroy(currentRoomInstance);
+
+        foreach (Transform child in transform)
+            Destroy(child.gameObject);
     }
 }

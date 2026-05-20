@@ -4,6 +4,7 @@ public class RoomUpgradesManager : MonoBehaviour
 {
     [SerializeField] private GameObject shipGridPanel;
     [SerializeField] private RoomDetailsPanel roomDetailsPanel;
+    [SerializeField] private GameObject roomSelectionPanel;
 
     private void Update()
     {
@@ -21,4 +22,10 @@ public class RoomUpgradesManager : MonoBehaviour
     }
 
     public void OpenRoomDetails(RoomSlot slot) => roomDetailsPanel.ShowPanel(slot);
+
+    public void CloseRoomDetails() => roomDetailsPanel.gameObject.SetActive(false);
+
+    public void CloseRoomSelection() => roomSelectionPanel.gameObject.SetActive(false);
+
+    public void CloseShipGridPanel() => shipGridPanel.SetActive(false);
 }
