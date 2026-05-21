@@ -19,5 +19,5 @@ MonoBehaviour:
   planetDescription: A wild planet with active volcanoes, rivers of lava, and vast
     resources. Only the bravest take on the challenge of survival.
   planetMaterial: {fileID: 2100000, guid: bd9f0f9022c5b1f4bbb994f5ee3be7c3, type: 2}
-  burnedMaterial: {fileID: 2100000, guid: 30e853dd34b2b2f4396092e53d23174d, type: 2}
+  burnedMaterial: {fileID: 2100000, guid: 460addb3f248de24eb165c5e1513d342, type: 2}
   gravityForce: 22
