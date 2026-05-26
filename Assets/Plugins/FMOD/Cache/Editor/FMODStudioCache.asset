@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/UI.bank
   Name: UI
   StudioPath: bank:/UI
-  lastModified: 639117724026752826
+  lastModified: 639101357239424872
   FileSizes:
   - Name: Desktop
     Value: 4416
@@ -35,7 +35,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 639117724026588615
+  lastModified: 639101357239259746
   FileSizes:
   - Name: Desktop
     Value: 1481024
@@ -82,7 +82,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/TESTING.bank
   Name: TESTING
   StudioPath: bank:/TESTING
-  lastModified: 639117724026742788
+  lastModified: 639101357239419845
   FileSizes:
   - Name: Desktop
     Value: 4105312
@@ -102,7 +102,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639117724026498561
+  lastModified: 639101357239179723
   FileSizes:
   - Name: Desktop
     Value: 1536
@@ -203,7 +203,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639117724026493577
+  lastModified: 639101357239169707
   FileSizes:
   - Name: Desktop
     Value: 1074
@@ -246,7 +246,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -4705166642097723612}
   cacheVersion: 131858
-  cacheTime: 639117724026752826
+  cacheTime: 639101357239424872
   SerializableEventsDict:
   - key: event:/SFX/SFX_Footsteps_HardSurface
     index: 0
@@ -366,7 +366,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Ambient.bank
   Name: Ambient
   StudioPath: bank:/Ambient
-  lastModified: 639117724026483643
+  lastModified: 639101357239164706
   FileSizes:
   - Name: Desktop
     Value: 4589536
@@ -467,7 +467,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 639117724026630516
+  lastModified: 639101357239309785
   FileSizes:
   - Name: Desktop
     Value: 853600
