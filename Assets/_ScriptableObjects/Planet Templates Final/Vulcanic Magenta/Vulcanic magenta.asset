@@ -19,5 +19,5 @@ MonoBehaviour:
   planetDescription: A rarer and somewhat safer variant of the volcanic planet. No
     one has yet discovered how it forms or whether its creator is solely nature.
   planetMaterial: {fileID: 2100000, guid: eda160589e9e2654ba1da3684b48047f, type: 2}
-  burnedMaterial: {fileID: 2100000, guid: 30e853dd34b2b2f4396092e53d23174d, type: 2}
+  burnedMaterial: {fileID: 2100000, guid: 460addb3f248de24eb165c5e1513d342, type: 2}
   gravityForce: 22

@@ -35,6 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5542972861280483733}
+  - {fileID: 6664319157681855616}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &493979425972086012
@@ -128,9 +129,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlanetInteractable
   spawnPanelPosition: {fileID: 5542972861280483733}
-  PlanetName: 
-  SelectedPresetName: 
+  planetSettings: {fileID: 0}
   sfx: {fileID: -8642968640092399971}
+  baseFuelCost: 10
+  costPerUnitDistance: 0.5
 --- !u!114 &-8642968640092399971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,3 +211,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6884066969935106816}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &8603935115743916485
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6884066969935106816}
+    m_Modifications:
+    - target: {fileID: 3106141857849666885, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3074651
+      objectReference: {fileID: 0}
+    - target: {fileID: 3106141857849666885, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3074651
+      objectReference: {fileID: 0}
+    - target: {fileID: 3106141857849666885, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.3074651
+      objectReference: {fileID: 0}
+    - target: {fileID: 3106141857849666885, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.002
+      objectReference: {fileID: 0}
+    - target: {fileID: 3106141857849666885, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.004
+      objectReference: {fileID: 0}
+    - target: {fileID: 3106141857849666885, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3106141857849666885, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3106141857849666885, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3106141857849666885, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3106141857849666885, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3106141857849666885, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3106141857849666885, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3106141857849666885, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646272304383176677, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b02dbabefe37ec74486079f79f8432c5, type: 2}
+    - target: {fileID: 7738631270692946066, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+      propertyPath: m_Name
+      value: SunHalo
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+--- !u!4 &6664319157681855616 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3106141857849666885, guid: 6a1fd46dd1a36a7468da00954e517a6f, type: 3}
+  m_PrefabInstance: {fileID: 8603935115743916485}
+  m_PrefabAsset: {fileID: 0}

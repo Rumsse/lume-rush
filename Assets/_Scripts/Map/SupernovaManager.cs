@@ -5,6 +5,7 @@ public class SupernovaManager : MonoBehaviour
     #region Settings
 
     [SerializeField] float expansionSpeed = 2f;
+    [SerializeField] ParticleSystem waveParticleRoot;
 
     #endregion
 
@@ -12,6 +13,7 @@ public class SupernovaManager : MonoBehaviour
 
     public static SupernovaManager Instance { get; private set; }
     public float CurrentRadius { get; private set; }
+    ParticleSystem[] waveParticles;
 
     #endregion
 
@@ -27,10 +29,18 @@ public class SupernovaManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        if (waveParticleRoot)
+            waveParticles = waveParticleRoot.GetComponentsInChildren<ParticleSystem>();
+
         LoadRadius();
     }
 
-    void Update() => CurrentRadius += expansionSpeed * Time.deltaTime;
+    void Update()
+    {
+        CurrentRadius += expansionSpeed * Time.deltaTime;
+        UpdateParticleRadius();
+    }
 
     void OnDisable() => SaveRadius();
 
@@ -46,22 +56,25 @@ public class SupernovaManager : MonoBehaviour
 
     #region Logic
 
+    void UpdateParticleRadius()
+    {
+        if (waveParticles == null)
+            return;
+
+        foreach (var ps in waveParticles)
+        {
+            var shape = ps.shape;
+            shape.radius = CurrentRadius;
+        }
+    }
+
     public void SaveRadius()
     {
         PlayerPrefs.SetFloat("SupernovaRadius", CurrentRadius);
         PlayerPrefs.Save();
     }
 
-    void LoadRadius()
-    {
-        if (!PlayerPrefs.HasKey("SupernovaRadius"))
-        {
-            CurrentRadius = 0f;
-            return;
-        }
-
-        CurrentRadius = PlayerPrefs.GetFloat("SupernovaRadius");
-    }
+    void LoadRadius() => CurrentRadius = PlayerPrefs.GetFloat("SupernovaRadius", 0f);
 
     public static void ResetRadius()
     {

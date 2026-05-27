@@ -3,13 +3,20 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
+    #region Variables
+
     public static ResourceManager Instance { get; private set; }
 
-    Dictionary<string, int> globalResources = new Dictionary<string, int>();
-
-    [SerializeField] int startingFuel = 500;
-
     public int Fuel => globalResources.TryGetValue("Fuel", out var v) ? v : 0;
+
+    [SerializeField] private int startingFuel = 500;
+    [SerializeField] private string[] developerCheatResources = { "Titanium", "Aluminium", "Iron", "Coal", "Food", "Fuel" }; 
+
+    private Dictionary<string, int> globalResources = new Dictionary<string, int>();
+
+    #endregion
+
+    #region Unity Methods
 
     void Awake()
     {
@@ -24,6 +31,16 @@ public class ResourceManager : MonoBehaviour
     }
 
     void Start() => AddResource("Fuel", startingFuel);
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+            GiveDeveloperResources();
+    }
+
+    #endregion
+
+    #region Resource Management
 
     public void AddResource(string resourceName, int amount)
     {
@@ -68,10 +85,24 @@ public class ResourceManager : MonoBehaviour
         return true;
     }
 
+    #endregion
+
+    #region Developer Tools
+
     public void DebugInventory()
     {
         Debug.Log("=== Global Resources ===");
         foreach (var resource in globalResources)
             Debug.Log($"{resource.Key}: {resource.Value}");
     }
+
+    private void GiveDeveloperResources()
+    {
+        foreach (string resource in developerCheatResources)
+            AddResource(resource, 20);
+
+        Debug.Log("[ResourceManager] Developer cheat applied: +10 all resources");
+    }
+
+    #endregion
 }
