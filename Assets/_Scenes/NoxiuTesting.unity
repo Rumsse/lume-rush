@@ -194,7 +194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5cd3e5f4ff1e4db45abe40d0f7a3db48, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.1702147
+      value: 27.331005
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5cd3e5f4ff1e4db45abe40d0f7a3db48, type: 3}
       propertyPath: m_LocalRotation.w
@@ -227,7 +227,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 5cd3e5f4ff1e4db45abe40d0f7a3db48, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 4b85f7cb2f2661e47903f7d0c194df5a, type: 2}
+      objectReference: {fileID: 2100000, guid: add8cc8c5922858469070611f7f09504, type: 2}
     - target: {fileID: 919132149155446097, guid: 5cd3e5f4ff1e4db45abe40d0f7a3db48, type: 3}
       propertyPath: m_Name
       value: sciany_drzwi_obie_strony
@@ -294,6 +294,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6188c4296ca8444b8912640082c5977, type: 3}
+--- !u!1001 &563704530
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 4e548697b89608d4ba4b219a53d5d2fd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.66866106
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e548697b89608d4ba4b219a53d5d2fd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00000001784963
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e548697b89608d4ba4b219a53d5d2fd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 35.82868
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e548697b89608d4ba4b219a53d5d2fd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e548697b89608d4ba4b219a53d5d2fd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e548697b89608d4ba4b219a53d5d2fd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e548697b89608d4ba4b219a53d5d2fd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e548697b89608d4ba4b219a53d5d2fd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e548697b89608d4ba4b219a53d5d2fd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e548697b89608d4ba4b219a53d5d2fd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 4e548697b89608d4ba4b219a53d5d2fd, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7a8dff036ed2bda4db23fe3273c1d273, type: 2}
+    - target: {fileID: 919132149155446097, guid: 4e548697b89608d4ba4b219a53d5d2fd, type: 3}
+      propertyPath: m_Name
+      value: sciany_pomieszczenie_wlasne
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4e548697b89608d4ba4b219a53d5d2fd, type: 3}
 --- !u!1001 &649504154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -312,7 +373,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d91312e43df79048ad22909bf0f2309, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.5392087
+      value: 23.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d91312e43df79048ad22909bf0f2309, type: 3}
       propertyPath: m_LocalRotation.w
@@ -342,6 +403,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 8d91312e43df79048ad22909bf0f2309, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2e68af1829ed75942b1a4ef0f04c3804, type: 2}
     - target: {fileID: 919132149155446097, guid: 8d91312e43df79048ad22909bf0f2309, type: 3}
       propertyPath: m_Name
       value: sciany_drzwi_prawo
@@ -461,7 +526,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c8689fe2d3ddcd947ae95162c3f38fd2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.099099
+      value: 31.259892
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c8689fe2d3ddcd947ae95162c3f38fd2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -494,7 +559,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: c8689fe2d3ddcd947ae95162c3f38fd2, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 4b85f7cb2f2661e47903f7d0c194df5a, type: 2}
+      objectReference: {fileID: 2100000, guid: 37de47167b2635145a744d3316b9d137, type: 2}
     - target: {fileID: 919132149155446097, guid: c8689fe2d3ddcd947ae95162c3f38fd2, type: 3}
       propertyPath: m_Name
       value: sciany_drzwi_lewo
@@ -5132,3 +5197,4 @@ SceneRoots:
   - {fileID: 1753708763}
   - {fileID: 416989346}
   - {fileID: 513665512}
+  - {fileID: 563704530}
