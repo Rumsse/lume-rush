@@ -12,7 +12,7 @@ public class RoomUpgradesManager : MonoBehaviour
             ToggleShipGrid();
     }
 
-    private void ToggleShipGrid()
+    public void ToggleShipGrid()
     {
         bool state = !shipGridPanel.activeSelf;
         shipGridPanel.SetActive(state);
