@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{5d9ffcf0-6064-4206-af2d-379d9a150890}">
+		<property name="assetPath">
+			<value>473707__joao_janz__kitchen-sink-tap-water-opening-and-closing-half-full.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>10.232791666666667</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{35a3e562-a987-43e9-b56b-8e7572148796}</destination>
+		</relationship>
+	</object>
+</objects>

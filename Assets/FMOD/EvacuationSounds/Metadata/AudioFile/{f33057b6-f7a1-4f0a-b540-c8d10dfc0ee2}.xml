@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{f33057b6-f7a1-4f0a-b540-c8d10dfc0ee2}">
+		<property name="assetPath">
+			<value>473708__joao_janz__kitchen-exhaust-fan-low-mid-power-setting.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>57.031885416666668</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{35a3e562-a987-43e9-b56b-8e7572148796}</destination>
+		</relationship>
+	</object>
+</objects>

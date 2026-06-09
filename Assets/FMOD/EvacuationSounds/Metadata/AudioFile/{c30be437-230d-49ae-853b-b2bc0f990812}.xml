@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{c30be437-230d-49ae-853b-b2bc0f990812}">
+		<property name="assetPath">
+			<value>SFX/Pump/321807__lloydevans09__plunger_pop_1.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.35439909297052152</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{35a3e562-a987-43e9-b56b-8e7572148796}</destination>
+		</relationship>
+	</object>
+</objects>
