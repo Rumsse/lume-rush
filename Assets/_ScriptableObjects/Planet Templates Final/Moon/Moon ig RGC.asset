@@ -37,7 +37,73 @@ MonoBehaviour:
     offset: -0.2
     avoidWater: 1
     initialized: 1
-  props: []
+  props:
+  - prefab: {fileID: 6636425855264016158, guid: 293d66a075390644bb2aa2697f87675d, type: 3}
+    count: 1
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 2008797211179778365, guid: ad63dafa48e2a664c9e576c915511c11, type: 3}
+    count: 1
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 6983085580411489180, guid: f339d2e28c8ba9f4d8cbab66e9b0863a, type: 3}
+    count: 1
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 8903016793730736735, guid: a2c964a15e021d845ad0bddc4a9e2d2a, type: 3}
+    count: 1
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 844999361666973701, guid: 103e9b2c9bc62574d862eb4ea2af8df0, type: 3}
+    count: 4
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 6662543630490839620, guid: 12ac6d373c6510547b2dccc98cf64334, type: 3}
+    count: 3
+    alignAxis: 0
+    offset: 4.6
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 1173081794189147991, guid: 491fe6fe16eb9e84dbdac9d8cc9d709b, type: 3}
+    count: 6
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 1682525107386707344, guid: c1e74a487bc7b304aa9a6ed226a3d330, type: 3}
+    count: 6
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 968166648712743070, guid: 179ac1e8444532946a38f1f0997f72e9, type: 3}
+    count: 6
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 1173081794189147991, guid: 491fe6fe16eb9e84dbdac9d8cc9d709b, type: 3}
+    count: 6
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 1173081794189147991, guid: 491fe6fe16eb9e84dbdac9d8cc9d709b, type: 3}
+    count: 6
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
   collisionCheckRadius: 1
   rotationAdjustment: {x: 0, y: 180, z: 0}
   waterMargin: 0.05
