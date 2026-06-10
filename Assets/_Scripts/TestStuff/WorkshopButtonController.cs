@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
+using FMODUnity;
 
 public class WorkshopButtonController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -10,99 +11,120 @@ public class WorkshopButtonController : MonoBehaviour, IPointerEnterHandler, IPo
     public Sprite availableImage;
     public Sprite boughtImage;
 
-    public GameObject materialNeed;
+    public BuyCostSO materialsNeeded;
+    public TextMeshProUGUI[] costTexts;
 
-    [SerializeField]
-    private Dictionary<string, int> buyCost;
+    public EventReference hoverSound;
+    public EventReference buySound;
+    public EventReference notEnoughMaterialsSound;
 
-    private bool canBuy = true;
-    private bool isBought = false;
-
-    public ScriptableObject materialsNeeded;
-
-    #region SO STRUCT
-
-    [System.Serializable]
-    public class NewDict
-    {
-        [SerializeField] public NewDictItem[] newDictItems;
-
-        public Dictionary<string, int> ToDictionary()
-        {
-            Dictionary<string, int> dict = new Dictionary<string, int>();
-
-            foreach (var item in newDictItems)
-            {
-                dict[item.resourceName] = item.resourceAmount;
-            }
-
-            return dict;
-        }
-    }
-
-    [System.Serializable]
-    public class NewDictItem
-    {
-        public string resourceName;
-        public int resourceAmount;
-    }
-
-    #endregion
+    private bool canBuy;
+    private bool isBought;
 
     private void OnEnable()
     {
+        StartCoroutine(WaitForResourceManagerAndRefresh());
+    }
+
+    private IEnumerator WaitForResourceManagerAndRefresh()
+    {
+        while (ResourceManager.Instance == null)
+            yield return null;
+
         RefreshData();
     }
+
     public void BuyItem()
     {
-        CheckIfCanBuy();
-        if (!canBuy) return;
+        RefreshData();
 
-        BuyCostSO buyCostSO = materialsNeeded as BuyCostSO;
-        var costDict = buyCostSO.newDict.ToDictionary();
+        if (isBought || ResourceManager.Instance == null)
+            return;
 
-        foreach (var cost in costDict)
+        if (!canBuy)
         {
-            ResourceStorage.Instance.Spend(cost.Key, cost.Value);
+            RuntimeManager.PlayOneShot(notEnoughMaterialsSound);
+            return;
         }
 
-        Debug.Log("Purchased item!");
+        foreach (var item in materialsNeeded.items)
+        {
+            if (item.resource == null)
+                continue;
+
+            ResourceManager.Instance.ConsumeResource(item.resource.GetStorageName(), item.resourceAmount);
+        }
+
+        RuntimeManager.PlayOneShot(buySound);
 
         isBought = true;
 
         GetComponent<Image>().sprite = boughtImage;
         GetComponent<Button>().interactable = false;
 
-        RefreshData();
+        RefreshAllWorkshopButtons();
     }
 
-    public void CostTextFill()
+    public void RefreshData()
     {
-        var textList = materialNeed.GetComponentsInChildren<TextMeshProUGUI>();
+        if (ResourceManager.Instance == null || materialsNeeded == null || materialsNeeded.items == null)
+            return;
 
-        int i = 0;
+        CostTextFill();
+        CheckIfCanBuy();
+    }
 
-        foreach (var cost in buyCost)
+    private void RefreshAllWorkshopButtons()
+    {
+        WorkshopButtonController[] buttons = FindObjectsOfType<WorkshopButtonController>();
+
+        foreach (var button in buttons)
+            button.RefreshData();
+    }
+
+    private void CostTextFill()
+    {
+        for (int i = 0; i < costTexts.Length; i++)
         {
-            ResourceStorage.Instance.resources.TryGetValue(cost.Key, out int owned);
-
-            textList[i].text = $"{cost.Key}: {owned}/{cost.Value}";
-            i++;
+            if (costTexts[i] != null)
+                costTexts[i].text = "";
         }
 
-        for (int j = i; j < textList.Length; j++)
+        int count = Mathf.Min(materialsNeeded.items.Length, costTexts.Length);
+
+        for (int i = 0; i < count; i++)
         {
-            textList[j].text = "";
+            var item = materialsNeeded.items[i];
+
+            if (item == null || item.resource == null || costTexts[i] == null)
+                continue;
+
+            string displayName = item.resource.resourceName;
+            string storageName = item.resource.GetStorageName();
+
+            int owned = ResourceManager.Instance.GetResourceCount(storageName);
+            int needed = item.resourceAmount;
+
+            costTexts[i].text = $"{displayName}: {owned}/{needed}";
         }
     }
 
-    public void CheckIfCanBuy()
+    private void CheckIfCanBuy()
     {
+        if (isBought)
+        {
+            GetComponent<Image>().sprite = boughtImage;
+            return;
+        }
+
         canBuy = true;
 
-        foreach (var cost in buyCost)
+        foreach (var item in materialsNeeded.items)
         {
-            if (!ResourceStorage.Instance.HasEnough(cost.Key, cost.Value))
+            if (item == null || item.resource == null)
+                continue;
+
+            if (ResourceManager.Instance.GetResourceCount(item.resource.GetStorageName()) < item.resourceAmount)
             {
                 canBuy = false;
                 GetComponent<Image>().sprite = unavailableImage;
@@ -112,18 +134,14 @@ public class WorkshopButtonController : MonoBehaviour, IPointerEnterHandler, IPo
 
         GetComponent<Image>().sprite = availableImage;
     }
-    private void RefreshData()
-    {
-        BuyCostSO buyCostSO = materialsNeeded as BuyCostSO;
-        buyCost = buyCostSO.newDict.ToDictionary();
 
-        CostTextFill();
-        CheckIfCanBuy();
-    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!isBought && canBuy)
+        {
+            RuntimeManager.PlayOneShot(hoverSound);
             transform.localScale *= 1.05f;
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)

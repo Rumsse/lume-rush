@@ -74,4 +74,18 @@ public class ResourceManager : MonoBehaviour
         foreach (var resource in globalResources)
             Debug.Log($"{resource.Key}: {resource.Value}");
     }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            AddResource("Aluminium", 100);
+            AddResource("Titanium", 100);
+            AddResource("Iron", 100);
+            AddResource("Coal", 100);
+            AddResource("Fuel", 100);
+
+            Debug.Log("Added 100 of every resource");
+        }
+    }
 }

@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc24f3bac88e13a40b9b176aa927cab6, type: 3}
   m_Name: ControlUnit
   m_EditorClassIdentifier: Assembly-CSharp::BuyCostSO
-  newDict:
-    newDictItems:
-    - resourceName: Titanium
-      resourceAmount: 8
-    - resourceName: Iron
-      resourceAmount: 10
-    - resourceName: Aluminium
-      resourceAmount: 5
+  items:
+  - resource: {fileID: 11400000, guid: 72b0e1e7a399e87478feeee92c132192, type: 2}
+    resourceAmount: 10
+  - resource: {fileID: 11400000, guid: 5d12b5c3d63090c4793ce0ebc5a03dbc, type: 2}
+    resourceAmount: 10
+  - resource: {fileID: 11400000, guid: 836d97a13f8eff94e9acedb7d0bfd8a6, type: 2}
+    resourceAmount: 10
