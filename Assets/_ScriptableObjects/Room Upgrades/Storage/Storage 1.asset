@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Storage 1
   m_EditorClassIdentifier: Assembly-CSharp::RoomLevelData
   level: 1
-  costs: []
-  roomPrefab: {fileID: 0}
+  costs:
+  - resourceName: Coal
+    amount: 1
+  roomPrefab: {fileID: 7313986818401722630, guid: 338dadb49bb9f834eb83e37da71df997, type: 3}
   previewImage: {fileID: 21300000, guid: ceb49312a40b4c843b8b2d4ff52ef2d7, type: 3}
+  spawnOffset: {x: 0.608, y: 0.067, z: -0.022074}
+  spawnRotation: {x: 0, y: 0, z: 0}

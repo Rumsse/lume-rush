@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: Kitchen 3
   m_EditorClassIdentifier: Assembly-CSharp::RoomLevelData
   level: 3
-  costs: []
-  roomPrefab: {fileID: 0}
+  costs:
+  - resourceName: Iron 5
+    amount: 0
+  - resourceName: Aluminium 5
+    amount: 0
+  roomPrefab: {fileID: 6068550337843989572, guid: 2d13dad8f301c874da1b1287a72c3a1d, type: 3}
   previewImage: {fileID: 21300000, guid: 740030c8d0fc8964c81e674f4a596792, type: 3}
+  spawnOffset: {x: 0, y: 0.068, z: -0.00099915}
+  spawnRotation: {x: 0, y: 0, z: 0}

@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: Workshop 3
   m_EditorClassIdentifier: Assembly-CSharp::RoomLevelData
   level: 3
-  costs: []
-  roomPrefab: {fileID: 0}
+  costs:
+  - resourceName: Titanium
+    amount: 4
+  - resourceName: Iron
+    amount: 4
+  roomPrefab: {fileID: 2215792768143112156, guid: 5b975007142dab14f9e3a370ecafb807, type: 3}
   previewImage: {fileID: 21300000, guid: 738129beb05c8ea418ea67f89767d8a4, type: 3}
+  spawnOffset: {x: -5.481, y: 0.698, z: -5.985}
+  spawnRotation: {x: 0, y: 0, z: 0}
