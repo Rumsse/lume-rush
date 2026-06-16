@@ -104,6 +104,12 @@ MonoBehaviour:
     offset: 0
     avoidWater: 1
     initialized: 1
+  - prefab: {fileID: 1791275200300474753, guid: 0056e049575b78e42bca1357228adec3, type: 3}
+    count: 20
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
   collisionCheckRadius: 1
   rotationAdjustment: {x: 0, y: 180, z: 0}
   waterMargin: 0.05
