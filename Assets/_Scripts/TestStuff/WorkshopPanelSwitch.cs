@@ -8,6 +8,7 @@ public class WorkshopPanelSwitch : MonoBehaviour
         if (workshopPanel.activeInHierarchy)
         {
             if (Input.GetKeyDown(KeyCode.E)) workshopPanel.SetActive(false);
+            Time.timeScale = 1f;
         }
     }
 }

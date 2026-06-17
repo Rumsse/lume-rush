@@ -416,18 +416,18 @@ MonoBehaviour:
   ppm: {fileID: 3399875839887823955}
   footstepsEvent_dirtSurface:
     Guid:
-      Data1: 1281783592
-      Data2: 1097285967
-      Data3: 2098149548
-      Data4: 902577280
-    Path: event:/SFX/SFX_Footsteps_DirtSurface
+      Data1: 1250759071
+      Data2: 1284390875
+      Data3: 760697753
+      Data4: 1097783558
+    Path: event:/SFX/SFX_Walk_Dirt
   footstepsEvent_hardSurface:
     Guid:
-      Data1: -801774572
-      Data2: 1341803168
-      Data3: -57650007
-      Data4: -273397553
-    Path: event:/SFX/SFX_Footsteps_HardSurface
+      Data1: 1526541705
+      Data2: 1149225986
+      Data3: -1910267469
+      Data4: 56547401
+    Path: event:/SFX/SFX_Walk_Stone
   jumpEvent:
     Guid:
       Data1: -1259795941
