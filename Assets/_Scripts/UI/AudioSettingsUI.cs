@@ -21,7 +21,7 @@ public class AudioSettingsUI : MonoBehaviour
     public string musicBusPath = "bus:/Music";
     public string uiBusPath = "bus:/UI";
     public string sfxBusPath = "bus:/SFX";
-    public string ambienceBusPath = "bus:/Ambience";
+    public string ambienceBusPath = "bus:/Ambients";
 
     private Bus masterBus;
     private Bus musicBus;
@@ -138,4 +138,5 @@ public class AudioSettingsUI : MonoBehaviour
     {
         SaveVolumes();
     }
+
 }
