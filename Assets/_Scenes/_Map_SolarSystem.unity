@@ -24416,6 +24416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SupernovaManager
   expansionSpeed: 3
   waveParticleRoot: {fileID: 626136356}
+  mapSceneName: _Map_SolarSystem
 --- !u!4 &583718033
 Transform:
   m_ObjectHideFlags: 0
