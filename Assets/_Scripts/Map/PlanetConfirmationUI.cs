@@ -53,12 +53,16 @@ public class PlanetConfirmationUI : MonoBehaviour
 
     void OnConfirmClicked(Action onConfirm)
     {
-        if (ResourceManager.Instance == null)
+        if (!ResourceManager.Instance)
             return;
 
         if (!ResourceManager.Instance.ConsumeResource("Fuel", currentFuelCost))
         {
             Debug.Log("Not enough fuel to travel!");
+
+            if (FuelPopup.Instance)
+                FuelPopup.Instance.ShowMessage("Not enough fuel!");
+
             return;
         }
 
