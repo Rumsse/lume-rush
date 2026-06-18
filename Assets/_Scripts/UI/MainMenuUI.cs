@@ -1,35 +1,35 @@
 using UnityEngine;
 using FMODUnity;
 using UnityEngine.EventSystems;
-using Unity.VisualScripting;
 
 public class MainMenuUI : MonoBehaviour, IPointerEnterHandler
 {
-    [SerializeField] private EventReference hoverOverSound;
-    [SerializeField] private EventReference clickSound;
+    [SerializeField] EventReference hoverOverSound;
+    [SerializeField] EventReference clickSound;
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        RuntimeManager.PlayOneShot(hoverOverSound);
-    }
+    public void OnPointerEnter(PointerEventData eventData) => RuntimeManager.PlayOneShot(hoverOverSound);
 
-    public void OnClickSFX()
-    {
-        RuntimeManager.PlayOneShot(clickSound);
-    }
+    public void OnClickSFX() => RuntimeManager.PlayOneShot(clickSound);
 
     public void OnPlayButton()
     {
         OnClickSFX();
-        if (SceneLoader.Instance != null)
-            SceneLoader.Instance.LoadMap();
+        PlanetSelectionManager.ResetMapData();
+
+        if (!SceneLoader.Instance)
+            return;
+
+        SceneLoader.Instance.LoadMap();
     }
 
     public void OnContinueButton()
     {
         OnClickSFX();
-        if (SceneLoader.Instance != null)
-            SceneLoader.Instance.LoadMap();
+
+        if (!SceneLoader.Instance)
+            return;
+
+        SceneLoader.Instance.LoadMap();
     }
 
     public void OnSettingsButton()
@@ -41,7 +41,10 @@ public class MainMenuUI : MonoBehaviour, IPointerEnterHandler
     public void OnQuitButton()
     {
         OnClickSFX();
-        if (SceneLoader.Instance != null)
-            SceneLoader.Instance.QuitGame();
+
+        if (!SceneLoader.Instance)
+            return;
+
+        SceneLoader.Instance.QuitGame();
     }
 }

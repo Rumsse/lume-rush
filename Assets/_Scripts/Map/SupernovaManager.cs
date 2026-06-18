@@ -63,6 +63,8 @@ public class SupernovaManager : MonoBehaviour
 
         foreach (var ps in waveParticles)
         {
+            if (ps == null) continue;
+
             var shape = ps.shape;
             shape.radius = CurrentRadius;
         }
@@ -78,8 +80,22 @@ public class SupernovaManager : MonoBehaviour
 
     public static void ResetRadius()
     {
-        if (Instance)
-            Instance.CurrentRadius = 0f;
+        if (Instance == null) return;
+
+        Instance.CurrentRadius = 0f;
+
+        if (Instance.waveParticles != null)
+        {
+            foreach (var ps in Instance.waveParticles)
+            {
+                if (ps == null) continue;
+
+                ps.Clear(); 
+
+                var shape = ps.shape;
+                shape.radius = 0f;
+            }
+        }
 
         PlayerPrefs.DeleteKey("SupernovaRadius");
     }
