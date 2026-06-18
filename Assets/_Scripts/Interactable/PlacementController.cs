@@ -115,20 +115,28 @@ public class PlacementController : MonoBehaviour
 
         if (cam && cam.isActiveAndEnabled)
         {
-            origin = cam.transform.position - Vector3.up * rayDownOffset;
+            origin = cam.transform.position - transform.up * rayDownOffset;
             dir = cam.transform.forward;
         }
         else
         {
-            origin = transform.position + Vector3.up * eyeHeight;
+            origin = transform.position + transform.up * eyeHeight;
             dir = transform.forward;
-            Debug.Log("[PLC] No camera, using player forward");
+
+            if (debugLogs)
+                Debug.Log("[PLC] No camera, using player forward");
         }
 
-        if (Physics.Raycast(new Ray(origin, dir), out hit, maxPlaceDistance, placementMask, QueryTriggerInteraction.Collide)) return true;
+        Debug.DrawRay(origin, dir * maxPlaceDistance, Color.red);
 
-        var probeStart = transform.position + transform.forward.normalized * Mathf.Min(forwardProbe, maxPlaceDistance) + Vector3.up * groundProbeUp;
-        if (Physics.Raycast(probeStart, Vector3.down, out hit, groundProbeUp + groundProbeDown, placementMask, QueryTriggerInteraction.Collide)) return true;
+        if (Physics.Raycast(new Ray(origin, dir), out hit, maxPlaceDistance, placementMask, QueryTriggerInteraction.Collide))
+            return true;
+
+        Vector3 probeStart = transform.position + transform.forward.normalized * Mathf.Min(forwardProbe, maxPlaceDistance) + transform.up * groundProbeUp;
+        Debug.DrawRay(probeStart, -transform.up * (groundProbeUp + groundProbeDown), Color.blue);
+
+        if (Physics.Raycast(probeStart, -transform.up, out hit, groundProbeUp + groundProbeDown, placementMask, QueryTriggerInteraction.Collide))
+            return true;
 
         hit = default;
         return false;
