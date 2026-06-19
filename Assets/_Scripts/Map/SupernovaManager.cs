@@ -17,6 +17,8 @@ public class SupernovaManager : MonoBehaviour
 
     public static SupernovaManager Instance { get; private set; }
     public float CurrentRadius { get; private set; }
+    public float ExpansionSpeed => expansionSpeed;
+
     ParticleSystem[] waveParticles;
     bool isGameOver;
 

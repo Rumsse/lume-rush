@@ -251,6 +251,7 @@ MonoBehaviour:
       Data3: 153197212
       Data4: -330884681
     Path: event:/SFX/UI/UI_Button_Click
+  startingPlanetPreset: {fileID: 11400000, guid: 2e906eb5b6146594ab36af443a126cfc, type: 2}
 --- !u!1 &390349744
 GameObject:
   m_ObjectHideFlags: 0

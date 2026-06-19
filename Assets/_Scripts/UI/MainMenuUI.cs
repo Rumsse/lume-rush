@@ -4,8 +4,15 @@ using UnityEngine.EventSystems;
 
 public class MainMenuUI : MonoBehaviour, IPointerEnterHandler
 {
+    #region Settings
+
     [SerializeField] EventReference hoverOverSound;
     [SerializeField] EventReference clickSound;
+    [SerializeField] CelestialBodySettings startingPlanetPreset;
+
+    #endregion
+
+    #region UI Callbacks
 
     public void OnPointerEnter(PointerEventData eventData) => RuntimeManager.PlayOneShot(hoverOverSound);
 
@@ -16,10 +23,18 @@ public class MainMenuUI : MonoBehaviour, IPointerEnterHandler
         OnClickSFX();
         PlanetSelectionManager.ResetMapData();
 
+        if (startingPlanetPreset != null)
+        {
+            PlayerPrefs.SetString("SelectedPlanetPreset", startingPlanetPreset.name);
+            PlayerPrefs.Save();
+        }
+        else
+            Debug.LogWarning("Starting Planet Preset is not assigned in MainMenuUI!");
+
         if (!SceneLoader.Instance)
             return;
 
-        SceneLoader.Instance.LoadMap();
+        SceneLoader.Instance.LoadPlanet();
     }
 
     public void OnContinueButton()
@@ -47,4 +62,6 @@ public class MainMenuUI : MonoBehaviour, IPointerEnterHandler
 
         SceneLoader.Instance.QuitGame();
     }
+
+    #endregion
 }
