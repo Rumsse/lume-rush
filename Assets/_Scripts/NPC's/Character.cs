@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using static CharacterStats;
 
-public abstract class Character : MonoBehaviour, IHealth
+public abstract class Character : MonoBehaviour // IHealth
 {
     [SerializeField] CharacterStats stats;
     [SerializeField] int baseMaxHealth = 100;

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SupernovaManager : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class SupernovaManager : MonoBehaviour
 
     [SerializeField] float expansionSpeed = 2f;
     [SerializeField] ParticleSystem waveParticleRoot;
+    [SerializeField] string mapSceneName = "Map";
 
     #endregion
 
@@ -36,15 +38,27 @@ public class SupernovaManager : MonoBehaviour
         LoadRadius();
     }
 
+    void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        if (Instance == this)
+            SaveRadius();
+    }
+
     void Update()
     {
         CurrentRadius += expansionSpeed * Time.deltaTime;
         UpdateParticleRadius();
     }
 
-    void OnDisable() => SaveRadius();
-
-    void OnApplicationQuit() => SaveRadius();
+    void OnApplicationQuit()
+    {
+        if (Instance == this)
+            SaveRadius();
+    }
 
     void OnDrawGizmos()
     {
@@ -56,6 +70,23 @@ public class SupernovaManager : MonoBehaviour
 
     #region Logic
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode) => ToggleParticlesVisibility(scene.name == mapSceneName);
+
+    void ToggleParticlesVisibility(bool visible)
+    {
+        if (waveParticles == null)
+            return;
+
+        foreach (var ps in waveParticles)
+        {
+            if (ps == null)
+                continue;
+
+            if (ps.TryGetComponent<ParticleSystemRenderer>(out var particleRenderer))
+                particleRenderer.enabled = visible;
+        }
+    }
+
     void UpdateParticleRadius()
     {
         if (waveParticles == null)
@@ -63,6 +94,9 @@ public class SupernovaManager : MonoBehaviour
 
         foreach (var ps in waveParticles)
         {
+            if (ps == null)
+                continue;
+
             var shape = ps.shape;
             shape.radius = CurrentRadius;
         }
@@ -78,10 +112,26 @@ public class SupernovaManager : MonoBehaviour
 
     public static void ResetRadius()
     {
-        if (Instance)
-            Instance.CurrentRadius = 0f;
-
         PlayerPrefs.DeleteKey("SupernovaRadius");
+
+        if (Instance == null)
+            return;
+
+        Instance.CurrentRadius = 0f;
+
+        if (Instance.waveParticles != null)
+        {
+            foreach (var ps in Instance.waveParticles)
+            {
+                if (ps == null)
+                    continue;
+
+                ps.Clear();
+
+                var shape = ps.shape;
+                shape.radius = 0f;
+            }
+        }
     }
 
     #endregion

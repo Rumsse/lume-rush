@@ -9,10 +9,10 @@ public class ResourceManager : MonoBehaviour
 
     public int Fuel => globalResources.TryGetValue("Fuel", out var v) ? v : 0;
 
-    [SerializeField] private int startingFuel = 500;
-    [SerializeField] private string[] developerCheatResources = { "Titanium", "Aluminium", "Iron", "Coal", "Food", "Fuel" }; 
+    [SerializeField] int startingFuel = 500;
+    [SerializeField] string[] developerCheatResources = { "Titanium", "Aluminium", "Iron", "Coal", "Food", "Fuel" };
 
-    private Dictionary<string, int> globalResources = new Dictionary<string, int>();
+    Dictionary<string, int> globalResources = new Dictionary<string, int>();
 
     #endregion
 
@@ -30,7 +30,7 @@ public class ResourceManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start() => AddResource("Fuel", startingFuel);
+    void Start() => ResetResources();
 
     void Update()
     {
@@ -53,7 +53,9 @@ public class ResourceManager : MonoBehaviour
             globalResources[resourceName] = amount;
 
         Debug.Log($"[ResourceManager] Added {amount}x {resourceName}. Total: {globalResources[resourceName]}");
-        ResourceUI.Instance?.UpdateUI();
+
+        if (ResourceUI.Instance)
+            ResourceUI.Instance.UpdateUI();
     }
 
     public void AddResourceWithCategory(ResourceData resourceData, int amount)
@@ -81,8 +83,17 @@ public class ResourceManager : MonoBehaviour
             return false;
 
         globalResources[resourceName] -= amount;
-        ResourceUI.Instance?.UpdateUI();
+
+        if (ResourceUI.Instance)
+            ResourceUI.Instance.UpdateUI();
+
         return true;
+    }
+
+    public void ResetResources()
+    {
+        globalResources.Clear();
+        AddResource("Fuel", startingFuel);
     }
 
     #endregion
@@ -96,12 +107,12 @@ public class ResourceManager : MonoBehaviour
             Debug.Log($"{resource.Key}: {resource.Value}");
     }
 
-    private void GiveDeveloperResources()
+    void GiveDeveloperResources()
     {
         foreach (string resource in developerCheatResources)
             AddResource(resource, 20);
 
-        Debug.Log("[ResourceManager] Developer cheat applied: +10 all resources");
+        Debug.Log("[ResourceManager] Developer cheat applied: +20 all resources");
     }
 
     #endregion

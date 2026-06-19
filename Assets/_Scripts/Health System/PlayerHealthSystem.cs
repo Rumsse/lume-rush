@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,8 @@ public class PlayerHealthSystem : MonoBehaviour, IHealth
     #region State
 
     Image[] hearts;
+    public static event Action OnPlayerDamage;
+    public static event Action OnPlayerDeath;
     public int CurrentHealth { get; private set; }
     public int MaxHealth => maxHealth;
 
@@ -42,19 +45,22 @@ public class PlayerHealthSystem : MonoBehaviour, IHealth
         string heartsContainerName = "HeartsContainer";
         var heartsContainer = GameObject.Find(heartsContainerName);
 
-        if (heartsContainer != null)
+        if (heartsContainer == null)
         {
-            hearts = heartsContainer.GetComponentsInChildren<Image>();
-            if (hearts.Length != maxHealth)
-                Debug.LogError($"The number of hearts in UI ({hearts.Length}) does not match maxHealth ({maxHealth}).");
-        }
-        else
             Debug.LogError($"Object '{heartsContainerName}' not found on the scene! Cannot update hearts.");
+            return;
+        }
+
+        hearts = heartsContainer.GetComponentsInChildren<Image>();
+
+        if (hearts.Length != maxHealth)
+            Debug.LogError($"The number of hearts in UI ({hearts.Length}) does not match maxHealth ({maxHealth}).");
     }
 
     public void UpdateHearts()
     {
-        if (hearts == null || hearts.Length == 0) return;
+        if (hearts == null || hearts.Length == 0)
+            return;
 
         for (int i = 0; i < hearts.Length; i++)
         {
@@ -71,6 +77,7 @@ public class PlayerHealthSystem : MonoBehaviour, IHealth
     {
         CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
         UpdateHearts();
+        OnPlayerDamage?.Invoke();
 
         if (CurrentHealth <= 0)
             Die();
@@ -86,6 +93,7 @@ public class PlayerHealthSystem : MonoBehaviour, IHealth
     {
         CurrentHealth = 0;
         UpdateHearts();
+        OnPlayerDeath?.Invoke();
         Debug.Log("Player has died.");
     }
 

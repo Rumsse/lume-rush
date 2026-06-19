@@ -53,7 +53,8 @@ public class PumpFuelCollector : MonoBehaviour
     void Awake()
     {
         cam = Camera.main;
-        if (pumpModel) originalScale = pumpModel.localScale;
+        if (pumpModel)
+            originalScale = pumpModel.localScale;
     }
 
     void Update()
@@ -72,7 +73,8 @@ public class PumpFuelCollector : MonoBehaviour
             }
         }
 
-        if (faceCamera) Billboard();
+        if (faceCamera)
+            Billboard();
     }
 
     void OnDestroy() => pulseSequence?.Kill();
@@ -83,7 +85,8 @@ public class PumpFuelCollector : MonoBehaviour
 
     public void BeginCollect()
     {
-        if (producedOnce) return;
+        if (producedOnce)
+            return;
 
         charged = false;
         timer = 0f;
@@ -96,7 +99,8 @@ public class PumpFuelCollector : MonoBehaviour
 
     public int ConsumeFuel()
     {
-        if (!charged) return 0;
+        if (!charged)
+            return 0;
 
         producedOnce = true;
         charged = false;
@@ -111,7 +115,8 @@ public class PumpFuelCollector : MonoBehaviour
 
     void StartPulse()
     {
-        if (!pumpModel) return;
+        if (!pumpModel)
+            return;
 
         StopPulse();
 
@@ -129,7 +134,8 @@ public class PumpFuelCollector : MonoBehaviour
 
     void StopPulse()
     {
-        if (!pumpModel) return;
+        if (!pumpModel)
+            return;
 
         pulseSequence?.Kill();
         pumpModel.DOScale(originalScale, 0.2f).SetEase(Ease.OutQuad);
@@ -141,8 +147,10 @@ public class PumpFuelCollector : MonoBehaviour
 
     void EnsureUI()
     {
-        if (uiInstance) return;
-        if (!sliderPrefab) return;
+        if (uiInstance)
+            return;
+        if (!sliderPrefab)
+            return;
 
         uiInstance = Instantiate(sliderPrefab, transform);
         uiTransform = uiInstance.transform;
@@ -159,31 +167,39 @@ public class PumpFuelCollector : MonoBehaviour
         else
         {
             fillImage = uiInstance.GetComponentInChildren<Image>(true);
-            if (fillImage) fillImage.fillAmount = 0f;
+            if (fillImage)
+                fillImage.fillAmount = 0f;
         }
     }
 
     void UpdateUI(float f)
     {
-        if (!uiInstance) EnsureUI();
-        if (slider) slider.value = f;
-        else if (fillImage) fillImage.fillAmount = f;
+        if (!uiInstance)
+            EnsureUI();
+        if (slider)
+            slider.value = f;
+        else if (fillImage)
+            fillImage.fillAmount = f;
     }
 
     void SetUIActive(bool v)
     {
-        if (!uiInstance) return;
+        if (!uiInstance)
+            return;
+
         uiInstance.SetActive(v);
     }
 
     void Billboard()
     {
-        if (!uiTransform) return;
-        if (!cam || !cam.isActiveAndEnabled) cam = Camera.main;
-        if (!cam) return;
+        if (!uiTransform)
+            return;
+        if (!cam || !cam.isActiveAndEnabled)
+            cam = Camera.main;
+        if (!cam)
+            return;
 
-        var toCam = cam.transform.position - uiTransform.position;
-        if (toCam.sqrMagnitude > 1e-6f) uiTransform.rotation = Quaternion.LookRotation(-toCam, Vector3.up);
+        uiTransform.rotation = cam.transform.rotation;
     }
 
     #endregion
