@@ -2,13 +2,31 @@ using UnityEngine;
 
 public class GameOverUI : MonoBehaviour
 {
+    #region Settings
+
     [SerializeField] GameObject gameOverPanel;
+
+    #endregion
+
+    #region Unity Callbacks
 
     void Awake() => HideGameOver();
 
-    void OnEnable() => PlayerHealthSystem.OnPlayerDeath += ShowGameOver;
+    void OnEnable()
+    {
+        PlayerHealthSystem.OnPlayerDeath += ShowGameOver;
+        SupernovaManager.OnSupernovaHitPlayer += ShowGameOver;
+    }
 
-    void OnDisable() => PlayerHealthSystem.OnPlayerDeath -= ShowGameOver;
+    void OnDisable()
+    {
+        PlayerHealthSystem.OnPlayerDeath -= ShowGameOver;
+        SupernovaManager.OnSupernovaHitPlayer -= ShowGameOver;
+    }
+
+    #endregion
+
+    #region Logic
 
     void ShowGameOver()
     {
@@ -25,4 +43,6 @@ public class GameOverUI : MonoBehaviour
 
         gameOverPanel.SetActive(false);
     }
+
+    #endregion
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PauseManager : MonoBehaviour
 {
-    #region Serialized
+    #region Settings
 
     [SerializeField] GameObject pauseMenuPanel;
     [SerializeField] KeyCode pauseKey = KeyCode.Escape;
@@ -24,9 +24,17 @@ public class PauseManager : MonoBehaviour
             pauseMenuPanel.SetActive(false);
     }
 
-    void OnEnable() => PlayerHealthSystem.OnPlayerDeath += HandleGameOver;
+    void OnEnable()
+    {
+        PlayerHealthSystem.OnPlayerDeath += HandleGameOver;
+        SupernovaManager.OnSupernovaHitPlayer += HandleGameOver;
+    }
 
-    void OnDisable() => PlayerHealthSystem.OnPlayerDeath -= HandleGameOver;
+    void OnDisable()
+    {
+        PlayerHealthSystem.OnPlayerDeath -= HandleGameOver;
+        SupernovaManager.OnSupernovaHitPlayer -= HandleGameOver;
+    }
 
     void Update()
     {
@@ -39,7 +47,7 @@ public class PauseManager : MonoBehaviour
 
     #endregion
 
-    #region Pause Logic
+    #region Logic
 
     public void TogglePause()
     {
@@ -56,6 +64,10 @@ public class PauseManager : MonoBehaviour
     void HandleGameOver()
     {
         isGameOver = true;
+
+        if (pauseMenuPanel != null)
+            pauseMenuPanel.SetActive(false);
+
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

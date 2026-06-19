@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,7 @@ public class SupernovaManager : MonoBehaviour
     #region Settings
 
     [SerializeField] float expansionSpeed = 2f;
+    [SerializeField] float startRadius = 53f;
     [SerializeField] ParticleSystem waveParticleRoot;
     [SerializeField] string mapSceneName = "Map";
 
@@ -16,6 +18,13 @@ public class SupernovaManager : MonoBehaviour
     public static SupernovaManager Instance { get; private set; }
     public float CurrentRadius { get; private set; }
     ParticleSystem[] waveParticles;
+    bool isGameOver;
+
+    #endregion
+
+    #region Events
+
+    public static event Action OnSupernovaHitPlayer;
 
     #endregion
 
@@ -50,8 +59,12 @@ public class SupernovaManager : MonoBehaviour
 
     void Update()
     {
+        if (isGameOver)
+            return;
+
         CurrentRadius += expansionSpeed * Time.deltaTime;
         UpdateParticleRadius();
+        CheckPlayerHit();
     }
 
     void OnApplicationQuit()
@@ -69,6 +82,16 @@ public class SupernovaManager : MonoBehaviour
     #endregion
 
     #region Logic
+
+    void CheckPlayerHit()
+    {
+        if (CurrentRadius < Vector3.Distance(Vector3.zero, PlanetSelectionManager.CurrentPlayerPosition))
+            return;
+
+        isGameOver = true;
+        OnSupernovaHitPlayer?.Invoke();
+        Debug.Log("Supernova reached the player!");
+    }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode) => ToggleParticlesVisibility(scene.name == mapSceneName);
 
@@ -108,7 +131,7 @@ public class SupernovaManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    void LoadRadius() => CurrentRadius = PlayerPrefs.GetFloat("SupernovaRadius", 0f);
+    void LoadRadius() => CurrentRadius = PlayerPrefs.GetFloat("SupernovaRadius", startRadius);
 
     public static void ResetRadius()
     {
@@ -117,7 +140,8 @@ public class SupernovaManager : MonoBehaviour
         if (Instance == null)
             return;
 
-        Instance.CurrentRadius = 0f;
+        Instance.CurrentRadius = Instance.startRadius;
+        Instance.isGameOver = false;
 
         if (Instance.waveParticles != null)
         {
@@ -129,7 +153,7 @@ public class SupernovaManager : MonoBehaviour
                 ps.Clear();
 
                 var shape = ps.shape;
-                shape.radius = 0f;
+                shape.radius = Instance.startRadius;
             }
         }
     }

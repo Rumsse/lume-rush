@@ -57,10 +57,7 @@ public class PlanetSelectionManager : MonoBehaviour
     void LoadPlayerPosition()
     {
         if (!PlayerPrefs.HasKey("PlayerPosX"))
-        {
-            CurrentPlayerPosition = Vector3.zero;
             return;
-        }
 
         float x = PlayerPrefs.GetFloat("PlayerPosX");
         float y = PlayerPrefs.GetFloat("PlayerPosY");
@@ -85,13 +82,19 @@ public class PlanetSelectionManager : MonoBehaviour
             star.name = "Star_Center";
         }
 
+        var mainPlanetPos = GetOrbitPosition(0);
+
         if (mainPlanetPreset)
-            AddPlanet(mainPlanetPreset, GetOrbitPosition(0), true);
+            AddPlanet(mainPlanetPreset, mainPlanetPos, true);
+
+        if (!PlayerPrefs.HasKey("PlayerPosX"))
+            UpdatePlayerPosition(mainPlanetPos);
 
         var availablePresets = new List<CelestialBodySettings>(otherPlanetPresets);
         for (int i = 1; i < planetCount; i++)
         {
-            if (availablePresets.Count == 0) break;
+            if (availablePresets.Count == 0)
+                break;
 
             var randomPreset = availablePresets[Random.Range(0, availablePresets.Count)];
             availablePresets.Remove(randomPreset);
