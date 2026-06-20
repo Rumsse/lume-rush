@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/UI.bank
   Name: UI
   StudioPath: bank:/UI
-  lastModified: 639175732196674645
+  lastModified: 639175753259949795
   FileSizes:
   - Name: Desktop
     Value: 400576
@@ -35,7 +35,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 639175732196564419
+  lastModified: 639175753259809191
   FileSizes:
   - Name: Desktop
     Value: 1481024
@@ -237,7 +237,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639175732196359288
+  lastModified: 639175753259545883
   FileSizes:
   - Name: Desktop
     Value: 2604
@@ -420,7 +420,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639175732196349533
+  lastModified: 639175753259545883
   FileSizes:
   - Name: Desktop
     Value: 1670
@@ -645,7 +645,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -4705166642097723612}
   cacheVersion: 131858
-  cacheTime: 639175732196674645
+  cacheTime: 639175753259949795
   SerializableEventsDict:
   - key: event:/SFX/SFX_JumpAndFall_HardSurface
     index: 0
@@ -805,7 +805,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Ambient.bank
   Name: Ambient
   StudioPath: bank:/Ambient
-  lastModified: 639175732196349533
+  lastModified: 639175753259545883
   FileSizes:
   - Name: Desktop
     Value: 17600128
@@ -1015,7 +1015,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 639175732196629248
+  lastModified: 639175753259878950
   FileSizes:
   - Name: Desktop
     Value: 1633408
