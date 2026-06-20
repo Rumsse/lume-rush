@@ -1,179 +1,84 @@
-using System;
 using TMPro;
 using UnityEngine;
 
 public sealed class TimerUI : MonoBehaviour
 {
-    #region Serialized
+    #region Settings
 
-    [SerializeField] TMP_Text _label;
-    [SerializeField] bool _countDown = true;
-    [SerializeField, Min(0)] int _startSeconds = 60;
-    [SerializeField] bool _autoStart = true;
-    [SerializeField] bool _useUnscaledTime = false;
-    [SerializeField] string _playerTag = "Player";
-    [SerializeField] GameObject _gameOverPanel;
+    [SerializeField] TMP_Text label;
 
     #endregion
 
     #region State
 
-    IHealth _playerHealth;
-    double _time;
-    bool _running;
-    int _lastShown = int.MinValue;
+    int lastShown = int.MinValue;
+    bool isActive;
 
     #endregion
 
-    #region Lifecycle
+    #region Unity Callbacks
 
-    void Awake()
-    {
-        _label ??= GetComponent<TMP_Text>();
-
-        if (_gameOverPanel != null)
-            _gameOverPanel.SetActive(false);
-
-        Time.timeScale = 1f;
-    }
+    void Awake() => label ??= GetComponent<TMP_Text>();
 
     void OnEnable()
     {
-        CachePlayer();
         TutorialManager.OnTutorialCompleted += HandleTutorialCompleted;
 
         if (PlayerPrefs.GetInt("TutorialDone", 0) == 0)
         {
-            _label.gameObject.SetActive(false);
+            label.gameObject.SetActive(false);
             return;
         }
 
-        if (_autoStart)
-            StartTimer();
-        else
-            Refresh(true);
+        isActive = true;
     }
 
-    void OnDisable()
-    {
-        TutorialManager.OnTutorialCompleted -= HandleTutorialCompleted;
-    }
+    void OnDisable() => TutorialManager.OnTutorialCompleted -= HandleTutorialCompleted;
 
     void Update()
     {
-        if (!_running)
+        if (!isActive)
             return;
-
-        var dt = _useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
-        _time += _countDown ? -dt : dt;
-
-        if (_countDown && _time <= 0)
-        {
-            _time = 0;
-            _running = false;
-
-            if (_playerHealth == null)
-                CachePlayer();
-
-            if (_playerHealth != null)
-                _playerHealth.TakeDamage(_playerHealth.MaxHealth);
-
-            if (_gameOverPanel != null)
-                _gameOverPanel.SetActive(true);
-
-            Time.timeScale = 0f;
-
-            Refresh(true);
-            return;
-        }
 
         Refresh();
     }
 
     #endregion
 
-    #region Control
+    #region Logic
 
-    public bool IsRunning => _running;
-
-    public void StartTimer()
+    void Refresh()
     {
-        _time = _countDown ? _startSeconds : 0;
-        _running = true;
-        _lastShown = int.MinValue;
-        _label.gameObject.SetActive(true);
-        Refresh(true);
-    }
-
-    public void Pause() => _running = false;
-
-    public void Resume()
-    {
-        if (_time <= 0 && _countDown)
+        if (label == null || SupernovaManager.Instance == null)
             return;
 
-        _running = true;
-    }
+        var playerPos = PlanetSelectionManager.CurrentPlayerPosition;
+        var currentRadius = SupernovaManager.Instance.CurrentRadius;
+        var speed = SupernovaManager.Instance.ExpansionSpeed;
 
-    public void Stop()
-    {
-        _running = false;
-        _time = 0;
-        Refresh(true);
-    }
+        var distanceToPlayer = Vector3.Distance(Vector3.zero, playerPos);
+        var distanceRemaining = distanceToPlayer - currentRadius;
 
-    public void SetTimeSeconds(int seconds)
-    {
-        _time = Math.Max(0, seconds);
-        _lastShown = int.MinValue;
-        Refresh(true);
-    }
+        var timeRemaining = speed > 0f ? distanceRemaining / speed : 0f;
+        timeRemaining = Mathf.Max(0f, timeRemaining);
 
-    public void AddSeconds(int seconds)
-    {
-        _time = Math.Max(0, _time + seconds);
-        _lastShown = int.MinValue;
-        Refresh(true);
-    }
+        var s = Mathf.FloorToInt(timeRemaining);
 
-    #endregion
-
-    #region Helpers
-
-    void CachePlayer()
-    {
-        var go = GameObject.FindWithTag(_playerTag);
-
-        if (go != null)
-            _playerHealth = go.GetComponent<IHealth>();
-    }
-
-    void Refresh(bool force = false)
-    {
-        if (_label == null)
+        if (s == lastShown)
             return;
 
-        var s = (int)Math.Max(0, Math.Floor(_time));
-
-        if (!force && s == _lastShown)
-            return;
-
-        _lastShown = s;
+        lastShown = s;
 
         var m = s / 60;
         var sec = s % 60;
-        _label.SetText("{0:00}:{1:00}", m, sec);
+        label.SetText("{0:00}:{1:00}", m, sec);
     }
 
     void HandleTutorialCompleted()
     {
-        if (_autoStart)
-            StartTimer();
-        else
-        {
-            _label.gameObject.SetActive(true);
-            Refresh(true);
-        }
+        isActive = true;
+        label.gameObject.SetActive(true);
+        Refresh();
     }
 
     #endregion

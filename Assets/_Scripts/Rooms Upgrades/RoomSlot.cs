@@ -5,6 +5,7 @@ public class RoomSlot : MonoBehaviour
 {
     #region Properties
 
+    [field: SerializeField] public string SlotID { get; private set; }
     public RoomType CurrentRoomType => currentRoomType;
     public int CurrentLevel => currentLevel;
     public RoomDefinition CurrentDefinition => currentDefinition;
@@ -35,7 +36,11 @@ public class RoomSlot : MonoBehaviour
             targetLightIntensity = roomLight.intensity;
     }
 
-    private void Start() => InitializeRoomState();
+    private void Start()
+    {
+        LoadRoomData();
+        InitializeRoomState();
+    }
 
     #endregion
 
@@ -137,6 +142,31 @@ public class RoomSlot : MonoBehaviour
         }
 
         roomLight.intensity = targetLightIntensity;
+    }
+
+    #endregion
+
+    #region Save & Load
+
+    private void LoadRoomData()
+    {
+        ShipSaveData data = ShipSaveManager.LoadData();
+        RoomSlotData savedRoom = data.rooms.Find(r => r.slotID == SlotID);
+
+        if (savedRoom == null)
+        {
+            if (currentRoomType != RoomType.None && currentDefinition != null)
+                SpawnRoomModel(false);
+
+            return;
+        }
+
+        currentRoomType = savedRoom.roomType;
+        currentLevel = savedRoom.level;
+        currentDefinition = RoomDatabase.Instance.GetDefinition(currentRoomType);
+
+        if (currentRoomType != RoomType.None)
+            SpawnRoomModel(false);
     }
 
     #endregion

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Icey
   m_EditorClassIdentifier: 
   planetName: Icey
+  planetPrefab: {fileID: 5103152106553406725, guid: 0d197dd795845ee4baab13db50b68c76, type: 3}
+  burnedPrefab: {fileID: 4490352944879345919, guid: e62307601efcf2b47afcbb5d63c87396, type: 3}
   shape: {fileID: 11400000, guid: 505f06728fc82da4a867dd20f2df4b3a, type: 2}
   shading: {fileID: 11400000, guid: 19c1016c06b11834997d445b38f55d13, type: 2}
   resourceConfig: {fileID: 11400000, guid: 8775a80a8856a9549a9e67ea65d86c38, type: 2}
   planetDescription: Ice, snow, and freezing temperatures. On the surface, that's
     all this planet has to offer. However, beneath the snow, treasures may lie hidden.
-  planetMaterial: {fileID: 2100000, guid: a7275a072135b5b4fb9abfa9dc47b133, type: 2}
-  burnedMaterial: {fileID: 2100000, guid: 460addb3f248de24eb165c5e1513d342, type: 2}
   gravityForce: 15

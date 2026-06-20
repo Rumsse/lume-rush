@@ -250,21 +250,8 @@ MonoBehaviour:
       Data2: 1104528693
       Data3: 153197212
       Data4: -330884681
-    Path: event:/UI/UI_Button_Click
-  pauseMenuClose:
-    Guid:
-      Data1: -1897988489
-      Data2: 1186417427
-      Data3: -1486328402
-      Data4: -1858070062
-    Path: event:/UI/UI_PauseMenu_Close
-  pauseMenuOpen:
-    Guid:
-      Data1: 333535347
-      Data2: 1165861082
-      Data3: 281348028
-      Data4: 593687168
-    Path: event:/UI/UI_PauseMenu_Open
+    Path: event:/SFX/UI/UI_Button_Click
+  startingPlanetPreset: {fileID: 11400000, guid: 2e906eb5b6146594ab36af443a126cfc, type: 2}
 --- !u!1 &390349744
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Vulcanic magenta
   m_EditorClassIdentifier: 
   planetName: Vulcanic Magenta
+  planetPrefab: {fileID: 7591348454170378593, guid: fc92b189f05734c4ca9165e4e4fc0e1a, type: 3}
+  burnedPrefab: {fileID: 4490352944879345919, guid: e62307601efcf2b47afcbb5d63c87396, type: 3}
   shape: {fileID: 11400000, guid: 94bfca340fd619444a652044824b8f1c, type: 2}
   shading: {fileID: 11400000, guid: 9b668ed9db1b35a4eb1a32af6f0eb547, type: 2}
   resourceConfig: {fileID: 11400000, guid: 41b409116aa1df6418fdb2979bd7bc90, type: 2}
   planetDescription: A rarer and somewhat safer variant of the volcanic planet. No
     one has yet discovered how it forms or whether its creator is solely nature.
-  planetMaterial: {fileID: 2100000, guid: eda160589e9e2654ba1da3684b48047f, type: 2}
-  burnedMaterial: {fileID: 2100000, guid: 460addb3f248de24eb165c5e1513d342, type: 2}
   gravityForce: 22

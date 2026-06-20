@@ -134,6 +134,8 @@ public class RoomDetailsPanel : MonoBehaviour
             ResourceManager.Instance.ConsumeResource(cost.resourceName, cost.amount);
 
         activeSlot.BuildOrUpgradeRoom(def);
+        ShipSaveManager.SaveRoom(activeSlot.SlotID, activeSlot.CurrentRoomType, activeSlot.CurrentLevel);
+
         RefreshUI();
     }
 }

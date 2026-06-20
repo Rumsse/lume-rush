@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2617889877868218525}
   - component: {fileID: 3772189409779249999}
   - component: {fileID: 4886999943687232905}
+  - component: {fileID: 4397192780562897424}
   m_Layer: 0
   m_Name: P_schowek2 1
   m_TagString: Untagged
@@ -90,3 +91,24 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4397192780562897424
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633871519418320932}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0237992, y: 2.2543213, z: 3.1841826}
+  m_Center: {x: -0.08356498, y: 1.1092695, z: 0.022662062}

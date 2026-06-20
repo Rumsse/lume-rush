@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Vulcanic
   m_EditorClassIdentifier: 
   planetName: Vulcanic
+  planetPrefab: {fileID: 8843528553563979911, guid: a250a8d9a2abdb74ea097ab6e0df5252, type: 3}
+  burnedPrefab: {fileID: 4490352944879345919, guid: e62307601efcf2b47afcbb5d63c87396, type: 3}
   shape: {fileID: 11400000, guid: 72e003cdb2e52284ea60fe7437862150, type: 2}
   shading: {fileID: 11400000, guid: 7294a38ee26a1fb4bb0180b4bd7d6c4b, type: 2}
   resourceConfig: {fileID: 11400000, guid: a2fa9b3e0ec26784a960f9c96de253e5, type: 2}
   planetDescription: A wild planet with active volcanoes, rivers of lava, and vast
     resources. Only the bravest take on the challenge of survival.
-  planetMaterial: {fileID: 2100000, guid: bd9f0f9022c5b1f4bbb994f5ee3be7c3, type: 2}
-  burnedMaterial: {fileID: 2100000, guid: 460addb3f248de24eb165c5e1513d342, type: 2}
   gravityForce: 22

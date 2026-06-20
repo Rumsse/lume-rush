@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Crystal
   m_EditorClassIdentifier: 
   planetName: Crystal
+  planetPrefab: {fileID: 5955801202909282651, guid: cbf5f37335cf0e54a8d7db04343bf090, type: 3}
+  burnedPrefab: {fileID: 4490352944879345919, guid: e62307601efcf2b47afcbb5d63c87396, type: 3}
   shape: {fileID: 11400000, guid: 529e5d00ebd517d4db5390d81ceada39, type: 2}
   shading: {fileID: 11400000, guid: 39d462cf97e295848849b93b20a7894d, type: 2}
   resourceConfig: {fileID: 11400000, guid: 49909f781fd0be64aafcfc6c4f9a8f09, type: 2}
   planetDescription: One glance is enough to see the beauty of this planet. Wonderful
     crystals and abundant resources, but one must be wary of the traps created by
     nature.
-  planetMaterial: {fileID: 2100000, guid: a6f6cff38e262734ea7bcc9ca078bc01, type: 2}
-  burnedMaterial: {fileID: 2100000, guid: 460addb3f248de24eb165c5e1513d342, type: 2}
   gravityForce: 70

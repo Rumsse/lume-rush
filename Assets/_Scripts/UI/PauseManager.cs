@@ -3,7 +3,7 @@ using FMODUnity;
 
 public class PauseManager : MonoBehaviour
 {
-    #region Serialized
+    #region Settings
 
     [SerializeField] private GameObject pauseMenuPanel;
     [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
@@ -26,9 +26,17 @@ public class PauseManager : MonoBehaviour
             pauseMenuPanel.SetActive(false);
     }
 
-    void OnEnable() => PlayerHealthSystem.OnPlayerDeath += HandleGameOver;
+    void OnEnable()
+    {
+        PlayerHealthSystem.OnPlayerDeath += HandleGameOver;
+        SupernovaManager.OnSupernovaHitPlayer += HandleGameOver;
+    }
 
-    void OnDisable() => PlayerHealthSystem.OnPlayerDeath -= HandleGameOver;
+    void OnDisable()
+    {
+        PlayerHealthSystem.OnPlayerDeath -= HandleGameOver;
+        SupernovaManager.OnSupernovaHitPlayer -= HandleGameOver;
+    }
 
     void Update()
     {
@@ -41,7 +49,7 @@ public class PauseManager : MonoBehaviour
 
     #endregion
 
-    #region Pause Logic
+    #region Logic
 
     public void TogglePause()
     {
@@ -52,16 +60,20 @@ public class PauseManager : MonoBehaviour
             pauseMenuPanel.SetActive(isPaused);
 
         Time.timeScale = isPaused ? 0f : 1f;
-        Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = isPaused;
+/*        Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = isPaused;*/
     }
 
     void HandleGameOver()
     {
         isGameOver = true;
+
+        if (pauseMenuPanel != null)
+            pauseMenuPanel.SetActive(false);
+
         Time.timeScale = 0f;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+/*        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;*/
     }
 
     #endregion

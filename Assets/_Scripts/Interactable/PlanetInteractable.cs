@@ -19,7 +19,6 @@ public class PlanetInteractable : BaseInteractable
 
     GameObject spawnedPanel;
     Vector3 baseScale;
-    MeshRenderer meshRenderer;
     bool hasBurned;
 
     bool IsBurned => Vector3.Distance(Vector3.zero, transform.position) <= SupernovaManager.Instance.CurrentRadius;
@@ -28,11 +27,7 @@ public class PlanetInteractable : BaseInteractable
 
     #region Unity Callbacks
 
-    void Awake()
-    {
-        baseScale = transform.localScale;
-        meshRenderer = GetComponent<MeshRenderer>();
-    }
+    void Awake() => baseScale = transform.localScale;
 
     void Start()
     {
@@ -93,11 +88,16 @@ public class PlanetInteractable : BaseInteractable
     {
         hasBurned = true;
 
-        if (meshRenderer && planetSettings.burnedMaterial)
-            meshRenderer.material = planetSettings.burnedMaterial;
-
         if (spawnedPanel)
             OnCancelAction();
+
+        if (planetSettings.burnedPrefab)
+        {
+            var burnedPlanet = Instantiate(planetSettings.burnedPrefab, transform.position, transform.rotation, transform.parent);
+            burnedPlanet.name = gameObject.name;
+        }
+
+        Destroy(gameObject);
     }
 
     int CalculateTravelCost()

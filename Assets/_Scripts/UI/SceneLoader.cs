@@ -23,6 +23,8 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadMap() => SceneManager.LoadScene("_Map_SolarSystem");
 
+    public void LoadPlanet() => SceneManager.LoadScene("_Planet_Exploration");
+
     public void QuitGame()
     {
 #if UNITY_EDITOR
