@@ -39,7 +39,7 @@ public class IntroCinematicController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(skipKey))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
             Skip();
     }
 
