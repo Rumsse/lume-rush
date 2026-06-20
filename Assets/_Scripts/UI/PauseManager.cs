@@ -57,8 +57,8 @@ public class PauseManager : MonoBehaviour
             pauseMenuPanel.SetActive(isPaused);
 
         Time.timeScale = isPaused ? 0f : 1f;
-        Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = isPaused;
+/*        Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = isPaused;*/
     }
 
     void HandleGameOver()
@@ -69,8 +69,8 @@ public class PauseManager : MonoBehaviour
             pauseMenuPanel.SetActive(false);
 
         Time.timeScale = 0f;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+/*        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;*/
     }
 
     #endregion

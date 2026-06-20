@@ -154,7 +154,12 @@ public class RoomSlot : MonoBehaviour
         RoomSlotData savedRoom = data.rooms.Find(r => r.slotID == SlotID);
 
         if (savedRoom == null)
+        {
+            if (currentRoomType != RoomType.None && currentDefinition != null)
+                SpawnRoomModel(false);
+
             return;
+        }
 
         currentRoomType = savedRoom.roomType;
         currentLevel = savedRoom.level;

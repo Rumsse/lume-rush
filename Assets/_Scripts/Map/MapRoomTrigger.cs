@@ -71,8 +71,8 @@ public class MapRoomTrigger : MonoBehaviour
 
         confirmationPanel.SetActive(true);
         Time.timeScale = 0f;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+/*        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;*/
 
         if (interactionPrompt)
             interactionPrompt.SetActive(false);
@@ -85,8 +85,8 @@ public class MapRoomTrigger : MonoBehaviour
 
         confirmationPanel.SetActive(false);
         Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+/*        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;*/
     }
 
     public void OnYesButton()
