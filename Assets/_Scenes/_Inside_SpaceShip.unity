@@ -1312,6 +1312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_4
   currentRoomType: 2
   currentLevel: 1
   currentDefinition: {fileID: 11400000, guid: e16a6e3a8283d0e499cdfdb725adf810, type: 2}
@@ -1536,6 +1537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: 
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -2358,6 +2360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_8
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -3691,6 +3694,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 430198011}
   m_CullTransparentMesh: 1
+--- !u!1001 &436751235
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1436618006}
+    m_Modifications:
+    - target: {fileID: 4190174772955299172, guid: 5236cc0ae8b046846911de90ea314885, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.816
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190174772955299172, guid: 5236cc0ae8b046846911de90ea314885, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.052
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190174772955299172, guid: 5236cc0ae8b046846911de90ea314885, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.292
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190174772955299172, guid: 5236cc0ae8b046846911de90ea314885, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7070655
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190174772955299172, guid: 5236cc0ae8b046846911de90ea314885, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.70714813
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190174772955299172, guid: 5236cc0ae8b046846911de90ea314885, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190174772955299172, guid: 5236cc0ae8b046846911de90ea314885, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190174772955299172, guid: 5236cc0ae8b046846911de90ea314885, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190174772955299172, guid: 5236cc0ae8b046846911de90ea314885, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190174772955299172, guid: 5236cc0ae8b046846911de90ea314885, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7314505054235661982, guid: 5236cc0ae8b046846911de90ea314885, type: 3}
+      propertyPath: m_Name
+      value: Workshop_lvl_1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5236cc0ae8b046846911de90ea314885, type: 3}
+--- !u!4 &436751236 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4190174772955299172, guid: 5236cc0ae8b046846911de90ea314885, type: 3}
+  m_PrefabInstance: {fileID: 436751235}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &442465945
 GameObject:
   m_ObjectHideFlags: 0
@@ -5227,6 +5292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_3
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -6245,6 +6311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_2
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -8564,6 +8631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_14
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -9202,6 +9270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_19
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -12133,6 +12202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_15
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -12309,6 +12379,7 @@ GameObject:
   - component: {fileID: 1347892911}
   - component: {fileID: 1347892912}
   - component: {fileID: 1347892913}
+  - component: {fileID: 1347892914}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -12373,6 +12444,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOverUI
   gameOverPanel: {fileID: 1487607042}
+--- !u!114 &1347892914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347892908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01413470fd290a942953336a77f1a3ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomDatabase
+  allRooms:
+  - {fileID: 11400000, guid: e16a6e3a8283d0e499cdfdb725adf810, type: 2}
+  - {fileID: 11400000, guid: 469574110fa62494eabac38c0023c2ab, type: 2}
+  - {fileID: 11400000, guid: 2f6e175789a3d4342a7816b6b02471e9, type: 2}
+  - {fileID: 11400000, guid: ef6528b251bf31448abbcfbc4b325281, type: 2}
 --- !u!1001 &1348437442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12647,6 +12735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_1
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -13351,6 +13440,9 @@ PrefabInstance:
       addedObject: {fileID: 8535029709620353400}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5cd3e5f4ff1e4db45abe40d0f7a3db48, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 436751236}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5cd3e5f4ff1e4db45abe40d0f7a3db48, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 930595978}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5cd3e5f4ff1e4db45abe40d0f7a3db48, type: 3}
@@ -13423,6 +13515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_8
   currentRoomType: 3
   currentLevel: 1
   currentDefinition: {fileID: 11400000, guid: ef6528b251bf31448abbcfbc4b325281, type: 2}
@@ -13979,6 +14072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_13
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -15658,6 +15752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_17
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -16541,6 +16636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_11
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -16829,6 +16925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_6
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -17223,6 +17320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_16
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -17627,6 +17725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: 
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -17773,6 +17872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_5
   currentRoomType: 1
   currentLevel: 1
   currentDefinition: {fileID: 11400000, guid: 469574110fa62494eabac38c0023c2ab, type: 2}
@@ -17919,6 +18019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_7
   currentRoomType: 4
   currentLevel: 1
   currentDefinition: {fileID: 11400000, guid: 2f6e175789a3d4342a7816b6b02471e9, type: 2}
@@ -18462,6 +18563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_10
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -18584,6 +18686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: Slot_12
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -18751,6 +18854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab867ff8df4d3a3438d075158a183649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomSlot
+  <SlotID>k__BackingField: 
   currentRoomType: 0
   currentLevel: 0
   currentDefinition: {fileID: 0}
@@ -18828,6 +18932,10 @@ PrefabInstance:
     - target: {fileID: 7314505054235661982, guid: 5236cc0ae8b046846911de90ea314885, type: 3}
       propertyPath: m_Name
       value: P_warsztat_lp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7314505054235661982, guid: 5236cc0ae8b046846911de90ea314885, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

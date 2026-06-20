@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2100703105020927575}
+  - component: {fileID: 7221760981918776756}
   m_Layer: 0
   m_Name: P_kuchnia_lvl_3.001 1
   m_TagString: Untagged
@@ -32,6 +33,27 @@ Transform:
   - {fileID: 5874204272234922284}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7221760981918776756
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6068550337843989572}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.79359114, y: 1.9620308, z: 3.0961778}
+  m_Center: {x: 0.5272258, y: 1.0404645, z: 0.029947028}
 --- !u!1001 &6201426814688585415
 PrefabInstance:
   m_ObjectHideFlags: 0

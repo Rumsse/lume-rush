@@ -22,6 +22,7 @@ public class MainMenuUI : MonoBehaviour, IPointerEnterHandler
     {
         OnClickSFX();
         PlanetSelectionManager.ResetMapData();
+        ShipSaveManager.ResetShipData();
 
         if (startingPlanetPreset != null)
         {

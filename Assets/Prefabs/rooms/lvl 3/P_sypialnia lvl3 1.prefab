@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6884944412572970996}
   - component: {fileID: 374001239412561164}
   - component: {fileID: 8281054737545408910}
+  - component: {fileID: 4816029774578417089}
   m_Layer: 0
   m_Name: P_sypialnia lvl3 1
   m_TagString: Untagged
@@ -92,3 +93,24 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4816029774578417089
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3681112317066320166}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 85.14626, y: 295.88663, z: 223.40143}
+  m_Center: {x: 4.5043874, y: 13.417739, z: -110.95409}
