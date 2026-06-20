@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: MoonIGuess
   m_EditorClassIdentifier: 
   planetName: Moon
+  planetPrefab: {fileID: 5882597215702989740, guid: 683900acf4637994ca7705db34d6394b, type: 3}
+  burnedPrefab: {fileID: 4490352944879345919, guid: e62307601efcf2b47afcbb5d63c87396, type: 3}
   shape: {fileID: 11400000, guid: 677d1906afe336844ad3e1229768ef6f, type: 2}
   shading: {fileID: 11400000, guid: 776e6bfd8d602bd479bd62ff4ad225ce, type: 2}
   resourceConfig: {fileID: 11400000, guid: 7824a8841aba49e43abf69eb58a1e3e5, type: 2}
   planetDescription: Despite its inconspicuous appearance, it conceals valuable deposits
     that are its greatest asset. Rumors have it that its core is yellow and riddled
     with holes.
-  planetMaterial: {fileID: 2100000, guid: a245585e6ed826747a2224a2a1f2b8fc, type: 2}
-  burnedMaterial: {fileID: 2100000, guid: 460addb3f248de24eb165c5e1513d342, type: 2}
   gravityForce: 7.5

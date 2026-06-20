@@ -6,7 +6,6 @@ public class PlanetSelectionManager : MonoBehaviour
     #region Settings
 
     public GameObject starPrefab;
-    public GameObject planetPrefab;
     public Transform starParent;
     public Vector2 orbitRange = new Vector2(50f, 200f);
 
@@ -118,6 +117,7 @@ public class PlanetSelectionManager : MonoBehaviour
 
         foreach (var data in generatedPlanets)
             RebuildPlanet(data);
+
     }
 
     void AddPlanet(CelestialBodySettings preset, Vector3 orbitPosition, bool isFirst)
@@ -134,25 +134,18 @@ public class PlanetSelectionManager : MonoBehaviour
 
     void RebuildPlanet(PlanetData data)
     {
-        var planetObj = Instantiate(planetPrefab, data.Position, Quaternion.identity, starParent);
-        planetObj.name = data.Name;
+        if (!data.Preset.planetPrefab)
+        {
+            Debug.LogError($"Missing planet prefab in preset: {data.Preset.name}");
+            return;
+        }
 
-        ApplyMaterial(planetObj, data.Preset.planetMaterial);
+        var planetObj = Instantiate(data.Preset.planetPrefab, data.Position, Quaternion.identity, starParent);
+        planetObj.name = data.Name;
 
         var interactable = planetObj.AddComponent<PlanetInteractable>();
         interactable.spawnPanelPosition = planetObj.transform;
         interactable.planetSettings = data.Preset;
-    }
-
-    void ApplyMaterial(GameObject target, Material mat)
-    {
-        if (mat == null)
-            return;
-
-        if (!target.TryGetComponent<MeshRenderer>(out var renderer))
-            return;
-
-        renderer.material = mat;
     }
 
     Vector3 GetOrbitPosition(int index)
