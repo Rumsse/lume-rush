@@ -123,8 +123,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 4.949993, y: 0}
-  m_SizeDelta: {x: 19.9, y: 0}
+  m_AnchoredPosition: {x: -2.5028992, y: 0}
+  m_SizeDelta: {x: 5.0043, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1396721919769757912
 CanvasRenderer:
@@ -265,14 +265,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7399711031440472413}
-  m_LocalRotation: {x: 0.31938818, y: -0.94762397, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.0015373109, y: 0.0015373109, z: 0.0015373109}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7597377584981450517}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: -37.252}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 8.099976}
@@ -295,7 +295,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 1
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -374,6 +374,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 2.4996033, y: 0}
+  m_SizeDelta: {x: -5.0008, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

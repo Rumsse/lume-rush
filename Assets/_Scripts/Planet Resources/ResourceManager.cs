@@ -3,13 +3,20 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
+    #region Variables
+
     public static ResourceManager Instance { get; private set; }
+
+    public int Fuel => globalResources.TryGetValue("Fuel", out var v) ? v : 0;
+
+    [SerializeField] int startingFuel = 500;
+    [SerializeField] string[] developerCheatResources = { "Titanium", "Aluminium", "Iron", "Coal", "Food", "Fuel" };
 
     Dictionary<string, int> globalResources = new Dictionary<string, int>();
 
-    [SerializeField] int startingFuel = 500;
+    #endregion
 
-    public int Fuel => globalResources.TryGetValue("Fuel", out var v) ? v : 0;
+    #region Unity Methods
 
     void Awake()
     {
@@ -23,7 +30,17 @@ public class ResourceManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start() => AddResource("Fuel", startingFuel);
+    void Start() => ResetResources();
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+            GiveDeveloperResources();
+    }
+
+    #endregion
+
+    #region Resource Management
 
     public void AddResource(string resourceName, int amount)
     {
@@ -36,7 +53,9 @@ public class ResourceManager : MonoBehaviour
             globalResources[resourceName] = amount;
 
         Debug.Log($"[ResourceManager] Added {amount}x {resourceName}. Total: {globalResources[resourceName]}");
-        ResourceUI.Instance?.UpdateUI();
+
+        if (ResourceUI.Instance)
+            ResourceUI.Instance.UpdateUI();
     }
 
     public void AddResourceWithCategory(ResourceData resourceData, int amount)
@@ -64,9 +83,22 @@ public class ResourceManager : MonoBehaviour
             return false;
 
         globalResources[resourceName] -= amount;
-        ResourceUI.Instance?.UpdateUI();
+
+        if (ResourceUI.Instance)
+            ResourceUI.Instance.UpdateUI();
+
         return true;
     }
+
+    public void ResetResources()
+    {
+        globalResources.Clear();
+        AddResource("Fuel", startingFuel);
+    }
+
+    #endregion
+
+    #region Developer Tools
 
     public void DebugInventory()
     {
@@ -75,17 +107,13 @@ public class ResourceManager : MonoBehaviour
             Debug.Log($"{resource.Key}: {resource.Value}");
     }
 
-    void Update()
+    void GiveDeveloperResources()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            AddResource("Aluminium", 100);
-            AddResource("Titanium", 100);
-            AddResource("Iron", 100);
-            AddResource("Coal", 100);
-            AddResource("Fuel", 100);
+        foreach (string resource in developerCheatResources)
+            AddResource(resource, 20);
 
-            Debug.Log("Added 100 of every resource");
-        }
+        Debug.Log("[ResourceManager] Developer cheat applied: +20 all resources");
     }
+
+    #endregion
 }

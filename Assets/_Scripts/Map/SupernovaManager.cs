@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SupernovaManager : MonoBehaviour
 {
     #region Settings
 
     [SerializeField] float expansionSpeed = 2f;
+    [SerializeField] ParticleSystem waveParticleRoot;
+    [SerializeField] string mapSceneName = "Map";
 
     #endregion
 
@@ -12,6 +15,7 @@ public class SupernovaManager : MonoBehaviour
 
     public static SupernovaManager Instance { get; private set; }
     public float CurrentRadius { get; private set; }
+    ParticleSystem[] waveParticles;
 
     #endregion
 
@@ -27,14 +31,34 @@ public class SupernovaManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        if (waveParticleRoot)
+            waveParticles = waveParticleRoot.GetComponentsInChildren<ParticleSystem>();
+
         LoadRadius();
     }
 
-    void Update() => CurrentRadius += expansionSpeed * Time.deltaTime;
+    void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
 
-    void OnDisable() => SaveRadius();
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
 
-    void OnApplicationQuit() => SaveRadius();
+        if (Instance == this)
+            SaveRadius();
+    }
+
+    void Update()
+    {
+        CurrentRadius += expansionSpeed * Time.deltaTime;
+        UpdateParticleRadius();
+    }
+
+    void OnApplicationQuit()
+    {
+        if (Instance == this)
+            SaveRadius();
+    }
 
     void OnDrawGizmos()
     {
@@ -46,29 +70,68 @@ public class SupernovaManager : MonoBehaviour
 
     #region Logic
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode) => ToggleParticlesVisibility(scene.name == mapSceneName);
+
+    void ToggleParticlesVisibility(bool visible)
+    {
+        if (waveParticles == null)
+            return;
+
+        foreach (var ps in waveParticles)
+        {
+            if (ps == null)
+                continue;
+
+            if (ps.TryGetComponent<ParticleSystemRenderer>(out var particleRenderer))
+                particleRenderer.enabled = visible;
+        }
+    }
+
+    void UpdateParticleRadius()
+    {
+        if (waveParticles == null)
+            return;
+
+        foreach (var ps in waveParticles)
+        {
+            if (ps == null)
+                continue;
+
+            var shape = ps.shape;
+            shape.radius = CurrentRadius;
+        }
+    }
+
     public void SaveRadius()
     {
         PlayerPrefs.SetFloat("SupernovaRadius", CurrentRadius);
         PlayerPrefs.Save();
     }
 
-    void LoadRadius()
-    {
-        if (!PlayerPrefs.HasKey("SupernovaRadius"))
-        {
-            CurrentRadius = 0f;
-            return;
-        }
-
-        CurrentRadius = PlayerPrefs.GetFloat("SupernovaRadius");
-    }
+    void LoadRadius() => CurrentRadius = PlayerPrefs.GetFloat("SupernovaRadius", 0f);
 
     public static void ResetRadius()
     {
-        if (Instance)
-            Instance.CurrentRadius = 0f;
-
         PlayerPrefs.DeleteKey("SupernovaRadius");
+
+        if (Instance == null)
+            return;
+
+        Instance.CurrentRadius = 0f;
+
+        if (Instance.waveParticles != null)
+        {
+            foreach (var ps in Instance.waveParticles)
+            {
+                if (ps == null)
+                    continue;
+
+                ps.Clear();
+
+                var shape = ps.shape;
+                shape.radius = 0f;
+            }
+        }
     }
 
     #endregion

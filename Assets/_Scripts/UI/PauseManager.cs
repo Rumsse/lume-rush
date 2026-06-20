@@ -3,7 +3,7 @@ using FMODUnity;
 
 public class PauseManager : MonoBehaviour
 {
-    #region Serialized Fields
+    #region Serialized
 
     [SerializeField] private GameObject pauseMenuPanel;
     [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
@@ -11,22 +11,30 @@ public class PauseManager : MonoBehaviour
 
     #endregion
 
-    #region Private Fields
+    #region State
 
-    private bool isPaused;
+    bool isPaused;
+    bool isGameOver;
 
     #endregion
 
-    #region Unity Lifecycle
+    #region Lifecycle
 
-    private void Start()
+    void Awake()
     {
         if (pauseMenuPanel != null)
             pauseMenuPanel.SetActive(false);
     }
 
-    private void Update()
+    void OnEnable() => PlayerHealthSystem.OnPlayerDeath += HandleGameOver;
+
+    void OnDisable() => PlayerHealthSystem.OnPlayerDeath -= HandleGameOver;
+
+    void Update()
     {
+        if (isGameOver)
+            return;
+
         if (Input.GetKeyDown(pauseKey))
             TogglePause();
     }
@@ -48,11 +56,24 @@ public class PauseManager : MonoBehaviour
         Cursor.visible = isPaused;
     }
 
+    void HandleGameOver()
+    {
+        isGameOver = true;
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    #endregion
+
+    #region Buttons
+
     public void OnResumeButton() => TogglePause();
 
     public void OnMainMenuButton()
     {
         Time.timeScale = 1f;
+
         if (SceneLoader.Instance != null)
             SceneLoader.Instance.LoadMainMenu();
     }

@@ -19,7 +19,49 @@ MonoBehaviour:
     offset: 0
     avoidWater: 1
     initialized: 1
-  props: []
+  props:
+  - prefab: {fileID: 1402414671211864174, guid: 4b431736193bf6648bc700224ecf1d99, type: 3}
+    count: 3
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 3301092010346490293, guid: 434ef7198d49647479c62e880ad71136, type: 3}
+    count: 3
+    alignAxis: 0
+    offset: 4.6
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 343195984070021810, guid: 14d3f5ca9081d124fa2cae8b5ecee044, type: 3}
+    count: 3
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 6097931574968192778, guid: d99ccf18bbafdbe4db2567011228a617, type: 3}
+    count: 5
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 980344457445140405, guid: 20e498746ca2e9b469983cf2db0f4bc5, type: 3}
+    count: 5
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 3300275997246436964, guid: d25935de21094164d98de8b2125427c2, type: 3}
+    count: 3
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 8129702889588674579, guid: 943e1acc6625bd540b9e031886f6d4c0, type: 3}
+    count: 20
+    alignAxis: 0
+    offset: 0
+    avoidWater: 1
+    initialized: 1
   collisionCheckRadius: 1
   rotationAdjustment: {x: 0, y: 180, z: 0}
   waterMargin: 0.05

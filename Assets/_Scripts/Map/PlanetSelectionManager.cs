@@ -49,6 +49,9 @@ public class PlanetSelectionManager : MonoBehaviour
         PlayerPrefs.DeleteKey("PlayerPosZ");
 
         SupernovaManager.ResetRadius();
+
+        if (ResourceManager.Instance)
+            ResourceManager.Instance.ResetResources();
     }
 
     void LoadPlayerPosition()

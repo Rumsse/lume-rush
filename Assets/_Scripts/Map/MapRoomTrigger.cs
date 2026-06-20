@@ -4,78 +4,96 @@ public class MapRoomTrigger : MonoBehaviour
 {
     #region Serialized Fields
 
-    [SerializeField] private GameObject confirmationPanel;
-    [SerializeField] private string playerTag = "Player";
-    [SerializeField] private KeyCode interactKey = KeyCode.E;
+    [SerializeField] GameObject confirmationPanel;
+    [SerializeField] GameObject interactionPrompt;
+    [SerializeField] string playerTag = "Player";
+    [SerializeField] KeyCode interactKey = KeyCode.E;
 
     #endregion
 
-    #region Private Fields
+    #region State
 
-    private bool playerInRange;
+    bool playerInRange;
 
     #endregion
 
-    #region Unity Lifecycle
+    #region Unity Callbacks
 
-    private void Start()
+    void Start()
     {
-        if (confirmationPanel != null)
+        if (confirmationPanel)
             confirmationPanel.SetActive(false);
+
+        if (interactionPrompt)
+            interactionPrompt.SetActive(false);
     }
 
-    private void Update()
+    void Update()
     {
-        if (playerInRange && Input.GetKeyDown(interactKey))
+        if (!playerInRange)
+            return;
+
+        if (Input.GetKeyDown(interactKey))
             ShowConfirmationPanel();
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(playerTag))
-            playerInRange = true;
+        if (!other.CompareTag(playerTag))
+            return;
+
+        playerInRange = true;
+
+        if (interactionPrompt)
+            interactionPrompt.SetActive(true);
     }
 
-    private void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(playerTag))
-        {
-            playerInRange = false;
-            HideConfirmationPanel();
-        }
+        if (!other.CompareTag(playerTag))
+            return;
+
+        playerInRange = false;
+        HideConfirmationPanel();
+
+        if (interactionPrompt)
+            interactionPrompt.SetActive(false);
     }
 
     #endregion
 
     #region Panel Methods
 
-    private void ShowConfirmationPanel()
+    void ShowConfirmationPanel()
     {
-        if (confirmationPanel != null)
-        {
-            confirmationPanel.SetActive(true);
-            Time.timeScale = 0f;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+        if (!confirmationPanel)
+            return;
+
+        confirmationPanel.SetActive(true);
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        if (interactionPrompt)
+            interactionPrompt.SetActive(false);
     }
 
-    private void HideConfirmationPanel()
+    void HideConfirmationPanel()
     {
-        if (confirmationPanel != null)
-        {
-            confirmationPanel.SetActive(false);
-            Time.timeScale = 1f;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+        if (!confirmationPanel)
+            return;
+
+        confirmationPanel.SetActive(false);
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void OnYesButton()
     {
         Time.timeScale = 1f;
 
-        if (SceneLoader.Instance != null)
+        if (SceneLoader.Instance)
             SceneLoader.Instance.LoadMap();
     }
 

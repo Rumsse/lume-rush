@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf7a9d763c4bdc44b87ea75865fcd497, type: 3}
+  m_Name: Storage Definition
+  m_EditorClassIdentifier: Assembly-CSharp::RoomDefinition
+  roomType: 4
+  levels:
+  - {fileID: 11400000, guid: 856bdfc31c8be714da6cef86e4f6b056, type: 2}
+  - {fileID: 11400000, guid: 886e1c4e4be15e84798ece99b4a34b65, type: 2}
+  - {fileID: 11400000, guid: 4ec7e2f0a1d03ac40997be8ccf13f32e, type: 2}
