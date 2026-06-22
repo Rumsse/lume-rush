@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/UI.bank
   Name: UI
   StudioPath: bank:/UI
-  lastModified: 639175753259949795
+  lastModified: 639177573705904613
   FileSizes:
   - Name: Desktop
     Value: 400576
@@ -35,7 +35,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 639175753259809191
+  lastModified: 639177573705777930
   FileSizes:
   - Name: Desktop
     Value: 1481024
@@ -217,7 +217,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/TESTING.bank
   Name: TESTING
   StudioPath: bank:/TESTING
-  lastModified: 639062125918011576
+  lastModified: 639124525120835462
   FileSizes:
   - Name: Desktop
     Value: 4105312
@@ -237,7 +237,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639175753259545883
+  lastModified: 639177573705613162
   FileSizes:
   - Name: Desktop
     Value: 2604
@@ -420,7 +420,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639175753259545883
+  lastModified: 639177573705598138
   FileSizes:
   - Name: Desktop
     Value: 1670
@@ -645,7 +645,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -4705166642097723612}
   cacheVersion: 131858
-  cacheTime: 639175753259949795
+  cacheTime: 639177573705904613
   SerializableEventsDict:
   - key: event:/SFX/SFX_JumpAndFall_HardSurface
     index: 0
@@ -805,7 +805,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Ambient.bank
   Name: Ambient
   StudioPath: bank:/Ambient
-  lastModified: 639175753259545883
+  lastModified: 639177573705588046
   FileSizes:
   - Name: Desktop
     Value: 17600128
@@ -1015,7 +1015,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 639175753259878950
+  lastModified: 639177573705846097
   FileSizes:
   - Name: Desktop
     Value: 1633408

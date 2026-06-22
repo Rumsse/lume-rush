@@ -247,7 +247,7 @@ MonoBehaviour:
   _baseSpeed: 10
   _baseTurnSpeed: 165
   _groundCheckBoxSize: {x: 1.04, y: 0.2, z: 1.14}
-  _baseJumpForce: 20
+  _baseJumpForce: 2
   _baseDashForce: 10
   _dashDuration: 0.6
   _dashCooldown: 4
