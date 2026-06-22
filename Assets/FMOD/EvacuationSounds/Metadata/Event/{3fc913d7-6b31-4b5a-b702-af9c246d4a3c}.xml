@@ -2,10 +2,10 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{3fc913d7-6b31-4b5a-b702-af9c246d4a3c}">
 		<property name="name">
-			<value>SFX_Placing_Pump</value>
+			<value>SFX_Pump_PlaceDown</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{f800f4ca-7bef-440f-bbe9-26453ed0a512}</destination>
@@ -53,14 +53,14 @@
 			<destination>{74eaa632-836a-44bd-870a-47e9d848ff68}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{ebc1d1e7-6757-4e62-aa98-7ed33c7855a6}</destination>
+			<destination>{6e36ef03-1178-4379-84e0-b495322c1031}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{e3d9d4f9-50c1-4fa3-9d04-4dc22484f6f6}" />
 	<object class="MarkerTrack" id="{fdf7be93-3a4a-4f26-a712-11facafa898c}" />
 	<object class="GroupTrack" id="{96676e3a-923f-4471-88b2-63cad6c8210d}">
 		<relationship name="modules">
-			<destination>{b23a1e47-6725-479d-b732-b7a1c5d4ae3c}</destination>
+			<destination>{62e34b4c-0b70-4c32-ad46-1760beb65f97}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{5c749647-b906-4586-b9e2-614a17960ae5}</destination>
@@ -68,7 +68,7 @@
 	</object>
 	<object class="Timeline" id="{a4fce908-708c-4547-aee4-a69086833ed8}">
 		<relationship name="modules">
-			<destination>{b23a1e47-6725-479d-b732-b7a1c5d4ae3c}</destination>
+			<destination>{62e34b4c-0b70-4c32-ad46-1760beb65f97}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{af14c419-b761-44a2-8f98-b40dda252ee4}">
@@ -88,18 +88,12 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{74eaa632-836a-44bd-870a-47e9d848ff68}" />
-	<object class="SingleSound" id="{b23a1e47-6725-479d-b732-b7a1c5d4ae3c}">
-		<property name="start">
-			<value>0.040000000000000001</value>
-		</property>
+	<object class="SingleSound" id="{62e34b4c-0b70-4c32-ad46-1760beb65f97}">
 		<property name="length">
-			<value>0.6865759637188209</value>
-		</property>
-		<property name="pitch">
-			<value>0.800000012</value>
+			<value>0.65709750566893421</value>
 		</property>
 		<relationship name="audioFile">
-			<destination>{504629d8-caea-44b0-b1a0-7b4ce18eb83f}</destination>
+			<destination>{14c7be5f-c17d-48f5-98d5-3d9e470a1d3d}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{5c749647-b906-4586-b9e2-614a17960ae5}">
@@ -138,16 +132,16 @@
 			<value>9</value>
 		</property>
 		<property name="frequencyA">
-			<value>8659.71094</value>
+			<value>15468.6729</value>
 		</property>
 		<property name="frequencyB">
-			<value>705.863708</value>
+			<value>677.211731</value>
 		</property>
 		<property name="qualityA">
-			<value>0.654792964</value>
+			<value>0.549556553</value>
 		</property>
 		<property name="gainB">
-			<value>-10.0487595</value>
+			<value>-8.48841858</value>
 		</property>
 	</object>
 	<object class="SFXReverbEffect" id="{5a81a5be-63e9-48e4-8e53-7a181a25e690}">

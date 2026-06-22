@@ -1,11 +1,13 @@
 using UnityEngine;
+using FMODUnity;
 
 public class PauseManager : MonoBehaviour
 {
     #region Settings
 
-    [SerializeField] GameObject pauseMenuPanel;
-    [SerializeField] KeyCode pauseKey = KeyCode.Escape;
+    [SerializeField] private GameObject pauseMenuPanel;
+    [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
+    [SerializeField] private EventReference pauseMenuOpen;
 
     #endregion
 
@@ -51,6 +53,7 @@ public class PauseManager : MonoBehaviour
 
     public void TogglePause()
     {
+        RuntimeManager.PlayOneShot(pauseMenuOpen);
         isPaused = !isPaused;
 
         if (pauseMenuPanel != null)

@@ -1,26 +1,43 @@
-using UnityEngine;
 using FMODUnity;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour, IPointerEnterHandler
 {
-    #region Settings
-
     [SerializeField] EventReference hoverOverSound;
     [SerializeField] EventReference clickSound;
+    [SerializeField] EventReference pauseMenuClose;
+    [SerializeField] EventReference pauseMenuOpen;
     [SerializeField] CelestialBodySettings startingPlanetPreset;
 
-    #endregion
+    private Button button;
 
-    #region UI Callbacks
+    private void Awake()
+    {
+        button = GetComponent<Button>();
+    }
 
-    public void OnPointerEnter(PointerEventData eventData) => RuntimeManager.PlayOneShot(hoverOverSound);
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (button == null)
+            return;
 
-    public void OnClickSFX() => RuntimeManager.PlayOneShot(clickSound);
+        if (!button.interactable)
+            return;
+
+        RuntimeManager.PlayOneShot(hoverOverSound);
+    }
+
+    public void OnClickSFX()
+    {
+        RuntimeManager.PlayOneShot(clickSound);
+    }
 
     public void OnPlayButton()
     {
         OnClickSFX();
+
         PlanetSelectionManager.ResetMapData();
         ShipSaveManager.ResetShipData();
 
@@ -30,12 +47,24 @@ public class MainMenuUI : MonoBehaviour, IPointerEnterHandler
             PlayerPrefs.Save();
         }
         else
+        {
             Debug.LogWarning("Starting Planet Preset is not assigned in MainMenuUI!");
+        }
 
         if (!SceneLoader.Instance)
             return;
 
         SceneLoader.Instance.LoadPlanet();
+    }
+
+    public void PauseMenuClose()
+    {
+        RuntimeManager.PlayOneShot(pauseMenuClose);
+    }
+
+    public void PauseMenuOpen()
+    {
+        RuntimeManager.PlayOneShot(pauseMenuOpen);
     }
 
     public void OnContinueButton()
@@ -63,6 +92,4 @@ public class MainMenuUI : MonoBehaviour, IPointerEnterHandler
 
         SceneLoader.Instance.QuitGame();
     }
-
-    #endregion
 }
