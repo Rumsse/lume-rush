@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.Collections;
 using FMODUnity;
 using FMOD.Studio;
@@ -17,33 +16,50 @@ public class IntroCinematicController : MonoBehaviour
         public float endScale = 1f;
     }
 
-    public Image imageA;
-    public Image imageB;
-    public Image blackFade;
+    [SerializeField] Image imageA;
+    [SerializeField] Image imageB;
+    [SerializeField] Image blackFade;
+    [SerializeField] Slide[] slides;
+    [SerializeField] EventReference musicEvent;
+    [SerializeField] float skipHoldTime = 1.5f;
 
-    public Slide[] slides;
+    bool skipping;
+    float currentSkipHold;
+    EventInstance musicInstance;
 
-    public string sceneToLoad;
+    #region Unity Callbacks
 
-    public EventReference musicEvent;
+    void Awake() => gameObject.SetActive(false);
 
-    public KeyCode skipKey = KeyCode.Space;
-
-    private bool skipping;
-    private EventInstance musicInstance;
-
-    private void Start()
+    void Update()
     {
+        if (skipping)
+            return;
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            currentSkipHold += Time.deltaTime;
+
+            if (currentSkipHold >= skipHoldTime)
+                Skip();
+        }
+        else
+        {
+            currentSkipHold = 0f;
+        }
+    }
+
+    #endregion
+
+    #region Logic
+
+    public void StartCinematic()
+    {
+        gameObject.SetActive(true);
         StartCoroutine(PlayCinematic());
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-            Skip();
-    }
-
-    private IEnumerator PlayCinematic()
+    IEnumerator PlayCinematic()
     {
         if (!musicEvent.IsNull)
         {
@@ -67,13 +83,7 @@ public class IntroCinematicController : MonoBehaviour
         BringBlackToFront();
 
         yield return FadeImage(blackFade, 1f, 0f, 1f);
-
-        yield return AnimateSlide(
-            current,
-            slides[0].holdTime,
-            slides[0].startScale,
-            slides[0].endScale
-        );
+        yield return AnimateSlide(current, slides[0].holdTime, slides[0].startScale, slides[0].endScale);
 
         for (int i = 1; i < slides.Length; i++)
         {
@@ -94,16 +104,9 @@ public class IntroCinematicController : MonoBehaviour
 
             SetAlpha(current, 0f);
 
-            Image temp = current;
-            current = next;
-            next = temp;
+            (current, next) = (next, current);
 
-            yield return AnimateSlide(
-                current,
-                slides[i].holdTime,
-                slides[i].startScale,
-                slides[i].endScale
-            );
+            yield return AnimateSlide(current, slides[i].holdTime, slides[i].startScale, slides[i].endScale);
         }
 
         yield return FadeImage(blackFade, 0f, 1f, 1f);
@@ -111,7 +114,7 @@ public class IntroCinematicController : MonoBehaviour
         Finish();
     }
 
-    private IEnumerator AnimateSlide(Image image, float duration, float startScale, float endScale)
+    IEnumerator AnimateSlide(Image image, float duration, float startScale, float endScale)
     {
         float timer = 0f;
 
@@ -129,7 +132,7 @@ public class IntroCinematicController : MonoBehaviour
         }
     }
 
-    private IEnumerator FadeTopImageOut(Image image, float duration)
+    IEnumerator FadeTopImageOut(Image image, float duration)
     {
         float timer = 0f;
 
@@ -149,7 +152,7 @@ public class IntroCinematicController : MonoBehaviour
         SetAlpha(image, 0f);
     }
 
-    private IEnumerator FadeImage(Image image, float from, float to, float duration)
+    IEnumerator FadeImage(Image image, float from, float to, float duration)
     {
         float timer = 0f;
 
@@ -169,9 +172,9 @@ public class IntroCinematicController : MonoBehaviour
         SetAlpha(image, to);
     }
 
-    private void SetAlpha(Image image, float alpha)
+    void SetAlpha(Image image, float alpha)
     {
-        if (image == null)
+        if (!image)
             return;
 
         Color c = image.color;
@@ -179,9 +182,9 @@ public class IntroCinematicController : MonoBehaviour
         image.color = c;
     }
 
-    private void BringBlackToFront()
+    void BringBlackToFront()
     {
-        if (blackFade != null)
+        if (blackFade)
             blackFade.transform.SetAsLastSibling();
     }
 
@@ -195,7 +198,7 @@ public class IntroCinematicController : MonoBehaviour
         Finish();
     }
 
-    private void Finish()
+    void Finish()
     {
         if (musicInstance.isValid())
         {
@@ -203,6 +206,11 @@ public class IntroCinematicController : MonoBehaviour
             musicInstance.release();
         }
 
-        SceneManager.LoadScene(sceneToLoad);
+        if (SceneLoader.Instance)
+            SceneLoader.Instance.LoadPlanet();
+        else
+            Debug.LogWarning("SceneLoader is missing!");
     }
+
+    #endregion
 }

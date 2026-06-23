@@ -4,7 +4,6 @@ using TMPro;
 
 public class TutorialManager : MonoBehaviour
 {
-
     public static TutorialManager Instance { get; private set; }
 
     [SerializeField] GameObject tutorialPanel;
@@ -63,16 +62,14 @@ public class TutorialManager : MonoBehaviour
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
                 wsadMoveTimer += Time.deltaTime;
+
                 if (wsadMoveTimer >= 3f)
                     AdvanceStep(TutorialStep.MoveWASD);
             }
         }
 
-        if (currentStep == TutorialStep.Sprint)
-        {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-                AdvanceStep(TutorialStep.Sprint);
-        }
+        if (currentStep == TutorialStep.Sprint && Input.GetKeyDown(KeyCode.LeftShift))
+            AdvanceStep(TutorialStep.Sprint);
     }
 
     public void ReportAction(TutorialStep action)

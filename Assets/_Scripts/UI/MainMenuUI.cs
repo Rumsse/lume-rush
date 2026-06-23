@@ -10,29 +10,35 @@ public class MainMenuUI : MonoBehaviour, IPointerEnterHandler
     [SerializeField] EventReference pauseMenuClose;
     [SerializeField] EventReference pauseMenuOpen;
     [SerializeField] CelestialBodySettings startingPlanetPreset;
+    [SerializeField] IntroCinematicController cinematicController;
 
-    private Button button;
+    Button button;
 
-    private void Awake()
-    {
-        button = GetComponent<Button>();
-    }
+    #region Unity Callbacks
+
+    void Awake() => button = GetComponent<Button>();
+
+    #endregion
+
+    #region Audio
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (button == null)
-            return;
-
-        if (!button.interactable)
+        if (!button || !button.interactable)
             return;
 
         RuntimeManager.PlayOneShot(hoverOverSound);
     }
 
-    public void OnClickSFX()
-    {
-        RuntimeManager.PlayOneShot(clickSound);
-    }
+    public void OnClickSFX() => RuntimeManager.PlayOneShot(clickSound);
+
+    public void PauseMenuClose() => RuntimeManager.PlayOneShot(pauseMenuClose);
+
+    public void PauseMenuOpen() => RuntimeManager.PlayOneShot(pauseMenuOpen);
+
+    #endregion
+
+    #region UI Actions
 
     public void OnPlayButton()
     {
@@ -41,7 +47,9 @@ public class MainMenuUI : MonoBehaviour, IPointerEnterHandler
         PlanetSelectionManager.ResetMapData();
         ShipSaveManager.ResetShipData();
 
-        if (startingPlanetPreset != null)
+        PlayerPrefs.SetInt("TutorialDone", 0);
+
+        if (startingPlanetPreset)
         {
             PlayerPrefs.SetString("SelectedPlanetPreset", startingPlanetPreset.name);
             PlayerPrefs.Save();
@@ -51,20 +59,10 @@ public class MainMenuUI : MonoBehaviour, IPointerEnterHandler
             Debug.LogWarning("Starting Planet Preset is not assigned in MainMenuUI!");
         }
 
-        if (!SceneLoader.Instance)
-            return;
-
-        SceneLoader.Instance.LoadPlanet();
-    }
-
-    public void PauseMenuClose()
-    {
-        RuntimeManager.PlayOneShot(pauseMenuClose);
-    }
-
-    public void PauseMenuOpen()
-    {
-        RuntimeManager.PlayOneShot(pauseMenuOpen);
+        if (cinematicController)
+            cinematicController.StartCinematic();
+        else if (SceneLoader.Instance)
+            SceneLoader.Instance.LoadPlanet();
     }
 
     public void OnContinueButton()
@@ -92,4 +90,6 @@ public class MainMenuUI : MonoBehaviour, IPointerEnterHandler
 
         SceneLoader.Instance.QuitGame();
     }
+
+    #endregion
 }
