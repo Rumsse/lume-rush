@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 2235017991179576477}
   - component: {fileID: 9159222072365261800}
   - component: {fileID: 3988242712264553547}
+  - component: {fileID: 1636392002247205369}
+  - component: {fileID: 3138753951422883148}
   m_Layer: 0
   m_Name: Workshop_lvl_1
   m_TagString: Untagged
@@ -112,3 +114,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 90.8114, y: 280.6054, z: 209.99455}
   m_Center: {x: -29.077093, y: 30.831245, z: -104.99726}
+--- !u!65 &1636392002247205369
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7314505054235661982}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 193.62294, y: 280.6054, z: 147.24194}
+  m_Center: {x: -80.48287, y: 30.831247, z: -73.62097}
+--- !u!114 &3138753951422883148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7314505054235661982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 659f2274bbe9d304eb7912fd8f4ac6c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorkshopPlayerDetection
+  playerTag: Player

@@ -1,19 +1,27 @@
+using System;
 using UnityEngine;
 
 public class WorkshopPlayerDetection : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    public static event Action<bool> OnWorkshopRangeChanged;
+
+    [SerializeField] string playerTag = "Player";
+
+    void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
-        {
-            Debug.Log("Player is in the workshop");
-        }
+        if (!other.CompareTag(playerTag))
+            return;
+
+        Debug.Log("Player entered the workshop trigger");
+        OnWorkshopRangeChanged?.Invoke(true);
     }
-    private void OnTriggerExit(Collider other)
+
+    void OnTriggerExit(Collider other)
     {
-        if(other.tag == "Player")
-        {
-            Debug.Log("Player left the workshop");
-        }
+        if (!other.CompareTag(playerTag))
+            return;
+
+        Debug.Log("Player left the workshop trigger");
+        OnWorkshopRangeChanged?.Invoke(false);
     }
 }
