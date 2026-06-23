@@ -1735,7 +1735,7 @@ MonoBehaviour:
       Data3: -328567900
       Data4: 1106294742
     Path: event:/SFX/SFX_Cinematic
-  skipHoldTime: 1.5
+  skipHoldTime: 1
 --- !u!114 &1507336190
 MonoBehaviour:
   m_ObjectHideFlags: 0
