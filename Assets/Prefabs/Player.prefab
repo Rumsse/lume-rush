@@ -239,8 +239,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 807c60ea4fccd0b48ad620789c0fce11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentPlanet: {fileID: 0}
   _movementSFX: {fileID: 0}
+  _currentPlanet: {fileID: 0}
   _animator: {fileID: 6464128004846700211}
   _groundMask:
     serializedVersion: 2
@@ -306,6 +306,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _isGrounded: 0
+  _isDashing: 0
 --- !u!114 &8424655656360232613
 MonoBehaviour:
   m_ObjectHideFlags: 0

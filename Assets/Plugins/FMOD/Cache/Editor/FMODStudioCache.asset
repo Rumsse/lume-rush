@@ -326,7 +326,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/TESTING.bank
   Name: TESTING
   StudioPath: bank:/TESTING
-  lastModified: 639124525120835462
+  lastModified: 639062125918011576
   FileSizes:
   - Name: Desktop
     Value: 4105312
@@ -873,7 +873,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -4705166642097723612}
   cacheVersion: 131858
-  cacheTime: 639177555829167509
+  cacheTime: 639178572387215966
   SerializableEventsDict:
   - key: event:/SFX/SFX_JumpAndFall_HardSurface
     index: 0
@@ -951,6 +951,8 @@ MonoBehaviour:
     index: 36
   - key: event:/SFX/SFX_Jump_Water
     index: 37
+  - key: event:/SFX/SFX_Dash
+    index: 38
 --- !u!114 &900448881132962175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1394,7 +1396,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 639177555829167509
+  lastModified: 639178572387215966
   FileSizes:
   - Name: Desktop
     Value: 1960544
