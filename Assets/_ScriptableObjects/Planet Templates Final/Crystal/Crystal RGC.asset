@@ -26,20 +26,20 @@ MonoBehaviour:
     avoidWater: 1
     initialized: 1
   props:
-  - prefab: {fileID: 1402414671211864174, guid: 4b431736193bf6648bc700224ecf1d99, type: 3}
-    count: 3
+  - prefab: {fileID: 604088409921967468, guid: a6be181d216dbcb489cdc4ff0f4c5d4d, type: 3}
+    count: 5
     alignAxis: 0
     offset: 0
     avoidWater: 1
     initialized: 1
-  - prefab: {fileID: 3301092010346490293, guid: 434ef7198d49647479c62e880ad71136, type: 3}
-    count: 3
+  - prefab: {fileID: 4049011681674664109, guid: 00d608c2c84720f4dbbf5c15d9bf8a2b, type: 3}
+    count: 4
     alignAxis: 0
-    offset: 4.6
+    offset: 0
     avoidWater: 1
     initialized: 1
-  - prefab: {fileID: 343195984070021810, guid: 14d3f5ca9081d124fa2cae8b5ecee044, type: 3}
-    count: 3
+  - prefab: {fileID: 5491815197109756909, guid: 410ad7a76d78f2541b4dc7f7123d7c1a, type: 3}
+    count: 4
     alignAxis: 0
     offset: 0
     avoidWater: 1
