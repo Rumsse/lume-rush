@@ -171,6 +171,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
       insertIndex: -1
       addedObject: {fileID: -9198526557186903553}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4443810427765629923}
   m_SourcePrefab: {fileID: 100100000, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
 --- !u!1 &296901486032930419 stripped
 GameObject:
@@ -319,6 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad52706c52d6e5f4da662407f541dfe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
+  pumpSFX: {fileID: 0}
   sfx: {fileID: 6351949712807476373}
   placement: {fileID: 2555966904752584968}
   pumpPrefab: {fileID: 8005319921480430843, guid: 2975f2279f777cd45a5d4188c2299996, type: 3}
@@ -515,6 +519,39 @@ MonoBehaviour:
     Path: event:/SFX/SFX_Dash
   _stepInterval: 0.35
   _minSpeedForSteps: 1
+--- !u!114 &-4443810427765629923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296901486032930419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 185cbc59026c318488536ca38c5d968b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PumpSFXController
+  pumpPlaceSound:
+    Guid:
+      Data1: 1070142423
+      Data2: 1264216881
+      Data3: -1666252105
+      Data4: 1011510564
+    Path: event:/SFX/SFX_Pump_PlaceDown
+  pumpWorkingSound:
+    Guid:
+      Data1: -1114777482
+      Data2: 1078063603
+      Data3: 1945999747
+      Data4: 1646789882
+    Path: event:/SFX/SFX_Pump_Working
+  pumpPickUpSound:
+    Guid:
+      Data1: -428461138
+      Data2: 1195373460
+      Data3: 95619226
+      Data4: -749451240
+    Path: event:/SFX/SFX_Pump_PickUp
 --- !u!4 &1104823336287280329 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 82d3449a77573b94fbfe8f74590d08ab, type: 3}
