@@ -3,12 +3,30 @@ using UnityEngine;
 
 public class PlayerPlanetMovement : MonoBehaviour
 {
+    #region MatiAddonsForSFX
+
+    public bool IsGrounded => _isGrounded;
+    public bool IsDashing => _isDashing;
+    public bool IsOnWater { get; private set; }
+    public Vector3 Velocity => _rigidbody.linearVelocity;
+    public Vector3 GravityDirection => _gravityBody != null ? _gravityBody.GravityDirection : Vector3.down;
+
+    #endregion
+
     #region Inspector
 
+    [Header("SFX")]
+    [SerializeField] private PlayerPlanetMovementSFX _movementSFX;
+
+    [Header("Planet")]
+    [SerializeField] private CelestialBodyGenerator _currentPlanet;
+
+    [Header("References")]
     [SerializeField] private Animator _animator;
     [SerializeField] private LayerMask _groundMask;
     [SerializeField] private Transform _groundCheck;
 
+    [Header("Movement")]
     [SerializeField] private float _baseSpeed = 15f;
     [SerializeField] private float _baseTurnSpeed = 1500f;
     [SerializeField] private Vector3 _groundCheckBoxSize = new Vector3(1.2f, 0.2f, 1.8f);
@@ -16,7 +34,7 @@ public class PlayerPlanetMovement : MonoBehaviour
     [Range(1f, 350f)]
     [SerializeField] private float _baseJumpForce = 100f;
 
-    [Header("Dash (Sprint)")]
+    [Header("Dash")]
     [SerializeField] private float _baseDashForce = 40f;
     [SerializeField] private float _dashDuration = 0.2f;
     [SerializeField] private float _dashCooldown = 1.5f;
@@ -37,10 +55,13 @@ public class PlayerPlanetMovement : MonoBehaviour
 
     private GravityBody _gravityBody;
     private Rigidbody _rigidbody;
+
     private float _horizontal;
     private float _vertical;
+
     public bool _isGrounded;
-    private bool _isDashing;
+    public bool _isDashing;
+
     private float _dashTimer;
     private float _currentSpeed;
     private float _currentTurnSpeed;
@@ -49,23 +70,27 @@ public class PlayerPlanetMovement : MonoBehaviour
 
     #endregion
 
-    void Awake()
+    private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _gravityBody = GetComponent<GravityBody>();
+
+        if (_movementSFX == null)
+            _movementSFX = GetComponent<PlayerPlanetMovementSFX>();
+
         _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
         _rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
         _baseJumpForce = Mathf.Clamp(_baseJumpForce, 0f, 500f);
+
         UpdateMovementParameters();
     }
 
-    void Update()
+    private void Update()
     {
-        _horizontal = Input.GetAxisRaw("Horizontal");
-        _vertical = Input.GetAxisRaw("Vertical");
-        _isGrounded = _groundCheck != null && Physics.CheckBox(_groundCheck.position, _groundCheckBoxSize * 0.5f, _groundCheck.rotation, _groundMask);
-
+        ReadInput();
+        UpdateGroundState();
+        UpdateWaterState();
         UpdateMovementParameters();
 
         if (Input.GetKey(KeyCode.Space) && _isGrounded)
@@ -78,15 +103,17 @@ public class PlayerPlanetMovement : MonoBehaviour
         UpdateDashCooldown();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        if (_isDashing) return;
+        if (_isDashing)
+            return;
 
         Vector3 gravityDir = _gravityBody != null ? _gravityBody.GravityDirection : Vector3.zero;
         Vector3 gravityUp = gravityDir != Vector3.zero ? -gravityDir.normalized : transform.up;
 
         bool moveInput = Mathf.Abs(_vertical) > 0.1f;
         bool turnInput = Mathf.Abs(_horizontal) > 0.1f;
+
         float moveMultiplier = _isGrounded ? 1f : _airMoveMultiplier;
         float turnMultiplier = _isGrounded ? 1f : _airTurnMultiplier;
 
@@ -94,22 +121,28 @@ public class PlayerPlanetMovement : MonoBehaviour
         {
             Vector3 desired = transform.forward * Mathf.Sign(_vertical);
             desired = Vector3.ProjectOnPlane(desired, gravityUp).normalized;
+
             Vector3 targetVel = desired * (_currentSpeed * moveMultiplier);
             Vector3 currentHorizVel = Vector3.ProjectOnPlane(_rigidbody.linearVelocity, gravityUp);
+
             Vector3 velChange = targetVel - currentHorizVel;
             velChange = Vector3.ProjectOnPlane(velChange, gravityUp);
+
             _rigidbody.AddForce(velChange, ForceMode.VelocityChange);
         }
 
         if (turnInput)
         {
             float angle = _horizontal * (_currentTurnSpeed * Time.fixedDeltaTime) * turnMultiplier;
+
             Vector3 currentForward = Vector3.ProjectOnPlane(transform.forward, gravityUp);
+
             if (currentForward.sqrMagnitude <= 0.0001f)
                 currentForward = Vector3.ProjectOnPlane(transform.right, gravityUp).normalized;
 
             Quaternion yaw = Quaternion.AngleAxis(angle, gravityUp);
             Vector3 newForward = (yaw * currentForward).normalized;
+
             _rigidbody.MoveRotation(Quaternion.LookRotation(newForward, gravityUp));
         }
 
@@ -120,9 +153,43 @@ public class PlayerPlanetMovement : MonoBehaviour
         }
     }
 
+    #region Input & Surface Detection
+
+    private void ReadInput()
+    {
+        _horizontal = Input.GetAxisRaw("Horizontal");
+        _vertical = Input.GetAxisRaw("Vertical");
+    }
+
+    private void UpdateGroundState()
+    {
+        _isGrounded =
+            _groundCheck != null &&
+            Physics.CheckBox(
+                _groundCheck.position,
+                _groundCheckBoxSize * 0.5f,
+                _groundCheck.rotation,
+                _groundMask
+            );
+    }
+
+    private void UpdateWaterState()
+    {
+        if (_currentPlanet != null && _groundCheck != null)
+        {
+            IsOnWater = _currentPlanet.IsWorldPositionInOcean(_groundCheck.position);
+        }
+        else
+        {
+            IsOnWater = false;
+        }
+    }
+
+    #endregion
+
     #region Movement Parameters
 
-    void UpdateMovementParameters()
+    private void UpdateMovementParameters()
     {
         if (_gravityBody == null || _gravityBody.CurrentGravityArea == null)
         {
@@ -149,11 +216,23 @@ public class PlayerPlanetMovement : MonoBehaviour
 
     #region Jump & Dash
 
-    void Jump() => _rigidbody.AddForce(-_gravityBody.GravityDirection * _currentJumpForce, ForceMode.Impulse);
+    private void Jump()
+    {
+        if (_gravityBody == null)
+            return;
 
-    IEnumerator PerformDash()
+        _rigidbody.AddForce(-_gravityBody.GravityDirection * _currentJumpForce, ForceMode.Impulse);
+
+        if (_movementSFX != null)
+            _movementSFX.PlayJumpSound();
+    }
+
+    private IEnumerator PerformDash()
     {
         _isDashing = true;
+
+        if (_movementSFX != null)
+            _movementSFX.PlayDashSound();
 
         if (_dashParticleDust != null)
             _dashParticleDust.SetActive(true);
@@ -170,7 +249,7 @@ public class PlayerPlanetMovement : MonoBehaviour
         _dashTimer = _dashCooldown;
     }
 
-    void UpdateDashCooldown()
+    private void UpdateDashCooldown()
     {
         if (_dashTimer > 0f)
             _dashTimer -= Time.deltaTime;
@@ -180,11 +259,14 @@ public class PlayerPlanetMovement : MonoBehaviour
 
     #region Animation
 
-    void UpdateAnimatorParameters()
+    private void UpdateAnimatorParameters()
     {
-        if (_gravityBody == null) return;
+        if (_animator == null || _gravityBody == null)
+            return;
 
-        Vector3 horizontalVelocity = Vector3.ProjectOnPlane(_rigidbody.linearVelocity, -_gravityBody.GravityDirection);
+        Vector3 horizontalVelocity =
+            Vector3.ProjectOnPlane(_rigidbody.linearVelocity, -_gravityBody.GravityDirection);
+
         float speed = horizontalVelocity.magnitude;
 
         _animator.SetFloat("Speed", speed);
@@ -194,11 +276,13 @@ public class PlayerPlanetMovement : MonoBehaviour
 
     #region Gizmos
 
-    void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
     {
-        if (_groundCheck == null) return;
+        if (_groundCheck == null)
+            return;
 
         Gizmos.color = _isGrounded ? Color.green : Color.red;
+
         Matrix4x4 old = Gizmos.matrix;
         Gizmos.matrix = Matrix4x4.TRS(_groundCheck.position, _groundCheck.rotation, Vector3.one);
         Gizmos.DrawWireCube(Vector3.zero, _groundCheckBoxSize);

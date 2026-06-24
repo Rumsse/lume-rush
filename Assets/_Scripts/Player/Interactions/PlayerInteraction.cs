@@ -4,6 +4,10 @@ using System;
 [RequireComponent(typeof(InteractionDetector))]
 public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 {
+    #region MatiSFXAddons
+        [SerializeField] PumpSFXController pumpSFX;
+    #endregion
+
     #region Properties 
 
     public static Action<PumpState> PumpStateChanged;
@@ -98,7 +102,11 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
         if (go.CompareTag(pumpTag))
         {
-            sfx.PlaySound_PumpWorkng(false, go);
+            if (pumpSFX != null)
+            {
+                pumpSFX.StopWorkingSound();
+                pumpSFX.PlayPickUpSound(go.transform.position);
+            }
 
             if (pumpUsedUp) { if (debugLogs) Debug.Log("[PI] Pump already used up"); return; }
 
@@ -156,6 +164,20 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
         if (go.CompareTag(pumpTag))
         {
+            if (go.CompareTag(pumpTag))
+            {
+                if (pumpSFX != null)
+                {
+                    pumpSFX.StopWorkingSound();
+                    pumpSFX.PlayPickUpSound(go.transform.position);
+                }
+
+                if (pumpUsedUp)
+                {
+                    collectingTarget = null;
+                    return;
+                }
+            }
             if (pumpUsedUp) { collectingTarget = null; return; }
 
             var collector = go.GetComponent<PumpFuelCollector>();
@@ -240,8 +262,11 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
     {
         placedPump = instance;
 
-        sfx.PlaySound_PumpPlace();
-        sfx.PlaySound_PumpWorkng(true, placedPump);
+        if (pumpSFX != null)
+        {
+            pumpSFX.PlayPlaceSound(placedPump.transform.position);
+            pumpSFX.StartWorkingSound(placedPump);
+        }
 
         hasPump = false;
         carriedPumpFuel = 0;

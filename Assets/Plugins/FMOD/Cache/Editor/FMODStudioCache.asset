@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8911606422071095569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/SFX_Fall_Water/Parameter 1
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Parameter 1
+  StudioPath: 
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 3312370147
+    data2: 3757971913
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Water
+  - Stone
+  - Dirt
+  Exists: 1
 --- !u!114 &-8117495612245068906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,11 +42,38 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/UI.bank
   Name: UI
   StudioPath: bank:/UI
-  lastModified: 639177573705904613
+  lastModified: 639177495249676848
   FileSizes:
   - Name: Desktop
     Value: 400576
   Exists: 1
+--- !u!114 &-8087267051602664759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/SFX_Dash
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/SFX_Dash
+  Guid:
+    Data1: 326645623
+    Data2: 1214953251
+    Data3: 1734291869
+    Data4: 571725240
+  Banks:
+  - {fileID: 7847837667737264636}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 550
 --- !u!114 &-7741648745694288906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35,7 +89,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 639177573705777930
+  lastModified: 639177495229419744
   FileSizes:
   - Name: Desktop
     Value: 1481024
@@ -121,6 +175,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 200086
+--- !u!114 &-6863615507981306800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/SFX_Fall_Stone
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/SFX_Fall_Stone
+  Guid:
+    Data1: 1795010863
+    Data2: 1337929835
+    Data3: -777559108
+    Data4: -1618224702
+  Banks:
+  - {fileID: 7847837667737264636}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -96820578375231300}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 800
 --- !u!114 &-6834248257628844217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,6 +230,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1986
+--- !u!114 &-6524626117465098138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/SFX_Jump_Dirt/Parameter 1
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Parameter 1
+  StudioPath: 
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 3312370147
+    data2: 3757971913
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Water
+  - Stone
+  - Dirt
+  Exists: 1
 --- !u!114 &-6506992809733729786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,7 +326,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/TESTING.bank
   Name: TESTING
   StudioPath: bank:/TESTING
-  lastModified: 639124525120835462
+  lastModified: 639062125918011576
   FileSizes:
   - Name: Desktop
     Value: 4105312
@@ -237,10 +346,10 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639177573705613162
+  lastModified: 639177555824734391
   FileSizes:
   - Name: Desktop
-    Value: 2604
+    Value: 2942
   Exists: 1
 --- !u!114 &-4630531537949946247
 MonoBehaviour:
@@ -324,6 +433,62 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 657
+--- !u!114 &-3451733313378071103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/SFX_Fall_Dirt
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/SFX_Fall_Dirt
+  Guid:
+    Data1: -881771451
+    Data2: 1284888195
+    Data3: 197639828
+    Data4: -165889812
+  Banks:
+  - {fileID: 7847837667737264636}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 2698997915324628841}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 650
+--- !u!114 &-2757502517188994092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/SFX_Fall_Water
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/SFX_Fall_Water
+  Guid:
+    Data1: -1324885379
+    Data2: 1095054201
+    Data3: 375070630
+    Data4: -744401744
+  Banks:
+  - {fileID: 7847837667737264636}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -8911606422071095569}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 754
 --- !u!114 &-2734629570593958163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,11 +585,39 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639177573705598138
+  lastModified: 639177555824714465
   FileSizes:
   - Name: Desktop
     Value: 1670
   Exists: 1
+--- !u!114 &-1829979837911729958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/SFX_Jump_Stone
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/SFX_Jump_Stone
+  Guid:
+    Data1: 1308077941
+    Data2: 1279914074
+    Data3: -1458621023
+    Data4: -1666235127
+  Banks:
+  - {fileID: 7847837667737264636}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 5260713988464273980}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 300
 --- !u!114 &-1482168260530263519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -587,6 +780,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2088
+--- !u!114 &-96820578375231300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/SFX_Fall_Stone/Parameter 1
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Parameter 1
+  StudioPath: 
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 3312370147
+    data2: 3757971913
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Water
+  - Stone
+  - Dirt
+  Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -639,13 +859,21 @@ MonoBehaviour:
   - {fileID: -1046980869994626524}
   - {fileID: -6506992809733729786}
   - {fileID: 7293382434171755665}
+  - {fileID: 7981419776262854559}
+  - {fileID: -6863615507981306800}
+  - {fileID: -3451733313378071103}
+  - {fileID: -1829979837911729958}
+  - {fileID: -2757502517188994092}
+  - {fileID: 6818047675520360843}
+  - {fileID: 6065526106415179560}
+  - {fileID: -8087267051602664759}
   EditorParameters: []
   MasterBanks:
   - {fileID: -2160354079488981446}
   StringsBanks:
   - {fileID: -4705166642097723612}
   cacheVersion: 131858
-  cacheTime: 639177573705904613
+  cacheTime: 639178572387215966
   SerializableEventsDict:
   - key: event:/SFX/SFX_JumpAndFall_HardSurface
     index: 0
@@ -709,6 +937,22 @@ MonoBehaviour:
     index: 29
   - key: event:/SFX/SFX_Cinematic
     index: 30
+  - key: event:/SFX/SFX_Walk_Water
+    index: 31
+  - key: event:/SFX/SFX_Fall_Stone
+    index: 32
+  - key: event:/SFX/SFX_Fall_Dirt
+    index: 33
+  - key: event:/SFX/SFX_Jump_Stone
+    index: 34
+  - key: event:/SFX/SFX_Fall_Water
+    index: 35
+  - key: event:/SFX/SFX_Jump_Dirt
+    index: 36
+  - key: event:/SFX/SFX_Jump_Water
+    index: 37
+  - key: event:/SFX/SFX_Dash
+    index: 38
 --- !u!114 &900448881132962175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,6 +1034,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 400000
+--- !u!114 &2698997915324628841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/SFX_Fall_Dirt/Parameter 1
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Parameter 1
+  StudioPath: 
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 3312370147
+    data2: 3757971913
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Water
+  - Stone
+  - Dirt
+  Exists: 1
+--- !u!114 &2882780684969214083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/SFX_Jump_Water/Parameter 1
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Parameter 1
+  StudioPath: 
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 3312370147
+    data2: 3757971913
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Water
+  - Stone
+  - Dirt
+  Exists: 1
 --- !u!114 &3723557183563299586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -805,7 +1103,7 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/Ambient.bank
   Name: Ambient
   StudioPath: bank:/Ambient
-  lastModified: 639177573705588046
+  lastModified: 639177495228566193
   FileSizes:
   - Name: Desktop
     Value: 17600128
@@ -837,6 +1135,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2951
+--- !u!114 &5260713988464273980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/SFX_Jump_Stone/Parameter 1
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Parameter 1
+  StudioPath: 
+  Min: 0
+  Max: 2
+  Default: 0
+  ID:
+    data1: 3312370147
+    data2: 3757971913
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Water
+  - Stone
+  - Dirt
+  Exists: 1
 --- !u!114 &5514270097038206014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -864,6 +1189,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 204
+--- !u!114 &6065526106415179560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/SFX_Jump_Water
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/SFX_Jump_Water
+  Guid:
+    Data1: 676257700
+    Data2: 1283462005
+    Data3: -1658381690
+    Data4: 693920470
+  Banks:
+  - {fileID: 7847837667737264636}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 2882780684969214083}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 380
 --- !u!114 &6435073999082513663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -891,6 +1244,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 30845
+--- !u!114 &6818047675520360843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/SFX_Jump_Dirt
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/SFX_Jump_Dirt
+  Guid:
+    Data1: -1903293283
+    Data2: 1144028690
+    Data3: -1589002576
+    Data4: -337923013
+  Banks:
+  - {fileID: 7847837667737264636}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -6524626117465098138}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 350
 --- !u!114 &7293382434171755665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1015,10 +1396,10 @@ MonoBehaviour:
   Path: Assets/FMOD/EvacuationSounds/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 639177573705846097
+  lastModified: 639178572387215966
   FileSizes:
   - Name: Desktop
-    Value: 1633408
+    Value: 1960544
   Exists: 1
 --- !u!114 &7870008936438087714
 MonoBehaviour:
@@ -1075,6 +1456,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 800
+--- !u!114 &7981419776262854559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/SFX_Walk_Water
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/SFX_Walk_Water
+  Guid:
+    Data1: -2098639909
+    Data2: 1151077064
+    Data3: -203528008
+    Data4: -1080972597
+  Banks:
+  - {fileID: 7847837667737264636}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 330
 --- !u!114 &8444179716013375432
 MonoBehaviour:
   m_ObjectHideFlags: 0
