@@ -1,22 +1,25 @@
 using UnityEngine;
 using System;
 using TMPro;
+using FMODUnity;
 
 public class TutorialManager : MonoBehaviour
 {
     public static TutorialManager Instance { get; private set; }
 
+    [Header("UI")]
     [SerializeField] GameObject tutorialPanel;
     [SerializeField] TextMeshProUGUI tutorialText;
     [SerializeField] bool enableTutorial = true;
+
+    [Header("SFX")]
+    [SerializeField] private string tutorialStepChangeSoundPath = "event:/UI/UI_Tutorial_PanelChange";
 
     TutorialStep currentStep;
     bool isCompleted;
     float wsadMoveTimer;
 
     public static Action OnTutorialCompleted;
-
-    #region Unity Callbacks
 
     void Awake()
     {
@@ -27,6 +30,7 @@ public class TutorialManager : MonoBehaviour
         }
 
         Instance = this;
+
         LoadState();
     }
 
@@ -37,10 +41,6 @@ public class TutorialManager : MonoBehaviour
 
         CheckInputSteps();
     }
-
-    #endregion
-
-    #region Logic
 
     void LoadState()
     {
@@ -92,13 +92,13 @@ public class TutorialManager : MonoBehaviour
             PlayerPrefs.Save();
             OnTutorialCompleted?.Invoke();
         }
+        else
+        {
+            PlayTutorialStepChangeSound();
+        }
 
         UpdateUI();
     }
-
-    #endregion
-
-    #region UI
 
     void UpdateUI()
     {
@@ -130,7 +130,13 @@ public class TutorialManager : MonoBehaviour
         };
     }
 
-    #endregion
+    void PlayTutorialStepChangeSound()
+    {
+        if (string.IsNullOrWhiteSpace(tutorialStepChangeSoundPath))
+            return;
+
+        RuntimeManager.PlayOneShot(tutorialStepChangeSoundPath);
+    }
 }
 
 public enum TutorialStep

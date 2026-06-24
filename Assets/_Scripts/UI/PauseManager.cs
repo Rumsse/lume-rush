@@ -7,7 +7,10 @@ public class PauseManager : MonoBehaviour
 
     [SerializeField] private GameObject pauseMenuPanel;
     [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
+
+    [Header("SFX")]
     [SerializeField] private EventReference pauseMenuOpen;
+    [SerializeField] private EventReference pauseMenuClose;
 
     #endregion
 
@@ -53,15 +56,22 @@ public class PauseManager : MonoBehaviour
 
     public void TogglePause()
     {
-        RuntimeManager.PlayOneShot(pauseMenuOpen);
         isPaused = !isPaused;
+
+        if (isPaused)
+            PlaySound(pauseMenuOpen);
+        else
+            PlaySound(pauseMenuClose);
 
         if (pauseMenuPanel != null)
             pauseMenuPanel.SetActive(isPaused);
 
         Time.timeScale = isPaused ? 0f : 1f;
-/*        Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = isPaused;*/
+
+        /*
+        Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = isPaused;
+        */
     }
 
     void HandleGameOver()
@@ -72,8 +82,17 @@ public class PauseManager : MonoBehaviour
             pauseMenuPanel.SetActive(false);
 
         Time.timeScale = 0f;
-/*        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;*/
+
+        /*
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        */
+    }
+
+    private void PlaySound(EventReference sound)
+    {
+        if (!sound.IsNull)
+            RuntimeManager.PlayOneShot(sound);
     }
 
     #endregion

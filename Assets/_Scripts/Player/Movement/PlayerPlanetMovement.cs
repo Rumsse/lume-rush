@@ -75,6 +75,9 @@ public class PlayerPlanetMovement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _gravityBody = GetComponent<GravityBody>();
 
+        if (_currentPlanet == null)
+            _currentPlanet = FindFirstObjectByType<CelestialBodyGenerator>();
+
         if (_movementSFX == null)
             _movementSFX = GetComponent<PlayerPlanetMovementSFX>();
 
@@ -175,6 +178,12 @@ public class PlayerPlanetMovement : MonoBehaviour
 
     private void UpdateWaterState()
     {
+        if (!_isGrounded)
+        {
+            IsOnWater = false;
+            return;
+        }
+
         if (_currentPlanet != null && _groundCheck != null)
         {
             IsOnWater = _currentPlanet.IsWorldPositionInOcean(_groundCheck.position);

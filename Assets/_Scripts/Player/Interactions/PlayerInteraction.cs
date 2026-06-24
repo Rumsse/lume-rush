@@ -5,7 +5,8 @@ using System;
 public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 {
     #region MatiSFXAddons
-        [SerializeField] PumpSFXController pumpSFX;
+    [SerializeField] PumpSFXController pumpSFX;
+    [SerializeField] MiningSFXController miningSFX;
     #endregion
 
     #region Properties 
@@ -43,6 +44,8 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
     void Awake()
     {
+        if (!miningSFX)
+            miningSFX = GetComponent<MiningSFXController>();
         interactionDetector = GetComponent<InteractionDetector>();
         if (!placement) placement = GetComponent<PlacementController>();
         if (!placement) placement = FindFirstObjectByType<PlacementController>();
@@ -152,14 +155,21 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
         collecting = true;
         collectingTarget.StartCollecting();
 
+        if (miningSFX != null)
+            miningSFX.StartMiningSound(target.gameObject);
+
         if (debugLogs) Debug.Log("[PI] Begin timed collect");
     }
 
     void CompleteCollect()
     {
+        if (miningSFX != null)
+            miningSFX.StopMiningSound();
+
         sfx.PlaySound_ItemPickUp();
         collectingTarget.StopCollecting();
         collecting = false;
+
         var go = collectingTarget.gameObject;
 
         if (go.CompareTag(pumpTag))
@@ -210,12 +220,16 @@ public class PlayerInteraction : MonoBehaviour, IPlacementReceiver
 
     void CancelCollect()
     {
+        if (miningSFX != null)
+            miningSFX.StopMiningSound();
+
         if (collectingTarget != null)
             collectingTarget.StopCollecting();
 
         collecting = false;
         collectingTarget = null;
         collectTimer = 0f;
+
         if (debugLogs) Debug.Log("[PI] Cancel timed collect");
     }
 
