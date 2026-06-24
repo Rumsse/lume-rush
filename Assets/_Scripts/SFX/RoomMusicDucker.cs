@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
@@ -31,10 +32,15 @@ public class RoomMusicDucker : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField] private float normalMusicVolume = 1f;
 
+    [SerializeField] private float fadeOutDuration = 1f;
+    [SerializeField] private float fadeInDuration = 1f;
+
     [Header("Player")]
     [SerializeField] private string playerTag = "Player";
 
     private Bus musicBus;
+    private Coroutine volumeFadeCoroutine;
+
     private bool playerInside;
     private bool isDucking;
     private RoomType lastRoomType = RoomType.None;
@@ -59,9 +65,7 @@ public class RoomMusicDucker : MonoBehaviour
             return;
 
         if (roomSlot.CurrentRoomType != lastRoomType)
-        {
             RefreshRoomAmbient();
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -133,7 +137,6 @@ public class RoomMusicDucker : MonoBehaviour
             return;
 
         roomEmitter.Stop();
-
         roomEmitter.EventReference = ambientEvent;
         roomEmitter.Play();
     }
@@ -146,10 +149,7 @@ public class RoomMusicDucker : MonoBehaviour
 
     private void DuckMusicVolume()
     {
-        if (!musicBus.isValid())
-            return;
-
-        musicBus.setVolume(duckedMusicVolume);
+        FadeMusicVolumeTo(duckedMusicVolume, fadeOutDuration);
         isDucking = true;
     }
 
@@ -158,21 +158,72 @@ public class RoomMusicDucker : MonoBehaviour
         if (!isDucking)
             return;
 
+        FadeMusicVolumeTo(normalMusicVolume, fadeInDuration);
+        isDucking = false;
+    }
+
+    private void FadeMusicVolumeTo(float targetVolume, float duration)
+    {
+        if (!musicBus.isValid())
+            return;
+
+        if (volumeFadeCoroutine != null)
+            StopCoroutine(volumeFadeCoroutine);
+
+        volumeFadeCoroutine = StartCoroutine(FadeMusicVolumeRoutine(targetVolume, duration));
+    }
+
+    private IEnumerator FadeMusicVolumeRoutine(float targetVolume, float duration)
+    {
+        musicBus.getVolume(out float startVolume);
+
+        if (duration <= 0f)
+        {
+            musicBus.setVolume(targetVolume);
+            yield break;
+        }
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+
+            float t = elapsedTime / duration;
+            float volume = Mathf.Lerp(startVolume, targetVolume, t);
+
+            musicBus.setVolume(volume);
+
+            yield return null;
+        }
+
+        musicBus.setVolume(targetVolume);
+        volumeFadeCoroutine = null;
+    }
+
+    private void OnDisable()
+    {
+        StopRoomAmbient();
+
+        if (volumeFadeCoroutine != null)
+            StopCoroutine(volumeFadeCoroutine);
+
         if (musicBus.isValid())
             musicBus.setVolume(normalMusicVolume);
 
         isDucking = false;
     }
 
-    private void OnDisable()
-    {
-        StopRoomAmbient();
-        RestoreMusicVolume();
-    }
-
     private void OnDestroy()
     {
         StopRoomAmbient();
-        RestoreMusicVolume();
+
+        if (volumeFadeCoroutine != null)
+            StopCoroutine(volumeFadeCoroutine);
+
+        if (musicBus.isValid())
+            musicBus.setVolume(normalMusicVolume);
+
+        isDucking = false;
     }
 }

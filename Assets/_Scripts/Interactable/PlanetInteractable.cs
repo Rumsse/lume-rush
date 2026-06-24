@@ -11,13 +11,8 @@ public class PlanetInteractable : BaseInteractable
     public SFX_SimpleSoundInteract sfx;
 
     [Header("SFX")]
-    [SerializeField]
-    private EventReference hoverSound =
-        EventReference.Find("event:/UI/UI_Planet_Hover");
-
-    [SerializeField]
-    private EventReference clickSound =
-        EventReference.Find("event:/UI/UI_Planet_MenuOpen");
+    [SerializeField] private string hoverSoundPath = "event:/UI/UI_Planet_Hover";
+    [SerializeField] private string clickSoundPath = "event:/UI/UI_Planet_Click";
 
     [Header("Fuel Settings")]
     [SerializeField] int baseFuelCost = 10;
@@ -59,7 +54,7 @@ public class PlanetInteractable : BaseInteractable
         if (hasBurned)
             return;
 
-        PlaySound(hoverSound);
+        PlaySound(hoverSoundPath);
 
         transform.localScale = baseScale * 1.2f;
     }
@@ -77,7 +72,7 @@ public class PlanetInteractable : BaseInteractable
             return;
         }
 
-        PlaySound(clickSound);
+        PlaySound(clickSoundPath);
 
         if (spawnedPanel)
             return;
@@ -159,10 +154,12 @@ public class PlanetInteractable : BaseInteractable
         spawnedPanel = null;
     }
 
-    void PlaySound(EventReference sound)
+    void PlaySound(string eventPath)
     {
-        if (!sound.IsNull)
-            RuntimeManager.PlayOneShot(sound, transform.position);
+        if (string.IsNullOrWhiteSpace(eventPath))
+            return;
+
+        RuntimeManager.PlayOneShot(eventPath, transform.position);
     }
 
     #endregion

@@ -15,8 +15,6 @@ public class TutorialManager : MonoBehaviour
     [Header("SFX")]
     [SerializeField] private string tutorialStepChangeSoundPath = "event:/UI/UI_Tutorial_PanelChange";
 
-    private EventReference tutorialStepChangeSound;
-
     TutorialStep currentStep;
     bool isCompleted;
     float wsadMoveTimer;
@@ -32,8 +30,6 @@ public class TutorialManager : MonoBehaviour
         }
 
         Instance = this;
-
-        tutorialStepChangeSound = EventReference.Find(tutorialStepChangeSoundPath);
 
         LoadState();
     }
@@ -136,8 +132,10 @@ public class TutorialManager : MonoBehaviour
 
     void PlayTutorialStepChangeSound()
     {
-        if (!tutorialStepChangeSound.IsNull)
-            RuntimeManager.PlayOneShot(tutorialStepChangeSound);
+        if (string.IsNullOrWhiteSpace(tutorialStepChangeSoundPath))
+            return;
+
+        RuntimeManager.PlayOneShot(tutorialStepChangeSoundPath);
     }
 }
 
