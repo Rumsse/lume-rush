@@ -23,6 +23,11 @@ public class PlayerPlanetMovementSFX : MonoBehaviour
     [SerializeField] private float _stepInterval = 0.35f;
     [SerializeField] private float _minSpeedForSteps = 1f;
 
+    [Header("Jump")]
+    [SerializeField] private float _jumpSoundCooldown = 0.15f;
+
+    private float _lastJumpSoundTime = -999f;
+
     private float _stepTimer;
     private bool _wasGrounded;
     private bool _wasOnWater;
@@ -56,11 +61,17 @@ public class PlayerPlanetMovementSFX : MonoBehaviour
 
     public void PlayJumpSound()
     {
+        if (Time.time - _lastJumpSoundTime < _jumpSoundCooldown)
+            return;
+
+        _lastJumpSoundTime = Time.time;
+
         EventReference jumpSound = _movement.IsOnWater
             ? _waterJumpSound
             : _groundJumpSound;
 
-        RuntimeManager.PlayOneShot(jumpSound, transform.position);
+        if (!jumpSound.IsNull)
+            RuntimeManager.PlayOneShot(jumpSound, transform.position);
     }
 
     public void PlayDashSound()

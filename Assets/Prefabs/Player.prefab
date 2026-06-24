@@ -329,8 +329,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad52706c52d6e5f4da662407f541dfe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
-  pumpSFX: {fileID: 0}
-  miningSFX: {fileID: 0}
+  pumpSFX: {fileID: -4443810427765629923}
+  miningSFX: {fileID: -5785726774593501582}
   sfx: {fileID: 6351949712807476373}
   placement: {fileID: 2555966904752584968}
   pumpPrefab: {fileID: 8005319921480430843, guid: 2975f2279f777cd45a5d4188c2299996, type: 3}
