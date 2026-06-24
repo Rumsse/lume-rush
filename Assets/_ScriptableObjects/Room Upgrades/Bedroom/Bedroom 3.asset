@@ -15,7 +15,13 @@ MonoBehaviour:
   level: 3
   costs:
   - resourceName: Titanium
-    amount: 8
+    amount: 5
+  - resourceName: Food
+    amount: 4
+  - resourceName: Coal
+    amount: 2
+  - resourceName: Aluminium
+    amount: 2
   roomPrefab: {fileID: 3681112317066320166, guid: 25be492f32318604e80f8b64618e67a4, type: 3}
   previewImage: {fileID: 21300000, guid: 7b947c404aec98c4a901601f1af359b0, type: 3}
   spawnOffset: {x: 0.473, y: 0.071, z: -0.178}

@@ -14,8 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomLevelData
   level: 2
   costs:
-  - resourceName: Coal 3
-    amount: 0
+  - resourceName: Coal
+    amount: 5
+  - resourceName: Aluminium
+    amount: 5
+  - resourceName: Coal
+    amount: 3
   roomPrefab: {fileID: 1633871519418320932, guid: 04f5c03e2f0a1754992683e69ebf5b42, type: 3}
   previewImage: {fileID: 21300000, guid: ceb49312a40b4c843b8b2d4ff52ef2d7, type: 3}
   spawnOffset: {x: 0.608, y: 0.067, z: -0.022074}

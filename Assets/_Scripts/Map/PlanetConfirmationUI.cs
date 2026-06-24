@@ -77,20 +77,26 @@ public class PlanetConfirmationUI : MonoBehaviour
             return;
         }
 
-        resourcesText.text = $"Food: {GetResourceLevel(config, "Food")}\n" +
+        resourcesText.text = $"Food: {GetResourceLevel(config, "Food", "Coconut", "magma fruit", "Icey fruit", "Icey", "Magma", "Fruit-Ice")}\n" +
                              $"Coal: {GetResourceLevel(config, "Coal")}\n" +
                              $"Iron: {GetResourceLevel(config, "Iron")}\n" +
                              $"Aluminium: {GetResourceLevel(config, "Aluminium")}\n" +
                              $"Titan: {GetResourceLevel(config, "Titan")}";
     }
 
-    string GetResourceLevel(ResourceGeneratorConfig config, string type)
+    string GetResourceLevel(ResourceGeneratorConfig config, params string[] types)
     {
         int total = 0;
 
         foreach (var item in config.resources)
-            if (item.prefab && item.prefab.name.Contains(type))
-                total += item.count;
+        {
+            if (!item.prefab)
+                continue;
+
+            foreach (string type in types)
+                if (item.prefab.name.Contains(type))
+                    total += item.count;
+        }
 
         if (total < lowThreshold)
             return "<color=#FF5555>Low</color>";

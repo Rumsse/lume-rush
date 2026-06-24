@@ -8,6 +8,8 @@ using UnityEngine.Events;
 
 public class WorkshopButtonController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [field: SerializeField] public string WorkshopItemID { get; private set; }
+
     [Header("State Visuals")]
     [SerializeField] private GameObject canBuyGlowObject;
     [SerializeField] private GameObject cantBuyObject;
@@ -38,6 +40,7 @@ public class WorkshopButtonController : MonoBehaviour, IPointerEnterHandler, IPo
 
     private void OnEnable()
     {
+        LoadSavedState();
         StartCoroutine(WaitForResourceManagerAndRefresh());
     }
 
@@ -47,6 +50,26 @@ public class WorkshopButtonController : MonoBehaviour, IPointerEnterHandler, IPo
             yield return null;
 
         RefreshData();
+    }
+
+    private void LoadSavedState()
+    {
+        if (string.IsNullOrEmpty(WorkshopItemID))
+        {
+            Debug.LogWarning($"{name}: WorkshopItemID is empty!");
+            return;
+        }
+
+        if (ShipSaveManager.IsWorkshopItemBought(WorkshopItemID))
+        {
+            isBought = true;
+            Button button = GetComponent<Button>();
+
+            if (button != null)
+                button.interactable = false;
+
+            ApplyVisualState();
+        }
     }
 
     public void BuyItem()
@@ -88,6 +111,7 @@ public class WorkshopButtonController : MonoBehaviour, IPointerEnterHandler, IPo
             button.interactable = false;
 
         ApplyVisualState();
+        ShipSaveManager.SaveWorkshopItem(WorkshopItemID);
 
         onBought?.Invoke();
 

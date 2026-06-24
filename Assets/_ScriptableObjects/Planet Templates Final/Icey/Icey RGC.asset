@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ResourceGeneratorConfig
   resources:
   - prefab: {fileID: 5465739070193905130, guid: c32b9b5cbbcc9134bb13330fdf251fdd, type: 3}
-    count: 15
+    count: 24
     alignAxis: 0
     offset: 0
     avoidWater: 1
     initialized: 1
   - prefab: {fileID: 6208371833824068528, guid: 6394dbd1dc7336a4c9d0c209da8b0241, type: 3}
-    count: 15
+    count: 16
     alignAxis: 0
     offset: -0.2
     avoidWater: 1

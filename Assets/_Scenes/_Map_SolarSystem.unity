@@ -19601,6 +19601,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PauseManager
   pauseMenuPanel: {fileID: 1817527344}
   pauseKey: 27
+  pauseMenuOpen:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &292472656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37362,7 +37369,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6788593316708130377, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
       propertyPath: midThreshold
-      value: 7
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 6963686971698073143, guid: 6154681ae5430f94aa6f1195daaa8393, type: 3}
       propertyPath: m_IsActive

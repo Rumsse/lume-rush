@@ -14,6 +14,7 @@ public class RoomSlotData
 public class ShipSaveData
 {
     public List<RoomSlotData> rooms = new List<RoomSlotData>();
+    public List<string> boughtWorkshopItems = new List<string>();
 }
 
 public static class ShipSaveManager
@@ -36,6 +37,26 @@ public static class ShipSaveManager
         string json = JsonUtility.ToJson(data);
         PlayerPrefs.SetString(SaveKey, json);
         PlayerPrefs.Save();
+    }
+
+    public static void SaveWorkshopItem(string itemID)
+    {
+        ShipSaveData data = LoadData();
+
+        if (!data.boughtWorkshopItems.Contains(itemID))
+        {
+            data.boughtWorkshopItems.Add(itemID);
+
+            string json = JsonUtility.ToJson(data);
+            PlayerPrefs.SetString(SaveKey, json);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public static bool IsWorkshopItemBought(string itemID)
+    {
+        ShipSaveData data = LoadData();
+        return data.boughtWorkshopItems.Contains(itemID);
     }
 
     public static ShipSaveData LoadData()

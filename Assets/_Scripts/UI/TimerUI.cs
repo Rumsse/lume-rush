@@ -23,14 +23,7 @@ public sealed class TimerUI : MonoBehaviour
     void OnEnable()
     {
         TutorialManager.OnTutorialCompleted += HandleTutorialCompleted;
-
-        if (PlayerPrefs.GetInt("TutorialDone", 0) == 0)
-        {
-            label.gameObject.SetActive(false);
-            return;
-        }
-
-        isActive = true;
+        UpdateVisibility();
     }
 
     void OnDisable() => TutorialManager.OnTutorialCompleted -= HandleTutorialCompleted;
@@ -46,6 +39,19 @@ public sealed class TimerUI : MonoBehaviour
     #endregion
 
     #region Logic
+
+    void UpdateVisibility()
+    {
+        if (PlayerPrefs.GetInt("TutorialDone", 0) == 0 || SupernovaManager.Instance == null)
+        {
+            isActive = false;
+            label.gameObject.SetActive(false);
+            return;
+        }
+
+        isActive = true;
+        label.gameObject.SetActive(true);
+    }
 
     void Refresh()
     {
@@ -74,12 +80,7 @@ public sealed class TimerUI : MonoBehaviour
         label.SetText("{0:00}:{1:00}", m, sec);
     }
 
-    void HandleTutorialCompleted()
-    {
-        isActive = true;
-        label.gameObject.SetActive(true);
-        Refresh();
-    }
+    void HandleTutorialCompleted() => UpdateVisibility();
 
     #endregion
 }

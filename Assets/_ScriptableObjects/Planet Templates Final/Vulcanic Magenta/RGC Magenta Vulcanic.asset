@@ -20,13 +20,19 @@ MonoBehaviour:
     avoidWater: 1
     initialized: 1
   - prefab: {fileID: 7226534699707336089, guid: d4064eb3f7f12cb4ab3c6ee87c6e2188, type: 3}
-    count: 20
+    count: 13
     alignAxis: 0
     offset: -0.2
     avoidWater: 1
     initialized: 1
   - prefab: {fileID: 3757027528730641854, guid: 2d79a6881b8acbb44b225aaf06146d34, type: 3}
     count: 5
+    alignAxis: 0
+    offset: -0.2
+    avoidWater: 1
+    initialized: 1
+  - prefab: {fileID: 5465739070193905130, guid: c32b9b5cbbcc9134bb13330fdf251fdd, type: 3}
+    count: 8
     alignAxis: 0
     offset: -0.2
     avoidWater: 1
