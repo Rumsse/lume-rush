@@ -6,14 +6,9 @@ using FMODUnity;
 [RequireComponent(typeof(Button))]
 public class UIButtonSFX : MonoBehaviour, IPointerEnterHandler
 {
-    [Header("SFX")]
-    [SerializeField]
-    private EventReference hoverSound =
-    EventReference.Find("event:/UI/UI_Button_Hover");
-
-    [SerializeField]
-    private EventReference clickSound =
-        EventReference.Find("event:/UI/UI_Button_Click");
+    [Header("FMOD Event Paths")]
+    [SerializeField] private string hoverEventPath = "event:/UI/UI_Button_Hover";
+    [SerializeField] private string clickEventPath = "event:/UI/UI_Button_Click";
 
     private Button button;
 
@@ -36,7 +31,7 @@ public class UIButtonSFX : MonoBehaviour, IPointerEnterHandler
         if (button != null && !button.interactable)
             return;
 
-        PlaySound(hoverSound);
+        PlaySound(hoverEventPath);
     }
 
     private void PlayClickSound()
@@ -44,12 +39,14 @@ public class UIButtonSFX : MonoBehaviour, IPointerEnterHandler
         if (button != null && !button.interactable)
             return;
 
-        PlaySound(clickSound);
+        PlaySound(clickEventPath);
     }
 
-    private void PlaySound(EventReference sound)
+    private void PlaySound(string eventPath)
     {
-        if (!sound.IsNull)
-            RuntimeManager.PlayOneShot(sound);
+        if (string.IsNullOrWhiteSpace(eventPath))
+            return;
+
+        RuntimeManager.PlayOneShot(eventPath);
     }
 }
