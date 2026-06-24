@@ -70,6 +70,8 @@ public class PlayerPlanetMovementSFX : MonoBehaviour
 
     private void HandleFootsteps()
     {
+        Debug.Log($"IsOnWater: {_movement.IsOnWater}");
+
         if (!_movement.IsGrounded)
         {
             _stepTimer = 0f;

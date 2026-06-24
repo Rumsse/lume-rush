@@ -13,6 +13,12 @@ public class WorkshopButtonController : MonoBehaviour, IPointerEnterHandler, IPo
     [SerializeField] private GameObject cantBuyObject;
     [SerializeField] private GameObject doneObject;
 
+    [Header("Completion Panel")]
+    [SerializeField] private GameObject allItemsBoughtPanel;
+
+    [Tooltip("Jeœli true, panel pojawi siê ponownie po wejœciu do warsztatu, jeœli wszystko zosta³o ju¿ kupione.")]
+    [SerializeField] private bool showCompletionPanelOnEnable = true;
+
     [Header("Cost")]
     public BuyCostSO materialsNeeded;
     public TextMeshProUGUI[] costTexts;
@@ -26,6 +32,8 @@ public class WorkshopButtonController : MonoBehaviour, IPointerEnterHandler, IPo
     public UnityEvent onBought;
     public UnityEvent onAllWorkshopItemsBought;
 
+    private static bool allWorkshopItemsBought;
+
     private bool canBuy;
     private bool isBought;
     private Vector3 originalScale;
@@ -34,11 +42,17 @@ public class WorkshopButtonController : MonoBehaviour, IPointerEnterHandler, IPo
     {
         originalScale = transform.localScale;
         ApplyVisualState();
+
+        if (allItemsBoughtPanel != null)
+            allItemsBoughtPanel.SetActive(false);
     }
 
     private void OnEnable()
     {
         StartCoroutine(WaitForResourceManagerAndRefresh());
+
+        if (showCompletionPanelOnEnable && allWorkshopItemsBought)
+            ShowAllItemsBoughtPanel();
     }
 
     private IEnumerator WaitForResourceManagerAndRefresh()
@@ -47,6 +61,9 @@ public class WorkshopButtonController : MonoBehaviour, IPointerEnterHandler, IPo
             yield return null;
 
         RefreshData();
+
+        if (showCompletionPanelOnEnable && allWorkshopItemsBought)
+            ShowAllItemsBoughtPanel();
     }
 
     public void BuyItem()
@@ -124,6 +141,18 @@ public class WorkshopButtonController : MonoBehaviour, IPointerEnterHandler, IPo
         CostTextFill();
         CheckIfCanBuy();
         ApplyVisualState();
+    }
+
+    public void CloseAllItemsBoughtPanel()
+    {
+        if (allItemsBoughtPanel != null)
+            allItemsBoughtPanel.SetActive(false);
+    }
+
+    private void ShowAllItemsBoughtPanel()
+    {
+        if (allItemsBoughtPanel != null)
+            allItemsBoughtPanel.SetActive(true);
     }
 
     private void RefreshAllWorkshopButtons()
@@ -222,6 +251,10 @@ public class WorkshopButtonController : MonoBehaviour, IPointerEnterHandler, IPo
             if (!button.isBought)
                 return;
         }
+
+        allWorkshopItemsBought = true;
+
+        ShowAllItemsBoughtPanel();
 
         onAllWorkshopItemsBought?.Invoke();
     }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using FMODUnity;
 
 public class PlanetInteractable : BaseInteractable
 {
@@ -8,6 +9,15 @@ public class PlanetInteractable : BaseInteractable
     public Transform spawnPanelPosition;
     public CelestialBodySettings planetSettings;
     public SFX_SimpleSoundInteract sfx;
+
+    [Header("SFX")]
+    [SerializeField]
+    private EventReference hoverSound =
+        EventReference.Find("event:/UI/UI_Planet_Hover");
+
+    [SerializeField]
+    private EventReference clickSound =
+        EventReference.Find("event:/UI/UI_Planet_MenuOpen");
 
     [Header("Fuel Settings")]
     [SerializeField] int baseFuelCost = 10;
@@ -49,10 +59,15 @@ public class PlanetInteractable : BaseInteractable
         if (hasBurned)
             return;
 
+        PlaySound(hoverSound);
+
         transform.localScale = baseScale * 1.2f;
     }
 
-    protected override void OnMouseExit() => transform.localScale = baseScale;
+    protected override void OnMouseExit()
+    {
+        transform.localScale = baseScale;
+    }
 
     protected override void OnMouseDown()
     {
@@ -61,6 +76,8 @@ public class PlanetInteractable : BaseInteractable
             Debug.Log("Planet is already consumed by the supernova.");
             return;
         }
+
+        PlaySound(clickSound);
 
         if (spawnedPanel)
             return;
@@ -93,7 +110,13 @@ public class PlanetInteractable : BaseInteractable
 
         if (planetSettings.burnedPrefab)
         {
-            var burnedPlanet = Instantiate(planetSettings.burnedPrefab, transform.position, transform.rotation, transform.parent);
+            var burnedPlanet = Instantiate(
+                planetSettings.burnedPrefab,
+                transform.position,
+                transform.rotation,
+                transform.parent
+            );
+
             burnedPlanet.name = gameObject.name;
         }
 
@@ -112,7 +135,9 @@ public class PlanetInteractable : BaseInteractable
 
     void OnConfirmAction()
     {
-        var displayName = string.IsNullOrEmpty(planetSettings.planetName) ? name : planetSettings.planetName;
+        var displayName = string.IsNullOrEmpty(planetSettings.planetName)
+            ? name
+            : planetSettings.planetName;
 
         PlanetSelectionManager.UpdatePlayerPosition(transform.position);
 
@@ -132,6 +157,12 @@ public class PlanetInteractable : BaseInteractable
 
         spawnedPanel.SetActive(false);
         spawnedPanel = null;
+    }
+
+    void PlaySound(EventReference sound)
+    {
+        if (!sound.IsNull)
+            RuntimeManager.PlayOneShot(sound, transform.position);
     }
 
     #endregion
